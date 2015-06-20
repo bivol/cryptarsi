@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CRYPTARSI encrypted data search system</title>
+        
+		<script type="text/javascript" src="mihalya/pdf.js"></script>
+      	<script type="text/javascript">PDFJS.workerSrc = 'mihalya/pdf.js';</script>
+     	<script type="text/javascript" src="mihalya/viewer.js"></script>
+        <script type="text/javascript" src="mihalya/aes.js"></script>
+        <script type="text/javascript" src="mihalya/search.js"></script>
+        <script type="text/javascript" src="mihalya/view.js"></script>
+        <script type="text/javascript" src="mihalya/q.js"></script>
+		<script type="text/javascript" src="mihalya/LargeLocalStorage.min.js"></script>
+		<script type="text/javascript" src="mihalya/encoder.js"></script>
+        <script type="text/javascript" src="mihalya/jquery.js"></script>
+        <script type="text/javascript" src="mihalya/jquery.highlight-5.closure.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="mihalya/viewer.css"/>
+        <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-responsive.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </head>
+
+    <script>
+        // Taking out the INIT from the search
+        function init() {
+            return view.init();
+        }
+    </script>
+
+<body onLoad="init()">
+<body>
+
+<div class="container bs-docs-container">
+	
+	<div><H1 class="page-header"><img src="mihalya/cryptarsi-logo.png"> CRYPTARSI</H1></div>
+	<div class="row" id="mylogin" STYLE="display:none">
+	<div class="col-md-9 col-md-push-3" role="main">
+	<div class="panel">
+			<div class="panel-heading">
+				<h3 class="panel-title"><span class="glyphicon glyphicon-info-sign"></span> About</h3>
+			</div>
+			<div class="panel-body">
+	<P>CRYPTARSI is a system designed to produce, search and browse encrypted data sets. The data can be hosted on unsecured servers or locally, inside your browser local storage. The name comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search". Cryptarsi is using encrypted raw text files. There is no scripting, no RDBMS engine behind, the simpliest web server is enough to put online your searchable encrypted data.
+	<P>Cryptarsi who's former development name was "Mihalya" was first used by the journalists from <a href="http://www.bivol.bg">Bivol.bg</a> while working on the Cablegate releases from different locations.
+	<P>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security... etc ;-)
+	<P>HTML5 enabled broser is required. The system is tested on Chrome, Firefox, Opera and Safari. Known problems: MP3 audio is not working on Firefox. PDF viewing is not working on Safari & Opera.
+	<P><span class="glyphicon glyphicon-copyright-mark"></span><a href="#" onclick="document.getElementById('credits').style.display='block'"> Credits</a>
+	</div>
+	<div id="credits" class="panel-body" STYLE="display:none">
+	Credits
+<pre>
+Copyright (c) 2011-2012, Delian Delchev & Atanas Tchobanov
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Delian Delchev & Atanas Tchobanov nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+This software is using code from the following projects:
+
+- AES implementation in JavaScript (c) Chris Veness 2005-2011 
+see http://csrc.nist.gov/publications/PubsFIPS.html#197   
+http://www.movable-type.co.uk/scripts/aes.html
+
+- Utf8 class: encode / decode between multi-byte Unicode characters and UTF-8 multiple single-byte character encoding (c) Chris Veness 2002-2011 
+
+- PDF.js Copyright (c) 2011 Mozilla Foundation
+https://github.com/mozilla/pdf.js
+Contributors: Andreas Gal 
+                  Chris G Jones 
+                  Shaon Barman 
+                  Vivien Nicolas 
+                  Justin D'Arcangelo 
+                  Yury Delendik
+                  Kalervo Kujala
+                  Adil Allawi 
+                  Jakob Miland
+                  Artur Adib
+                  Brendan Dahl
+
+- Base64Binary Copyright (c) 2011, Daniel Guerrero
+		</pre>
+		</fieldset>
+		</div>
+	</div>
+	</div>
+	
+	<div class="col-md-3 col-md-pull-9" role="main"> 
+	<div class="panel panel-default facet_limit blacklight-tags">
+	<div class="collapsed collapse-toggle panel-heading" data-toggle="collapse" data-target="#facet-multimedia" aria-expanded="true">
+	<h5 class="panel-title facet-field-heading"><a href="#" data-no-turbolink><span class="glyphicon glyphicon-lock"></span> Login</a></h5>
+	</div>
+	<div id="facet-tags" class="panel-collapse facet-content collapse.in">
+	<div class="panel-body">
+	<form ID="author">
+	<P><span class="glyphicon glyphicon-user"></span> <INPUT TYPE="text" NAME="name" VALUE="test">
+	<P><span class="glyphicon glyphicon-eye-close"></span> <INPUT TYPE="password" NAME="pass" VALUE="test">
+	<P>
+	<button ID="authorBtn" type="button" class="btn">
+          LOGIN
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+	<P>Only if the login is not working as expected please click this button:
+        <button ID="clearDb" type="button" class="btn btn-danger">
+          CLEAR
+          <span class="glyphicon glyphicon-trash"></span>
+        </button> 
+        <P> Encoder (beta):<BR>
+        <button ID="encodeBtn" type="button" class="btn btn-danger">
+          ENCODE
+          <span class="glyphicon glyphicon-dashboard"></span>
+        </button> 
+	</form>
+	</div>
+	</div>
+	</div>
+	</div>
+	
+	</div>
+	<div class="row" id="pdfview" STYLE="display:none">
+   
+    <div id="errorWrapper" hidden="true">
+      <div id="errorMessageLeft">
+        <span id="errorMessage"></span>
+        <button id="errorShowMore" onclick="" oncontextmenu="return false;">
+          More Information
+        </button>
+        <button id="errorShowLess" onclick="" oncontextmenu="return false;" hidden='true'>
+          Less Information
+        </button>
+      </div>
+      <div id="errorMessageRight">
+        <button id="errorClose" oncontextmenu="return false;">
+          Close
+        </button>
+      </div>
+      <div class="clearBoth"></div>
+      <textarea id="errorMoreInfo" hidden='true' readonly="readonly"></textarea>
+    </div>
+    <div id="sidebar">
+      <div id="sidebarBox">
+        <div id="sidebarScrollView">
+          <div id="sidebarView"></div>
+        </div>
+        <div id="outlineScrollView" hidden='true'>
+          <div id="outlineView"></div>
+        </div>
+        <div id="sidebarControls">
+          <button id="thumbsSwitch" title="Show Thumbnails" onclick="PDFView.switchSidebarView('thumbs')" data-selected>
+            Show Thumbs
+          </button>
+          <button id="outlineSwitch" title="Show Document Outline" onclick="PDFView.switchSidebarView('outline')" disabled>
+            Show Outlines
+          </button>
+        </div>
+     </div>
+    </div>
+    <div id="loading">Loading... 0%</div>
+     <div id="controls">
+    	<button id="backtosearch" onclick="document.getElementById('search').style.display='block';document.getElementById('pdfview').style.display='none';">
+    	Back to search
+      </button> 
+      
+      <div class="separator"></div>
+      
+      <button id="previous" onclick="PDFView.page--;" oncontextmenu="return false;">
+        Previous
+      </button>
+
+      <button id="next" onclick="PDFView.page++;" oncontextmenu="return false;">
+        Next
+      </button>
+
+      <div class="separator"></div>
+
+      <input type="number" id="pageNumber" onchange="PDFView.page = this.value;" value="1" size="4" min="1" />
+
+      <span>/</span>
+      <span id="numPages">--</span>
+
+      <div class="separator"></div>
+
+      <button id="zoomOut" title="Zoom Out" onclick="PDFView.zoomOut();" oncontextmenu="return false;">
+       Zoom Out
+      </button>
+      <button id="zoomIn" title="Zoom In" onclick="PDFView.zoomIn();" oncontextmenu="return false;">
+       Zoom In
+      </button>
+
+      <div class="separator"></div>
+
+      <select id="scaleSelect" onchange="PDFView.parseScale(this.value);" oncontextmenu="return false;">
+        <option id="customScaleOption" value="custom"></option>
+        <option value="0.5">50%</option>
+        <option value="0.75">75%</option>
+        <option value="1">100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5">150%</option>
+        <option value="2">200%</option>
+        <option id="pageWidthOption" value="page-width">Page Width</option>
+        <option id="pageFitOption" value="page-fit">Page Fit</option>
+        <option id="pageAutoOption" value="auto" selected="selected">Auto</option>
+      </select>
+
+      <div class="separator"></div>
+
+      <button id="print" onclick="window.print();" oncontextmenu="return false;">
+        Print
+      </button>
+
+      <button id="download" title="Download" onclick="PDFView.download();" oncontextmenu="return false;">
+        Download
+      </button>
+
+      <div class="separator"></div>
+		<button id="backtosearch" onclick="document.getElementById('search').style.display='block';document.getElementById('pdfview').style.display='none';">
+    	Back to search
+      </button> 
+
+      <span id="info">--</span>
+    </div>
+    <div id="viewer"></div>
+    </div>
+	<div class="row" id="search" STYLE="display:none">
+    	<!-- START Main Column -->
+    	<div class="col-md-9 col-md-push-3" role="main">
+		<!-- START Import -->	
+		<div ID="import" STYLE="display:none">
+		<FORM ID="fimport">
+			<TEXTAREA cols="80" rows="50" NAME="vimport">Paste the import text here"</TEXTAREA><BR>
+			<INPUT type="text" NAME="bimport" VALUE="Basket name"><BR>
+			<INPUT TYPE=BUTTON VALUE="OK">
+		</FORM>
+	</div>
+		<!-- END Import -->	
+		<!-- START Main Search -->
+		<div id="searching">
+		<!--<FORM SRC="#" onSubmit="return view.mysearch(0,20,'');">-->	
+		<!-- <INPUT TYPE=BUTTON VALUE="REDOWNLOAD DB" onClick="search.reldb()" STYLE="font-size: 6pt"> -->
+		<div class="navbar navbar-default">
+		<div class="input-group search-input-group">
+        <label for="srch" class="sr-only">search for</label>
+         <input type="text" ID="srch" name="srch" placeholder="Search..." class="search_q q form-control" />
+
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary search-btn"  onClick="view.mysearch(0,20,'')">
+          <span class="submit-search-text">Search</span>
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+        </span>
+      </div>
+<BR><small><a role="menuitem" tabindex="-1" href=# onclick="view.showid(1)">How it works</a> | <a role="menuitem" tabindex="-1" href=# onclick="view.showid(7)">Example with audio</a> | <a role="menuitem" tabindex="-1" href=# onclick="view.showid(8)">Example with pdf</a></small>
+</div>		
+		<!-- <INPUT TYPE=BUTTON VALUE="SEARCH EXPORT" onClick="search.export()"> -->
+		<!-- <INPUT TYPE=BUTTON VALUE="IMPORT" onClick="search.showimport()"> -->
+		<!--</FORM>-->
+		<div ID="results" align="left">Search results will display here. Take note of some search hints. If you want to search for a particular date enter the date in european format without ponctuation: 09 10 2007 (October 9-th 2007). To search documents with a particular classification search: CLASSIFICATION CONFIDENTIAL or CLASSIFICATION SECRET. <P><B>Very important!</B> Don't use the browser back button as it will bring you back to the login page. Use the search button to return to search results.
+		</div>
+		<div ID="media" align="left"></div>
+		</div>					
+    	</div>
+		<!-- END Main Search -->
+		<!-- END Main Column -->
+		<!-- START Right Column -->
+		<div class="col-md-3 col-md-pull-9" role="main"> 	
+		
+		<!-- START Tags -->
+		<div class="panel panel-default facet_limit blacklight-tags">
+			<div class="collapsed collapse-toggle panel-heading" data-toggle="collapse" data-target="#facet-tags">
+			<h5 class="panel-title facet-field-heading"><a href="#" data-no-turbolink><span class="glyphicon glyphicon-tags"></span> Tags</a></h5>
+			</div>
+			<div id="facet-tags" class="panel-collapse facet-content collapse.in">
+			<div class="input-group new-input-group">
+        <label for="tagnew" class="sr-only">new tag</label>
+         <input type="text" ID="nbasket" name="nbasket" placeholder="Tag name..." class="search_q q form-control" />
+
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary add-btn"  id="addbasket">
+          <span class="submit-search-text">Add</span>
+        </button>
+        </span>
+      </div>
+			<div class="panel-body">
+			<ul class="facet-values list-unstyled" id="lbaskets">
+			</ul>
+			</div>
+			</div>
+			</div>
+			
+		<!-- END Tags -->
+		
+		<!-- START Multimedia -->
+		
+		<div id="multimedia" class="panel panel-default facet_limit blacklight-multimedia" STYLE="display:none">
+		<div class="collapsed collapse-toggle panel-heading" data-toggle="collapse" data-target="#facet-multimedia" aria-expanded="true">
+				<h5 class="panel-title facet-field-heading">
+				<span class="glyphicon glyphicon glyphicon-list"></span> <a href="#" data-no-turbolink>Files</a></h5>
+			</div>
+			<div id="facet-multimedia" class="panel-collapse facet-content collapse.in">
+			<div id="attachments" class="panel-body"></div>
+			</div>
+			</div>
+			
+		<!-- END Multimedia -->
+		</div>
+		</div>
+	<div class="row" id="encoder" STYLE="display:none">
+	<div class="container dndArea">
+		<div class="usage">Drag and drop files here to encode.</div>
+		<div class="row thumbnails">
+		</div>
+	</div>
+	<div class="alert alert-danger">
+		<div class="container">
+			This feature is experimental.
+		</div>
+	</div>
+	<div class="alert alert-warning">
+		<div class="container">
+			In order to keep the files encoded you need to grant this app the ability
+			to save data!  Please click accept on the browser's prompt.
+		</div>
+	</div>
+	<label class="label label-default"><a href="#!" id="clear">Clear</a></label>
+	
+	</div>
+		<!-- END Right Column -->
+		
+ 	</div>
+</body>
+</html>
+	
+	

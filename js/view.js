@@ -738,7 +738,7 @@ function getSelectedText(){
         document.getElementById("clearDb").addEventListener("click", reldb);
         document.getElementById("fimport").addEventListener("submit", loadimport);
         document.getElementById("addbasket").addEventListener("click", addbasket);
-        document.getElementById("encodeBtn").addEventListener("click", showencoder);
+     //   document.getElementById("encodeBtn").addEventListener("click", showencoder);
         document.getElementById("panic").addEventListener("click", panic);
         loadbasket();
         search.init();

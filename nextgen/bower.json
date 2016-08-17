@@ -2,7 +2,7 @@
   "name": "cryptarsi",
   "description": "Encrypted search",
   "main": "index.js",
-  "directory": "js/libs",
+  "directory": "js/libs/bower",
   "authors": [
     "Bivol"
   ],

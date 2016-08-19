@@ -13,7 +13,9 @@
       "jquery": "npm:jquery@^3.1.0"
     },
     "devDependencies": {
-      "typescript": "npm:typescript@^1.6.2"
+      "typescript": "npm:typescript@^1.6.2",
+      "bower": "*",
+      "jspm": "*"
     }
   }
 }

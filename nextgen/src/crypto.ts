@@ -1,7 +1,7 @@
 /**
  * Created by delian on 8/19/16.
  */
-/// <reference path="./typings/globals/index.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 
 export class Crypto {
     password: string;
@@ -11,6 +11,10 @@ export class Crypto {
     }
 
     decrypt(data: string): string {
-        return "";
+        return CryptoJS.AES.decrypt(data, this.password).toString();
+    }
+
+    encrypt(data: string): string {
+        return CryptoJS.AES.encrypt(data, this.password).toString();
     }
 }

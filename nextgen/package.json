@@ -10,12 +10,11 @@
   "license": "GPL-2.0",
   "jspm": {
     "dependencies": {
-      "jquery": "npm:jquery@^3.1.0"
+      "jquery": "npm:jquery@^3.1.0",
+      "oldJ": "npm:jquery@1.6"
     },
     "devDependencies": {
-      "typescript": "npm:typescript@^1.6.2",
-      "bower": "*",
-      "jspm": "*"
+      "typescript": "npm:typescript@^1.6.2"
     }
   }
 }

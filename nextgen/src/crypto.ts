@@ -1,7 +1,7 @@
 /**
  * Created by delian on 8/19/16.
  */
-import * as AES from "../js/libs/bower/crypto-js/aes.js";
+/// <reference path="../typings/globals/jquery/index.d.ts" />
 
 export class Crypto {
     password: string;
@@ -11,6 +11,6 @@ export class Crypto {
     }
 
     decrypt(data: string): string {
-        return ""
+        return "";
     }
 }

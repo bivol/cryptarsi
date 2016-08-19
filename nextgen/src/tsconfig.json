@@ -5,6 +5,10 @@
         "noImplicitAny": false,
         "sourceMap": false
     },
+    "files": [
+        "../typings/index.d.ts",
+        "crypto.ts"
+    ],
     "exclude": [
         "node_modules"
     ]

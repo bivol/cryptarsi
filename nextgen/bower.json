@@ -19,6 +19,8 @@
   "dependencies": {
     "requirejs": "^2.2.0",
     "crypto-js": "^3.1.6",
-    "t-pdfjs": "^1.0.713"
+    "t-pdfjs": "^1.0.713",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0"
   }
 }

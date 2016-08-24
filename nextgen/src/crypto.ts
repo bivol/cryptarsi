@@ -10,11 +10,11 @@ export class Crypto {
         this.password = password;
     }
 
-    decrypt(data: string): string {
+    decrypt(data: string, password = this.password): string {
         return CryptoJS.AES.decrypt(data, this.password).toString();
     }
 
-    encrypt(data: string): string {
+    encrypt(data: string, password = this.password): string {
         return CryptoJS.AES.encrypt(data, this.password).toString();
     }
 }

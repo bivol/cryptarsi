@@ -18,3 +18,4 @@ export class Crypto {
         return CryptoJS.AES.encrypt(data, this.password).toString();
     }
 }
+

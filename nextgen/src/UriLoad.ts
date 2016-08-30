@@ -2,6 +2,8 @@
  * Created by delian on 8/30/16.
  */
 
+import {Config} from './Config';
+
 export class UriLoad {
     req: XMLHttpRequest = null;
 

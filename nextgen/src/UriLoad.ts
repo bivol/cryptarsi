@@ -10,13 +10,13 @@ export class UriLoad {
     }
 
     store(key:string, val:string) {
-
+        localStorage[key]=val;
     }
 
     get(uri:string, cb: Function) {
-        this.req.open('GET', file, false);
-        req.send(null);
-        if (req.status == 200 || req.status == 0) {
+        this.req.open('GET', uri, false);
+        this.req.send(null);
+        if (this.req.status == 200 || this.req.status == 0) {
             var resp = this.req.responseXML.documentElement;
             var field = resp.getElementsByTagName("data");
             for (var i=0; i<field.length;i++) {

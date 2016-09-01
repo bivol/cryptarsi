@@ -2,6 +2,11 @@
  * Created by delian on 8/19/16.
  */
 
+import {Crypto} from './Crypto';
+import {Storage} from './Storage';
+
+var crypt = new Crypto('parola','nonce'); //TODO: password store
+
 interface IAndNot {
     not: any,
     and: any
@@ -16,6 +21,15 @@ interface IPushA {
 export class Search {
     constructor() {
 
+    }
+
+    setextr(w: string):string[] {
+        var d = dhs(w + ".idx");
+        if (lstr(d)) {
+            var s = Aes.Ctr.decrypt(localStorage[d], pass2, 256);
+            return s.split(",")
+        }
+        else return [];
     }
 
     crossset(w: string[], s: string[]): string[] {

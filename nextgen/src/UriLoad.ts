@@ -11,8 +11,14 @@ export class UriLoad {
         this.req = new XMLHttpRequest();
     }
 
-    store(key:string, val:string) {
-        localStorage[key]=val;
+    get(uri:string, cb:Function):void {
+        this.req.open('GET', uri, false);
+        this.req.send(null);
+        if (this.req.status == 200 || this.req.status == 0) {
+            return cb(null,this.req);
+        } else {
+            return cb(new Error('Problem'),this.req);
+        }
     }
 
     get(uri:string, cb: Function) {

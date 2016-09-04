@@ -29,9 +29,9 @@ export class Storage {
         return val;
     }
 
-    lstr(x: string, cb: Function):void {
+    lstr(x: string, cb: Function):boolean { // TODO: lstr must become with callback
         var my = this;
-        if (this.getData(x)) return 1;
+        if (this.getData(x)) return true;
         var file = wh.s2h(x);
         var dir = file.substr(-3, 3);
         var fn = "index/" + dir + "/file" + file + ".txt";
@@ -41,5 +41,6 @@ export class Storage {
             if (my.getData(x)) return cb(null);
             return cb(new Error());
         });
+        return false;
     }
 }

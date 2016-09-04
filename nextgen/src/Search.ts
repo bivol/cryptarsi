@@ -4,9 +4,10 @@
 
 import {Crypto} from './Crypto';
 import {Storage} from './Storage';
-import {MyHash} from './WordHash';
+import {WordHash} from './WordHash';
 
 var crypt = new Crypto('parola','nonce'); //TODO: password store
+var storage = new Storage();
 
 interface IAndNot {
     not: any,
@@ -140,7 +141,9 @@ export class Search {
 
         w.unshift(w.splice(w.indexOf(w1[0]),1)[0]); // Put the largest AND word at the front
 
-        var myset = setextr(MyHash.hash(w[0]));
+        var myset = storage.setextr(WordHash.hash(w[0]),function() {
+
+        });
         for (let i:number = 1; i < w.length  && (myset.length >= (w.length-i)); i++) myset = (out.and[w[i]])?crossset(myset, setextr(myhash(w[i]))):notcrossset(myset, setextr(myhash(w[i])));
 
         // Now we have a set with probable matching, lets do the second match

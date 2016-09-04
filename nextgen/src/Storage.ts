@@ -4,9 +4,10 @@
 
 import {UriLoad} from './UriLoad';
 import {WordHash} from './WordHash';
+import {Crypto} from './Crypto';
 
 var net = new UriLoad();
-var wh = new WordHash('',''); // TODO: Password storage should be implemented
+var crypto = new Crypto('',''); // TODO: Password
 
 export class Storage {
     constructor() {
@@ -32,7 +33,7 @@ export class Storage {
     lstr(x: string, cb: Function):boolean { // TODO: lstr must become with callback
         var my = this;
         if (this.getData(x)) return true;
-        var file = wh.s2h(x);
+        var file = WordHash.s2h(x);
         var dir = file.substr(-3, 3);
         var fn = "index/" + dir + "/file" + file + ".txt";
         net.get(fn,function(err,req) {
@@ -43,4 +44,14 @@ export class Storage {
         });
         return false;
     }
+
+    setextr(w: string, cb:Function):void {
+        var d = crypto.dhs(w + ".idx");
+        this.lstr(d,function(err,data) {
+            if (err) cb(err,[]);
+            var s = crypto.decrypt(this.getData(d)); // TODO: Storage has to become async
+            return cb(null,s.split(","));
+        });
+    }
+
 }

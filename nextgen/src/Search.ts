@@ -4,6 +4,7 @@
 
 import {Crypto} from './Crypto';
 import {Storage} from './Storage';
+import {MyHash} from './WordHash';
 
 var crypt = new Crypto('parola','nonce'); //TODO: password store
 
@@ -21,15 +22,6 @@ interface IPushA {
 export class Search {
     constructor() {
 
-    }
-
-    setextr(w: string):string[] {
-        var d = dhs(w + ".idx");
-        if (lstr(d)) {
-            var s = Aes.Ctr.decrypt(localStorage[d], pass2, 256);
-            return s.split(",")
-        }
-        else return [];
     }
 
     crossset(w: string[], s: string[]): string[] {
@@ -148,7 +140,7 @@ export class Search {
 
         w.unshift(w.splice(w.indexOf(w1[0]),1)[0]); // Put the largest AND word at the front
 
-        var myset = setextr(myhash(w[0]));
+        var myset = setextr(MyHash.hash(w[0]));
         for (let i:number = 1; i < w.length  && (myset.length >= (w.length-i)); i++) myset = (out.and[w[i]])?crossset(myset, setextr(myhash(w[i]))):notcrossset(myset, setextr(myhash(w[i])));
 
         // Now we have a set with probable matching, lets do the second match

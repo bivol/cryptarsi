@@ -18,10 +18,14 @@
     }
   },
   "devDependencies": {
+    "bower": "^1.7.9",
     "gulp": "^3.9.1",
     "gulp-bower": "0.0.13",
+    "gulp-concat": "^2.6.0",
+    "gulp-sourcemaps": "^1.6.0",
     "gulp-typescript": "^2.13.6",
     "gulp-typings": "^2.0.4",
-    "merge2": "^1.0.2"
+    "merge2": "^1.0.2",
+    "typescript": "^1.8.10"
   }
 }

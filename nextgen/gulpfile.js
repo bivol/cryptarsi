@@ -7,17 +7,23 @@ var bower = require('gulp-bower');
 var typings = require('gulp-typings');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
 
-var tsProject = ts.createProject({
-    declaration: true,
-    noExternalResolve: true
+var tsProject = ts.createProject('./src/tsconfig.json',{
+    typescript: require('typescript')
 });
 
 gulp.task('scripts',['typings'],function () {
-    var result = gulp.src('./src/*.ts').pipe(ts(tsProject));
+    var result = gulp.src('./src/*.ts')
+        .pipe(sourcemaps.init())
+        .pipe(ts(tsProject));
     return merge([
         result.dts.pipe(gulp.dest('./definitions')),
-        result.js.pipe(gulp.dest('./js'))
+        result.js
+            .pipe(concat('cryptarsi.js'))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('./js'))
     ])
 });
 

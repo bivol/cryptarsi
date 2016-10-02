@@ -3,15 +3,19 @@
  */
 /// <reference path="./typings/index.d.ts" />
 
+import {WordHash} from "./WordHash";
+
 var gPassword:string = null;
 var gNonce:string = null;
-
 // TODO: To implement the Nonce
 
 export class Crypto {
-
     constructor(password: string, nonce: string) {
         gPassword = password;
+    }
+
+    hash(word:string):string {
+        return WordHash.hash(word);
     }
 
     decrypt(data: string, password:string = gPassword, nonce:string = gNonce): string {

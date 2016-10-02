@@ -20,5 +20,4 @@ export class WordHash {
         for (var i = 0; i < s.length; i++) cr = cr + this.d2h(s.charCodeAt(i));
         return cr;
     }
-
 }

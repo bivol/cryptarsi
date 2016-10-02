@@ -2,6 +2,8 @@
  * Created by delian on 8/19/16.
  */
 
+/// <reference path="./typings/index.d.ts" />
+
 import {UriLoad} from './UriLoad';
 import {WordHash} from './WordHash';
 import {Crypto} from './Crypto';

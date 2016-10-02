@@ -2,8 +2,12 @@
  * Created by delian on 10/2/16.
  */
 
+/// <reference path="./typings/index.d.ts" />
+
+
 import {UriLoad} from './UriLoad';
 import {Storage} from './Storage';
+import {Promise} from 'es6-promise';
 
 class LoadDB {
     uriReq: UriLoad;
@@ -14,7 +18,7 @@ class LoadDB {
         this.storage = new Storage();
     }
 
-    load(uri:string):void {
+    load(uri:string):Promise<any> {
         var me = this;
         return new Promise(function(resolve, reject) {
             me.uriReq.get(uri).then(function(req) {

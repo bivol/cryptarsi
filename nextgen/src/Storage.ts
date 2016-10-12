@@ -7,12 +7,16 @@
 import {UriLoad} from './UriLoad';
 import {WordHash} from './WordHash';
 import {Crypto} from './Crypto';
-
-var net = new UriLoad();
-var crypto = new Crypto('',''); // TODO: Password
+import {Promise} from 'es6-promise';
 
 export class Storage {
+
+    net: UriLoad;
+    crypto: Crypto;
+
     constructor() {
+        this.net = new UriLoad();
+        this.crypto = new Crypto('',''); // TODO: Fix the password
     }
 
     clear() {
@@ -23,13 +27,27 @@ export class Storage {
         this.clear();
     }
 
-    getData(key:string): string {
+    getDataLS(key:string): string {
         return localStorage[key];
     }
 
-    setData(key:string, val:string):string {
+    setDataLS(key:string, val:string):string {
         localStorage[key]=val;
         return val;
+    }
+
+    getData(key:string):Promise<any> {
+        var me = this;
+        return new Promise((resolve, reject) => {
+            resolve(me.getDataLS(key));
+        });
+    }
+
+    setData(key:string, val:string):Promise<any> {
+        var me = this;
+        return new Promise((resolve, reject) => {
+            resolve(me.setDataLS(key,val));
+        });
     }
 
     lstr(x: string, cb: Function):boolean { // TODO: lstr must become with callback

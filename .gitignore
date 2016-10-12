@@ -34,3 +34,7 @@ node_modules
 
 # Bower
 bower/
+
+# VSCore
+.vscode/
+db/

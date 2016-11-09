@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Cryptarsi';
-  //collection = ['first', 'two', 'third'];
+  collection = ['first', 'two', 'third'];
+  constructor() {
+    // setInterval(() => { this.collection.push('xxx'); }, 2000);
+  }
 }

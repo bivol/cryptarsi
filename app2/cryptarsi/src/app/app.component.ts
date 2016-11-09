@@ -8,8 +8,24 @@ import { AngularIndexedDB } from './cryptarsi/Storage';
 })
 export class AppComponent {
   title = 'Cryptarsi';
-  collection = ['first', 'two', 'third'];
+  collection = [
+    {name: 'first', select: false},
+    {name: 'two', select: false},
+    {name: 'third', select: false}
+  ];
+  databaseSelected = null;
+
   constructor() {
     // setInterval(() => { this.collection.push('xxx'); }, 2000);
+  }
+
+  selectDatabase(name: string) {
+    this.databaseSelected = name;
+    this.collection.forEach((n) => {
+      if (n.name == name)
+        n.select = true;
+      else
+        n.select = false;
+    });
   }
 }

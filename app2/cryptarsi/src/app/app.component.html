@@ -5,7 +5,13 @@
     <hr>
     <button md-button>Select databases:</button><br>
     <md-list dense>
-      <md-list-item *ngFor="let item of collection">{{item}}</md-list-item>
+      <md-list-item *ngFor="let item of collection">
+        <button
+          [attr.md-button]="item.select?null:true" 
+          [attr.md-raised-button]="item.select?true:null"
+          (click)="selectDatabase(item.name)"
+        >{{item.name}}</button>
+      </md-list-item>
       <div *ngIf="!collection">
         <button md-button>No databases imported</button>
       </div>
@@ -21,7 +27,7 @@
   </md-toolbar>
 
   <div class="app-content">
-    <md-card>
+    <md-card *ngIf="!databaseSelected">
       Please select database
     </md-card>
   </div>

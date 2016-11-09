@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { AngularIndexedDB } from './cryptarsi/Storage';
 
 @Component({
   selector: 'app-root',

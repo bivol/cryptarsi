@@ -1,8 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  height: 100%;
 }
 
 /* fallback */

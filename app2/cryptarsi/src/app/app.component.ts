@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularIndexedDB } from './cryptarsi/Storage';
+//import { AngularIndexedDB } from './cryptarsi/Storage';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +14,21 @@ export class AppComponent {
     {name: 'third', select: false}
   ];
   databaseSelected = null;
+  menuSelected = null;
 
   constructor() {
     // setInterval(() => { this.collection.push('xxx'); }, 2000);
   }
 
   selectDatabase(name: string) {
+    this.menuSelected = null;
     this.databaseSelected = name;
     this.collection.forEach((n) => {
-      if (n.name == name)
+      if (n.name === name) {
         n.select = true;
-      else
+      } else {
         n.select = false;
+      }
     });
   }
 }

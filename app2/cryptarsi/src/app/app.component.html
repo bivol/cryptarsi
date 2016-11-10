@@ -1,9 +1,9 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <button md-button>Import new directory as database</button><br>
-    <button md-button>Import new database</button><br><br>
+    <button md-button (click)="menuSelected='importDir'">Import new directory as database</button><br>
+    <button md-button (click)="menuSelected='importDb'">Import new database</button><br><br>
     <hr>
-    <button md-button>Select databases:</button><br>
+    <button md-button (click)="menuSelected=null">Select databases:</button><br>
     <md-list dense>
       <md-list-item *ngFor="let item of collection">
         <button
@@ -27,12 +27,22 @@
   </md-toolbar>
 
   <div class="app-content">
-    <md-card *ngIf="!databaseSelected">
-      Please select database
-    </md-card>
+    <span [ngSwitch]="menuSelected">
+      <span *ngSwitchCase="'importDir'">
+      </span>
+      <span *ngSwitchDefault>
+          <md-card *ngIf="!databaseSelected">
+            Please select database
+          </md-card>
+          <div *ngIf="databaseSelected">
+            <div>Database selected: {{databaseSelected}}</div>
+          </div>
+      </span>
+    </span>
   </div>
+
 </md-sidenav-layout>
 
-<span class="app-action">
+<span hidden class="app-action">
   <button md-fab><md-icon>check circle</md-icon></button>
 </span>

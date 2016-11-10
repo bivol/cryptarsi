@@ -1,15 +1,15 @@
 <md-card class="app-input-selection" *ngIf="encryptionMenuVisible" >
     <form novalidate (ngSubmit)="submit()" >
         <md-input
-            id='dbName'
             #dbName
             placeholder="Database Name"
             (change)="checkDbName" 
             maxlength="50"
             md-tooltip="Enter new database name"
             tooltip-position="below"
+            (change)="validateDbName()"
         >
-            <md-hint align="end">
+            <md-hint #dbNameHint align="end">
                 {{dbName.characterCount}}/50
             </md-hint>
         </md-input>
@@ -19,6 +19,7 @@
             placeholder="Encryption Key 1" 
             maxlength="128" 
             dividerColor="accent"
+            (change)="validateKeys()"
         >
         </md-input>
         <md-input 
@@ -27,6 +28,7 @@
             placeholder="Encryption Key 2" 
             maxlength="128" 
             dividerColor="accent"
+            (change)="validateKeys()"
         >
         </md-input>
         <label for=dirName>

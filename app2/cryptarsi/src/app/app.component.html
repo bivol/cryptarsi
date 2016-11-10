@@ -29,6 +29,7 @@
   <div class="app-content">
     <span [ngSwitch]="menuSelected">
       <span *ngSwitchCase="'importDir'">
+        <import-dir></import-dir>
       </span>
       <span *ngSwitchDefault>
           <md-card *ngIf="!databaseSelected">
@@ -43,6 +44,8 @@
 
 </md-sidenav-layout>
 
-<span hidden class="app-action">
+<!--
+<span class="app-action">
   <button md-fab><md-icon>check circle</md-icon></button>
 </span>
+-->

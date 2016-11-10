@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MdInput } from '@angular/material';
+import { FileReaderAPI } from '../cryptarsi/FileReader';
 
 @Component({
     // moduleId: module.id,
@@ -12,6 +13,8 @@ export class ImportDirComponent {
     @ViewChild('encKey1') encKey1: MdInput;
     @ViewChild('encKey2') encKey2: MdInput;
     @ViewChild('dirName') dirName;
+
+    files: any = null;
 
     encryptionMenuVisible: boolean = true;
 
@@ -62,6 +65,14 @@ export class ImportDirComponent {
         }
 
         return true;
+    }
+
+    onDirChange(e) {
+        this.files = e.srcElement.files;
+        console.log('files', this.files);
+        (new FileReaderAPI()).read(this.files).then(()=>{
+            console.log('Done');
+        });
     }
 
     submit() {

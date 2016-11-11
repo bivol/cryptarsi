@@ -1,48 +1,66 @@
-<md-card class="app-input-selection" *ngIf="encryptionMenuVisible" >
-    <form novalidate (ngSubmit)="submit()" >
-        <md-input
-            #dbName
-            placeholder="Database Name"
-            (change)="checkDbName" 
-            maxlength="50"
-            md-tooltip="Enter new database name"
-            tooltip-position="below"
-            (change)="validateDbName()"
-        >
-            <md-hint #dbNameHint align="end">
-                {{dbName.characterCount}}/50
-            </md-hint>
-        </md-input>
-        <md-input 
-            type="password" 
-            #encKey1 
-            placeholder="Encryption Key 1" 
-            maxlength="128" 
-            dividerColor="accent"
-            (change)="validateKeys()"
-        >
-        </md-input>
-        <md-input 
-            type="password" 
-            #encKey2 
-            placeholder="Encryption Key 2" 
-            maxlength="128" 
-            dividerColor="accent"
-            (change)="validateKeys()"
-        >
-        </md-input>
-        <label for=dirName>
-        <input 
-            #dirName 
-            id="dirName" 
-            type="file" 
-            webkitdirectory mozdirectory msdirectory odirectory directory 
-            multiple
-            (change)="onDirChange($event)"
-        >
+<div>
+    <md-card *ngIf="!processing" class="app-input-selection" >
+        <form novalidate (ngSubmit)="submit()" >
+            <md-input
+                #dbName
+                placeholder="Database Name"
+                (change)="checkDbName" 
+                maxlength="50"
+                md-tooltip="Enter new database name"
+                tooltip-position="below"
+                (change)="validateDbName()"
+            >
+                <md-hint #dbNameHint align="end">
+                    {{dbName.characterCount}}/50
+                </md-hint>
+            </md-input>
+            <md-input 
+                type="password" 
+                #encKey1 
+                placeholder="Encryption Key 1" 
+                maxlength="128" 
+                dividerColor="accent"
+                (change)="validateKeys()"
+            >
+            </md-input>
+            <md-input 
+                type="password" 
+                #encKey2 
+                placeholder="Encryption Key 2" 
+                maxlength="128" 
+                dividerColor="accent"
+                (change)="validateKeys()"
+            >
+            </md-input>
+            <label for=dirName>
+            <input 
+                #dirName 
+                id="dirName" 
+                type="file" 
+                webkitdirectory mozdirectory msdirectory odirectory directory 
+                multiple
+                (change)="onDirChange($event)"
+            >
+            </label>
+            <button type=submit md-raised-button>
+                Encrypt and Import
+            </button>
+        </form>
+    </md-card>
+    <md-card >
+        <label>
+            <div>
+                <div>{{filename}}</div>
+                <div>{{nofile}} of {{nofiles}}</div>
+                <div>Total Progress: {{progress}}%</div>
+            </div>
+            <br>
+            <md-progress-bar
+                class="app-progress"
+                color="accent"
+                mode="determinate"
+                [value]="progress"
+                aria-label="Determinate progress-bar example"></md-progress-bar>
         </label>
-        <button type=submit md-raised-button>
-            Encrypt and Import
-        </button>
-    </form>
-</md-card>
+    </md-card>
+</div>

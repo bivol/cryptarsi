@@ -16,14 +16,13 @@ export class ImportDirComponent {
 
     files: any = null;
 
-    encryptionMenuVisible: boolean = true;
+    progress: number = 0;
+    nofile: number = 0;
+    nofiles: number = 0;
+    filename: string = '';
+    processing = false;
 
     constructor() {
-    }
-
-    startEncryption() {
-        this.encryptionMenuVisible = false;
-        console.log('aaa');
     }
 
     validateDbName(): boolean {
@@ -74,11 +73,18 @@ export class ImportDirComponent {
 
     submit() {
         if (this.checkForm()) {
+            this.processing = true;
             let r = new FileReaderAPI();
             r.readAll(this.files, (f, text) => {
-                console.log('Downloaded', f.name, text);
+               // console.log('Downloaded', f.name, text);
             }, (f, loaded, total, count, totalcnt) => {
                 console.log('Downloading', f.name, loaded, total, count, totalcnt);
+                this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
+                this.nofile = count;
+                this.nofiles = totalcnt;
+                this.filename = f.name;
+            }).then(() => {
+                this.processing = false;
             });
         }
     }

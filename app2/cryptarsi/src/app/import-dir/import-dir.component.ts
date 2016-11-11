@@ -70,13 +70,16 @@ export class ImportDirComponent {
     onDirChange(e) {
         this.files = e.srcElement.files;
         console.log('files', this.files);
-        (new FileReaderAPI()).read(this.files).then(()=>{
-            console.log('Done');
-        });
     }
 
     submit() {
-        this.checkForm();
-        console.log('dir', this.dirName);
+        if (this.checkForm()) {
+            let r = new FileReaderAPI();
+            r.readAll(this.files, (f, text) => {
+                console.log('Downloaded', f.name, text);
+            }, (f, loaded, total, count, totalcnt) => {
+                console.log('Downloading', f.name, loaded, total, count, totalcnt);
+            });
+        }
     }
 }

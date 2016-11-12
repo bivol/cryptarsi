@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { MdInput } from '@angular/material';
-import { FileReaderAPI } from '../cryptarsi/FileReader';
+import { Component, ViewChild, Optional } from '@angular/core';
+import { MdInput, MdSnackBar } from '@angular/material';
+import { ImportDir } from '../cryptarsi/ImportDir';
+import { Crypto } from '../cryptarsi/CryptoAPI';
 
 @Component({
     // moduleId: module.id,
@@ -22,7 +23,12 @@ export class ImportDirComponent {
     filename: string = '';
     processing = false;
 
-    constructor() {
+    constructor(private _snackbar: MdSnackBar) {
+        var c = new Crypto('parola');
+        let cr = c.encrypt('moiat test');
+        console.log('ENC',cr);
+        let rc = c.decrypt(cr);
+        console.log('DEC',rc);
     }
 
     validateDbName(): boolean {
@@ -74,17 +80,18 @@ export class ImportDirComponent {
     submit() {
         if (this.checkForm()) {
             this.processing = true;
-            let r = new FileReaderAPI();
-            r.readAll(this.files, (f, text) => {
-               // console.log('Downloaded', f.name, text);
-            }, (f, loaded, total, count, totalcnt) => {
+            let r = new ImportDir(this.dbName.value, this.encKey1.value);
+            r.importFiles(this.files,
+                (f, loaded, total, count, totalcnt) => {
                 console.log('Downloading', f.name, loaded, total, count, totalcnt);
                 this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
                 this.nofile = count;
                 this.nofiles = totalcnt;
                 this.filename = f.name;
             }).then(() => {
+                this.progress = 100;
                 this.processing = false;
+                this._snackbar.open('The database is created and imported','OK');
             });
         }
     }

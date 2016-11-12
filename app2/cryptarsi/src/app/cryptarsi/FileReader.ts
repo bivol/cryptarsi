@@ -2,7 +2,7 @@ export class FileReaderAPI {
     constructor() {
     }
 
-    readAll(files, cbfile = (f, text) => {
+    readAll(files, cbfile = (f, text, obj?) => {
     }, cbprogress = (f, loaded, total, count?, totalcount?) => {
     }) {
         let me = this;
@@ -11,9 +11,34 @@ export class FileReaderAPI {
             let loaded = 0;
             let cnt = 1;
             let q = [];
+            let hash = {};
+            let groups = {};
+            let nindex = {};
+            let index = 1;
             for (let file of files) {
                 total += parseInt(file.size);
                 q.push(file);
+                let gname = file.name.match(/^(.*?)(\.[^\.]+)?$/)[1]; // Without the last extension
+                if (typeof groups[gname] === 'undefined') {
+                    groups[gname] = [];
+                }
+                groups[gname].push({
+                    index: index,
+                    name: file.name
+                });
+                let v = {
+                    name: file.name,
+                    index: index,
+                    file: file,
+                    group: gname
+                };
+                hash[index] = v;
+                nindex[file.name] = index;
+                index++;
+            }
+
+            for (let i in hash) { // Set the group index
+                hash[i].gindex = groups[hash[i].group];
             }
 
             function processNextFile() {
@@ -31,7 +56,7 @@ export class FileReaderAPI {
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
-                        cbfile(file, text);
+                        cbfile(file, text, hash[nindex[file.name]]);
                     }
                     processNextFile();
                 }).catch(reject);

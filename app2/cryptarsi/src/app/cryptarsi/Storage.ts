@@ -23,7 +23,7 @@ export class AngularIndexedDB {
                 let request = this.utils.indexedDB.open(this.dbWrapper.dbName, version);
                 request.onsuccess = function (e) {
                     self.dbWrapper.db = request.result;
-                    resolve();
+                    resolve(e);
                 };
 
                 request.onerror = function (e) {

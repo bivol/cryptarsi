@@ -1,14 +1,15 @@
 {
   "name": "cryptarsi",
-  "version": "0.0.0",
-  "license": "MIT",
+  "version": "0.0.1",
+  "license": "GPL",
   "angular-cli": {},
   "scripts": {
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "build": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@types/jasmine": "^2.2.30",
     "@types/node": "^6.0.42",
+    "google-closure-compiler": "^20161024.3.0",
     "angular-cli": "1.0.0-beta.19-3",
     "codelyzer": "1.0.0-beta.1",
     "jasmine-core": "2.4.1",

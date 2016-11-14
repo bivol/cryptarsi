@@ -8,8 +8,7 @@ import { ImportDirComponent } from './import-dir/import-dir.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ImportDirComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

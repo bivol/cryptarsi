@@ -11,10 +11,10 @@ export class DB {
     private dataStoreName = 'data';
     private listStoreName = 'list';
     private listDbName = 'dbList';
-    private listVersion = 7;
+    private listVersion = 8;
     private hashName = 'hash';
 
-    constructor(private dbName, private encKey, private version = 7) {
+    constructor(private dbName, private encKey, private version = 8) {
         this.crypto = new Crypto(encKey);
         this.store = new AngularIndexedDB(dbName, version);
         this.listDb = new AngularIndexedDB(this.listDbName, this.listVersion);
@@ -27,15 +27,14 @@ export class DB {
                 console.log('EVT CSIDB');
                 let obj = evt.currentTarget.result.createObjectStore(name, {
                     keyPath: 'id',
-                    autoIncrement: true
+                    //autoIncrement: true
                 })
                 obj.onerror = (e) => {
                     console.log('Cannot create objectStore',e);
                 }
-                resolve(obj);
             }).then(() => {
                 console.log('No errors has been executed');
-                //resolve();
+                resolve();
             }).catch(reject);
         })
     }

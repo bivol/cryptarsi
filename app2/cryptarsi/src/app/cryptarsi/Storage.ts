@@ -23,10 +23,20 @@ export class AngularIndexedDB {
                 let request = this.utils.indexedDB.open(this.dbWrapper.dbName, version);
                 request.onsuccess = function (e) {
                     self.dbWrapper.db = request.result;
-                    resolve(e);
+                    setTimeout(() => {
+                        resolve(e);
+                    },500);
                 };
 
                 request.onerror = function (e) {
+                    reject('IndexedDB error: ' + e.target.errorCode);
+                };
+
+                request.onabort = function(e) {
+                    reject('IndexedDB error: ' + e.target.errorCode);
+                };
+
+                request.onclose = function(e) {
                     reject('IndexedDB error: ' + e.target.errorCode);
                 };
 
@@ -101,7 +111,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    add(storeName: string, value: any, key: any) {
+    add(storeName: string, value: any, key?: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject) => {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -116,8 +126,12 @@ export class AngularIndexedDB {
                     }
                 }),
                 objectStore = transaction.objectStore(storeName);
-
-            objectStore.add(value, key);
+            
+            if (key) {
+                objectStore.add(value, key);
+            } else {
+                objectStore.add(value);
+            }
         });
 
         return promise;

@@ -75,7 +75,7 @@ export class DB {
 
     addDatabase(name) {
         return new Promise((resolve, reject) => {
-            this.listDb.add(this.listStoreName, name, name)
+            this.listDb.add(this.listStoreName, { name: name, id: name })
                 .then(resolve)
                 .catch(reject)
         })
@@ -83,7 +83,7 @@ export class DB {
 
     dropDatabase(name) {
         return new Promise((resolve, reject) => {
-            this.listDb.delete(this.listStoreName, name)
+            this.listDb.delete(this.listStoreName, name )
                 .then(resolve)
                 .catch(reject)
         })

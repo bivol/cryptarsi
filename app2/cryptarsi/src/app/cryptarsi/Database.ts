@@ -1,46 +1,45 @@
 import { Crypto } from './CryptoAPI';
 import { AngularIndexedDB } from './Storage';
 
-export class DB {
-    private crypto;
-    private store;
-
-    private listDb;
-
-    private indexStoreName = 'index';
-    private dataStoreName = 'data';
-    private listStoreName = 'list';
-    private listDbName = 'dbList';
-    private listVersion = 8;
-    private hashName = 'hash';
-
-    constructor(private dbName, private encKey, private version = 8) {
-        this.crypto = new Crypto(encKey);
-        this.store = new AngularIndexedDB(dbName, version);
-        this.listDb = new AngularIndexedDB(this.listDbName, this.listVersion);
-    }
-
-    private createStoreInDb(db, version, name) {
-        return new Promise((resolve, reject) => {
-            console.log('Going to create store',db,version,name);
-            db.createStore(version, (evt) => {
-                console.log('EVT CSIDB');
+function createStoreInDb(db, version, name) {
+    return new Promise((resolve, reject) => {
+        console.log('Going to create store',db,version,name);
+        db.createStore(version, (evt) => {
+            function oneStore(name) {
+                console.log('Creating non existing objStore', name);
                 let obj = evt.currentTarget.result.createObjectStore(name, {
                     keyPath: 'id',
                     //autoIncrement: true
                 })
                 obj.onerror = (e) => {
-                    console.log('Cannot create objectStore',e);
+                    console.log('Cannot create objectStore', e);
+                    reject(e);
                 }
-            }).then(() => {
-                console.log('No errors has been executed');
-                resolve();
-            }).catch(reject);
-        })
-    }
+            }
+            if (name instanceof Array) {
+                name.forEach(oneStore) 
+            } else {
+                oneStore(name)
+            }
+        }).then(() => {
+            console.log('No errors during creation/opening of', name);
+            resolve();
+        }).catch(reject);
+    })
+}
 
+class DatabaseList {
+    private listDb;
+
+    private listStoreName = 'list';
+    private listDbName = 'dbList';
+    private listVersion = 8;
+
+    constructor() {
+        this.listDb = new AngularIndexedDB(this.listDbName, this.listVersion);
+    }
     createListDb() {
-        return this.createStoreInDb(this.listDb, this.listVersion, this.listStoreName);
+        return createStoreInDb(this.listDb, this.listVersion, this.listStoreName);
     }
 
     clearListDb() {
@@ -52,7 +51,6 @@ export class DB {
             this.listDb.getAll(this.listStoreName).then((e) => {
                 resolve(e);
             }).catch((e) => {
-                console.log('listdb error',e,'create store will be called');
                 this.createListDb()
                     .then(()=>{
                         console.log('Supposedly the store is ready');
@@ -67,25 +65,101 @@ export class DB {
 
     getDatabase(name) {
         return new Promise((resolve, reject) => {
-            this.listDb.getByKey(this.listStoreName, name)
-                .then(resolve)
-                .catch(reject);
+            return this.listDb.getByKey(this.listStoreName, name)
         })
     }
 
     addDatabase(name) {
         return new Promise((resolve, reject) => {
-            this.listDb.add(this.listStoreName, { name: name, id: name })
-                .then(resolve)
-                .catch(reject)
+            return this.listDb.add(this.listStoreName, { name: name, id: name })
         })
     }
 
     dropDatabase(name) {
         return new Promise((resolve, reject) => {
-            this.listDb.delete(this.listStoreName, name )
-                .then(resolve)
-                .catch(reject)
+            return this.listDb.delete(this.listStoreName, name )
+        })
+    }
+}
+
+var listReady: boolean = false;
+var dbList: DatabaseList = new DatabaseList();
+dbList.createListDb().then(() => {
+    listReady = true;
+    console.log('Modifying listReady', listReady);
+}).catch((e) => {
+    console.log('Error', e);
+});
+
+function Ok(f: any, wait: number = 100, retry: number = 50) {
+    return new Promise((resolve, reject) => {
+        let count = retry;
+        function check() {
+            if (f()) {
+                return resolve();
+            }
+            if (--count>0) {
+                console.log('Not ready, wait', f());
+                setTimeout(check, wait)
+            } else {
+                return reject(); 
+            }
+        }
+        check();
+    });
+}
+
+function listOk() {
+    return Ok(() => {
+        return listReady
+    })
+}
+
+export class DbList {
+    constructor() {
+
+    }
+
+    static ready() {
+        return listReady;
+    }
+
+    static list() {
+        return new Promise((resolve, reject) => {
+            listOk().then(() => {
+                return dbList.listDatabases()
+            }).then(resolve).catch(reject)
+        })
+    }
+}
+
+export class DB {
+    private crypto;
+    private store;
+
+    private indexStoreName = 'index';
+    private dataStoreName = 'data';
+    private hashName = 'hash';
+    private dataVersion = 1;
+
+    constructor(private dbName, private encKey, private version = 8) {
+        this.crypto = new Crypto(encKey);
+        this.store = new AngularIndexedDB(dbName, version);
+    }
+
+
+    private createStores() {
+        return new Promise((resolve, reject) => {
+            return createStoreInDb(this.store,
+                this.dataVersion,
+                [this.indexStoreName, this.dataStoreName]
+            )
+        })
+    }
+
+    open() {
+        return new Promise((resolve, reject) => {
+            return this.createStores()
         })
     }
 

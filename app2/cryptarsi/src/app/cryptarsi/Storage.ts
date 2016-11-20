@@ -79,6 +79,7 @@ export class AngularIndexedDB {
 
     getAll(storeName: string) {
         let self = this;
+        let result = [];
         let promise = new Promise<any>((resolve, reject)=> {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
@@ -88,8 +89,7 @@ export class AngularIndexedDB {
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        resolve(e);
-                        //resolve(result);
+                        resolve(result);
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DB } from './cryptarsi/Database';
+import { DB, DbList } from './cryptarsi/Database';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +22,27 @@ export class AppComponent {
 
     this.db = new DB('aa','enc');
 
+    DbList.list().then((dbList) => {
+      console.log('Database list is', dbList);
+    });
+
+    this.db.open().then(() => {
+      console.log('Both indexes are completed')
+    }).catch(() => {
+      console.log('Error');
+    })
+    /*
     this.db.createListDb().then(() => {
       console.log('ListDB created');
       this.db.addDatabase('pesho').then(() => {
         console.log('Pesho is added');
         this.db.getDatabase('pesho').then((x) => {
           console.log('Pesho is ',x);
+          this.db.clearListDb().then(() => {
+            console.log('The db list is clear');
+          }).catch((e) => {
+            console.log('Clear error',e);
+          })
         }).catch((e) => {
           console.log('Pesho cannot be got');
         })
@@ -42,6 +57,7 @@ export class AppComponent {
     }).catch((e) => {
       console.log('ListDb cannot be created',e);
     })
+    */
 
   }
 

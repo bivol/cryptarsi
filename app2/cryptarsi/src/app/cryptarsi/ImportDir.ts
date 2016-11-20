@@ -1,5 +1,5 @@
-import { FileReaderAPI } from '../cryptarsi/FileReader';
-import { Crypto } from '../cryptarsi/CryptoAPI';
+import { FileReaderAPI } from './FileReader';
+import { Crypto } from './CryptoAPI';
 
 export class ImportDir {
     private crypto;

@@ -10,6 +10,8 @@ import { Crypto } from '../cryptarsi/CryptoAPI';
     styleUrls: ['import-dir.component.css']
 })
 export class ImportDirComponent {
+    componentName: 'ImportDirComponent';
+
     @ViewChild('dbName') dbName: MdInput;
     @ViewChild('encKey1') encKey1: MdInput;
     @ViewChild('encKey2') encKey2: MdInput;

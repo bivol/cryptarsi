@@ -1,11 +1,11 @@
-import { Component, ViewChild, Optional } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Crypto } from '../cryptarsi/CryptoAPI';
 
 @Component({
     // moduleId: module.id,
-    selector: 'import-dir',
+    selector: 'app-import-dir',
     templateUrl: 'import-dir.component.html',
     styleUrls: ['import-dir.component.css']
 })
@@ -26,7 +26,7 @@ export class ImportDirComponent {
     processing = false;
 
     constructor(private _snackbar: MdSnackBar) {
-        var c = new Crypto('parola');
+        let c = new Crypto('parola');
         let cr = c.encrypt('moiat test');
         console.log('ENC',cr);
         let rc = c.decrypt(cr);

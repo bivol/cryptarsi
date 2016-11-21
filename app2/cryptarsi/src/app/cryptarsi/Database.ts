@@ -39,6 +39,7 @@ class DatabaseList {
     constructor() {
         this.listDb = new AngularIndexedDB(this.listDbName, this.listVersion);
     }
+
     createListDb() {
         return createStoreInDb(this.listDb, this.listVersion, this.listStoreName);
     }
@@ -102,6 +103,8 @@ function listOk() {
 
 export class DbList {
 
+    databaseSelected = null;
+
     static ready() {
         return listReady;
     }
@@ -161,7 +164,9 @@ export class DB {
                 id: this.crypto.encryptIndex(index),
                 data: this.crypto.encrypt(content)
             };
+            console.log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
+                console.log('error add data', e);
                 if (e.target.error.code === 0) { // Key duplication
                     this.store.update(this.dataStoreName, data)
                         .then(resolve).catch(reject);
@@ -244,14 +249,17 @@ export class DB {
     getNextIndex() { // TODO: Better method to keep it in order
         return new Promise((resolve, reject) => {
             this.getData(0).then((data) => {
+                console.log('getData for 0 is', data);
                 let d = data ? data : 1;
                 let next = parseInt(<string>d) + 1;
+                console.log('d is', d, next);
                 this.setNextIndex(next).then(() => resolve(d)).catch(reject);
             }).catch(reject);
         });
     }
 
     setNextIndex(index: number) {
-        return this.modifyData(0, index);
+        console.log('setnextindex', index);
+        return this.modifyData(0, index + ' ');
     }
 }

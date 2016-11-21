@@ -1,10 +1,10 @@
 import { FileReaderAPI } from './FileReader';
-import { Crypto } from './CryptoAPI';
+import { DB } from './Database';
 
 export class ImportDir {
-    private crypto;
+    store: DB = null;
     constructor(private dbName, private encKey) {
-        this.crypto = new Crypto(encKey);
+        this.store = new DB(dbName, encKey);
     }
 
     importFiles(files, progress = (f, loaded, total, count, totalcnt) => {
@@ -12,14 +12,29 @@ export class ImportDir {
     }) {
         return new Promise((resolve, reject) => {
             let r = new FileReaderAPI();
-            r.readAll(files, (f, text, obj) => {
-                console.log('Downloaded', f.name, f.type, obj);
-                let enc = this.crypto.encrypt(text);
-            }, (f, loaded, total, count, totalcnt) => {
-                if (progress) {
-                    progress(f, loaded, total, count, totalcnt);
-                }
-            }).then(resolve).catch(reject);
-        })
+            this.store.open().then(() => {
+                let lastIndex = 0;
+                r.readAll(files, (f, text, obj) => {
+                    console.log('Downloaded', f.name, f.type, obj);
+                    // let enc = this.crypto.encrypt(text);
+                    lastIndex = Math.max(obj.index, lastIndex);
+                    this.store.modifyData(obj.index, text)
+                        .then(() => {
+                            console.log('Successfuly imported', f, obj);
+                        })
+                        .catch((e) => {
+                            console.log('Error inserting', f, e, obj);
+                        });
+                }, (f, loaded, total, count, totalcnt) => {
+                    if (progress) {
+                        progress(f, loaded, total, count, totalcnt);
+                    }
+                }).then(() => {
+                    this.store.setNextIndex(lastIndex)
+                        .then(resolve)
+                        .catch(reject);
+                }).catch(reject);
+            }).catch(reject);
+        });
     }
 }

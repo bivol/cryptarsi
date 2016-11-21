@@ -25,7 +25,7 @@ export class AppComponent {
 
     this.db = new DB('aa', 'enc');
 
-    setInterval(() => { // TODO: to be converted into events instead of polling
+    setTimeout(() => { // TODO: to be converted into events instead of polling
       DbList.list().then((dbList: any) => {
         console.log('Database list is', dbList);
         this.collection = dbList.map((n) => {
@@ -38,12 +38,17 @@ export class AppComponent {
     console.log('Try to open the db');
     this.db.open().then(() => {
       console.log('Both indexes are completed');
+      this.db.getNextIndex()
+        .then((n) => console.log('next index is', n))
+        .catch((e) => console.log('err', e));
+      /*
       this.db.addIndexToHash('pesho', Math.random() * 100)
         .then(() => {
           console.log('Successful index modification');
           this.db.getHash('pesho').then((v) => console.log('pesho is', v)).catch((e) => console.log('Error gethash',e));
         })
         .catch((e) => console.log('index error', e));
+        */
       /*
       this.db.modifyData(1, 'tralala')
         .then(() => {

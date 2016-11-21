@@ -3,6 +3,7 @@ export function WaitOK(f: any, wait = 100, retry = 50) {
         let count = retry;
         function check() {
             if (f()) {
+                console.log('WaitOK is ready');
                 return resolve();
             }
             if (--count > 0) {

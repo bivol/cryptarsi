@@ -8,11 +8,14 @@ import { DB, DbList } from './cryptarsi/Database';
 })
 export class AppComponent {
   title = 'Cryptarsi';
-  collection = [
+  collection: any = undefined;
+    /*
+  [
     {name: 'first', select: false},
     {name: 'two', select: false},
     {name: 'third', select: false}
   ];
+    */
   databaseSelected = null;
   menuSelected = null;
 
@@ -20,17 +23,39 @@ export class AppComponent {
 
   constructor() {
 
-    this.db = new DB('aa','enc');
+    this.db = new DB('aa', 'enc');
 
-    DbList.list().then((dbList) => {
-      console.log('Database list is', dbList);
-    });
+    setInterval(() => { // TODO: to be converted into events instead of polling
+      DbList.list().then((dbList: any) => {
+        console.log('Database list is', dbList);
+        this.collection = dbList.map((n) => {
+          n.select = (n.name == this.databaseSelected) ? true : false;
+          return n;
+        });
+      });
+    }, 500);
 
+    console.log('Try to open the db');
     this.db.open().then(() => {
-      console.log('Both indexes are completed')
+      console.log('Both indexes are completed');
+      this.db.addIndexToHash('pesho', Math.random() * 100)
+        .then(() => {
+          console.log('Successful index modification');
+          this.db.getHash('pesho').then((v) => console.log('pesho is', v)).catch((e) => console.log('Error gethash',e));
+        })
+        .catch((e) => console.log('index error', e));
+      /*
+      this.db.modifyData(1, 'tralala')
+        .then(() => {
+          this.db.getData(1)
+            .then((d) => console.log('data is', d))
+            .catch((e) => console.log('gdata err', e));
+        })
+        .catch((e) => console.log('error', e));
+        */
     }).catch(() => {
       console.log('Error');
-    })
+    });
     /*
     this.db.createListDb().then(() => {
       console.log('ListDB created');

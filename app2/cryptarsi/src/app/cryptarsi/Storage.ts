@@ -127,7 +127,7 @@ export class AngularIndexedDB {
                     }
                 }),
                 objectStore = transaction.objectStore(storeName);
-            
+
             if (key) {
                 objectStore.add(value, key);
             } else {
@@ -138,7 +138,7 @@ export class AngularIndexedDB {
         return promise;
     }
 
-    update(storeName: string, value: any, key: any) {
+    update(storeName: string, value: any, key?: any) {
         let self = this;
         let promise = new Promise<any>((resolve, reject) => {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
@@ -157,7 +157,11 @@ export class AngularIndexedDB {
                 }),
                 objectStore = transaction.objectStore(storeName);
 
-            objectStore.put(value, key);
+            if (key) {
+                objectStore.put(value, key);
+            } else {
+                objectStore.put(value);
+            }
         });
 
         return promise;

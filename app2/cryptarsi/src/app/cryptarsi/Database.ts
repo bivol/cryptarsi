@@ -4,29 +4,29 @@ import { WaitOK } from './WaitOK';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
-        console.log('Going to create store',db,version,name);
+        console.log('Going to create store', db, version, name);
         db.createStore(version, (evt) => {
-            function oneStore(name) {
-                console.log('Creating non existing objStore', name);
-                let obj = evt.currentTarget.result.createObjectStore(name, {
+            function oneStore(n) {
+                console.log('Creating non existing objStore', n);
+                let obj = evt.currentTarget.result.createObjectStore(n, {
                     keyPath: 'id',
                     //autoIncrement: true
-                })
+                });
                 obj.onerror = (e) => {
                     console.log('Cannot create objectStore', e);
                     reject(e);
-                }
+                };
             }
             if (name instanceof Array) {
-                name.forEach(oneStore) 
+                name.forEach(oneStore);
             } else {
-                oneStore(name)
+                oneStore(name);
             }
         }).then(() => {
             console.log('No errors during creation/opening of', name);
             resolve();
         }).catch(reject);
-    })
+    });
 }
 
 class DatabaseList {
@@ -53,43 +53,46 @@ class DatabaseList {
                 resolve(e);
             }).catch((e) => {
                 this.createListDb()
-                    .then(()=>{
+                    .then(() => {
                         console.log('Supposedly the store is ready');
                         resolve({});
                     }).catch(() => {
                         console.log('Some error has happened');
                         reject();
                     });
-            })
+            });
         });
     }
 
     getDatabase(name) {
         return new Promise((resolve, reject) => {
             return this.listDb.getByKey(this.listStoreName, name)
-        })
+        });
     }
 
     addDatabase(name) {
         return new Promise((resolve, reject) => {
             return this.listDb.add(this.listStoreName, { name: name, id: name })
-        })
+                .catch((e) => {
+                    if (e.target.error.code === 0) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
+        });
     }
 
     dropDatabase(name) {
         return new Promise((resolve, reject) => {
             return this.listDb.delete(this.listStoreName, name )
-        })
+        });
     }
 }
 
-let listReady: boolean = false;
+let listReady = false;
 let dbList: DatabaseList = new DatabaseList();
-dbList.createListDb().then(() => {
-    listReady = true;
-}).catch((e) => {
-    console.log('Error', e);
-});
+dbList.createListDb().then(() => { listReady = true; }).catch((e) => { console.log('Error', e); });
 
 function listOk() {
     return WaitOK(() => {
@@ -98,9 +101,6 @@ function listOk() {
 }
 
 export class DbList {
-    constructor() {
-
-    }
 
     static ready() {
         return listReady;
@@ -109,9 +109,9 @@ export class DbList {
     static list() {
         return new Promise((resolve, reject) => {
             listOk().then(() => {
-                return dbList.listDatabases()
-            }).then(resolve).catch(reject)
-        })
+                return dbList.listDatabases();
+            }).then(resolve).catch(reject);
+        });
     }
 }
 
@@ -121,7 +121,6 @@ export class DB {
 
     private indexStoreName = 'index';
     private dataStoreName = 'data';
-    private hashName = 'hash';
     private dataVersion = 1;
 
     constructor(private dbName, private encKey, private version = 8) {
@@ -132,17 +131,127 @@ export class DB {
 
     private createStores() {
         return new Promise((resolve, reject) => {
-            return createStoreInDb(this.store,
+            createStoreInDb(this.store,
                 this.dataVersion,
                 [this.indexStoreName, this.dataStoreName]
-            )
-        })
+            ).then(() => {
+                console.log('Stores created');
+                resolve();
+            }).catch(reject);
+        });
     }
 
     open() {
         return new Promise((resolve, reject) => {
-            return this.createStores()
-        })
+            listOk().then(() => {
+                console.log('Openning', this.dbName);
+                this.createStores().then(() => {
+                    console.log('Stores are ready, add it to the list', this.dbName);
+                    dbList.addDatabase(this.dbName)
+                        .then(resolve)
+                        .catch(reject);
+                }).catch(reject);
+            });
+        });
     }
 
+    modifyData(index, content) {
+        return new Promise((resolve, reject) => {
+            let data = {
+                id: this.crypto.encryptIndex(index),
+                data: this.crypto.encrypt(content)
+            };
+            this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
+                if (e.target.error.code === 0) { // Key duplication
+                    this.store.update(this.dataStoreName, data)
+                        .then(resolve).catch(reject);
+                }
+            });
+        });
+    }
+
+    getData(index) {
+        return new Promise((resolve, reject) => {
+            this.store.getByKey(this.dataStoreName, this.crypto.encryptIndex(index))
+                .then((v) => {
+                    resolve(this.crypto.decrypt((v && v.data) ? v.data : ''));
+                })
+                .catch(reject);
+        });
+    }
+
+    modifyHash(hash, content) {
+        return new Promise((resolve, reject) => {
+            let data = {
+                id: this.crypto.encryptHash(hash),
+                data: this.crypto.encrypt(content)
+            };
+            this.store.add(this.indexStoreName, data).then(resolve).catch((e) => {
+                if (e.target.error.code === 0) { // Key duplication
+                    this.store.update(this.indexStoreName, data)
+                        .then(resolve).catch(reject);
+                }
+            });
+        });
+    }
+
+    getHash(hash) {
+        return new Promise((resolve, reject) => {
+            this.store.getByKey(this.indexStoreName, this.crypto.encryptHash(hash))
+                .then((v) => {
+                    resolve(this.crypto.decrypt((v && v.data) ? v.data : ''));
+                })
+                .catch(reject);
+        });
+    }
+
+    addIndexToHash(hash, index) { // TODO: test for non existing index
+        return new Promise((resolve, reject) => {
+            this.getHash(hash)
+                .then((data) => {
+                    let ar = data.toString().split(',');
+                    if (ar.indexOf(index.toString()) < 0) {
+                        ar.push(index.toString());
+                        this.modifyHash(hash, ar.join(','))
+                            .then(resolve)
+                            .catch(reject);
+                    } else {
+                        resolve();
+                    }
+                })
+                .catch(reject);
+        });
+    }
+
+    removeIndexFromHash(hash, index) {
+        return new Promise((resolve, reject) => {
+            this.getHash(hash)
+                .then((data) => {
+                    let ar = data.toString().split(',');
+                    if (ar.indexOf(index.toString()) >= 0) {
+                        ar.splice(ar.indexOf(index.toString()), 1);
+                        this.modifyHash(hash, ar.join(','))
+                            .then(resolve)
+                            .catch(reject);
+                    } else {
+                        resolve();
+                    }
+                })
+                .catch(reject);
+        });
+    }
+
+    getNextIndex() { // TODO: Better method to keep it in order
+        return new Promise((resolve, reject) => {
+            this.getData(0).then((data) => {
+                let d = data ? data : 1;
+                let next = parseInt(<string>d) + 1;
+                this.setNextIndex(next).then(() => resolve(d)).catch(reject);
+            }).catch(reject);
+        });
+    }
+
+    setNextIndex(index: number) {
+        return this.modifyData(0, index);
+    }
 }

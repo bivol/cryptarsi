@@ -1,5 +1,6 @@
 import { Crypto } from './CryptoAPI';
 import { AngularIndexedDB } from './Storage';
+import { WaitOK } from './WaitOK';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
@@ -82,37 +83,18 @@ class DatabaseList {
     }
 }
 
-var listReady: boolean = false;
-var dbList: DatabaseList = new DatabaseList();
+let listReady: boolean = false;
+let dbList: DatabaseList = new DatabaseList();
 dbList.createListDb().then(() => {
     listReady = true;
-    console.log('Modifying listReady', listReady);
 }).catch((e) => {
     console.log('Error', e);
 });
 
-function Ok(f: any, wait: number = 100, retry: number = 50) {
-    return new Promise((resolve, reject) => {
-        let count = retry;
-        function check() {
-            if (f()) {
-                return resolve();
-            }
-            if (--count>0) {
-                console.log('Not ready, wait', f());
-                setTimeout(check, wait)
-            } else {
-                return reject(); 
-            }
-        }
-        check();
-    });
-}
-
 function listOk() {
-    return Ok(() => {
-        return listReady
-    })
+    return WaitOK(() => {
+        return listReady;
+    });
 }
 
 export class DbList {

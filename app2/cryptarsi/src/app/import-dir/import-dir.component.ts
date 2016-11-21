@@ -28,9 +28,9 @@ export class ImportDirComponent {
     constructor(private _snackbar: MdSnackBar) {
         let c = new Crypto('parola');
         let cr = c.encrypt('moiat test');
-        console.log('ENC',cr);
+        console.log('ENC', cr);
         let rc = c.decrypt(cr);
-        console.log('DEC',rc);
+        console.log('DEC', rc);
     }
 
     validateDbName(): boolean {

@@ -15,7 +15,7 @@ export class Crypto {
     }
 
     encrypt(data: string): string {
-        console.log('Encrypt data',data);
+        console.log('Encrypt data', data);
         return CryptoJS.AES.encrypt(data, this.password).toString();
     }
 

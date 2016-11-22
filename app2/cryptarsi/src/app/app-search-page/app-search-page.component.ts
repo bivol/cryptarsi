@@ -23,4 +23,8 @@ export class AppSearchPageComponent {
     closeDb() {
         this.open = false;
     }
+
+    search() {
+        
+    }
 }

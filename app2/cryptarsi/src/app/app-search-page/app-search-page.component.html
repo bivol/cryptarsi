@@ -23,7 +23,21 @@
             </button>
         </md-card-actions>
         <md-card-content>
-            Search
+            <md-input
+                #search
+                type="text"
+                placeholder="Search"
+                maxlength="128"
+                class="app-input"
+            >
+            </md-input>
+            &nbsp;
+            <button type=submit md-raised-button (click)="search()">
+                Search
+            </button>
+            <br>
+            <md-card>
+            </md-card>
         </md-card-content>
     </div>
 </md-card>

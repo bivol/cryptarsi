@@ -7,8 +7,8 @@
     <md-list dense>
       <md-list-item *ngFor="let item of collection">
         <button
-          [attr.md-button]="item.select?null:true" 
-          [attr.md-raised-button]="item.select?true:null"
+          [attr.md-button]="(item.name != databaseSelected)?true:null" 
+          [attr.md-raised-button]="(item.name == databaseSelected)?true:null"
           (click)="selectDatabase(item.name)"
         >{{item.name}}</button>
       </md-list-item>
@@ -36,8 +36,10 @@
             Please select database
           </md-card>
           <div *ngIf="databaseSelected">
-            <div>Database selected: {{databaseSelected}}</div>
-            <app-search-page></app-search-page>
+            <!--<div>Database selected: {{databaseSelected}}</div>-->
+            <div *ngFor="let item of collection">
+              <app-search-page [hidden]="item.name!=databaseSelected" [database]="item.name"></app-search-page>
+            </div>
           </div>
       </span>
     </span>

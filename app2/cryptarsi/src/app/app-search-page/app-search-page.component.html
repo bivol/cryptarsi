@@ -1,1 +1,29 @@
-<!--component html goes here -->
+<md-card>
+    <md-card-title>
+        Database: {{database}}
+    </md-card-title>
+    <md-card *ngIf="!open">
+        <md-input
+            #encKey
+            type="password"
+            placeholder="Encryption key"
+        >
+        </md-input>
+        <button type=submit md-raised-button (click)="openDb()">
+            Open
+        </button>
+    </md-card>
+    <div *ngIf="open">
+        <md-card-actions layout="row" layout-align="center">
+            <button md-button class="md-button" aria-label="Settings" (click)="closeDb()">
+            Close Database
+            </button>
+            <button md-button class="md-button" aria-label="Settings">
+            Drop Database
+            </button>
+        </md-card-actions>
+        <md-card-content>
+            Search
+        </md-card-content>
+    </div>
+</md-card>

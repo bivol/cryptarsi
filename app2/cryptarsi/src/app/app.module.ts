@@ -5,11 +5,13 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { ImportDirComponent } from './import-dir/import-dir.component';
+import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImportDirComponent
+    ImportDirComponent,
+    AppSearchPageComponent
   ],
   imports: [
     BrowserModule,

@@ -9,13 +9,6 @@ import { DB, DbList } from './cryptarsi/Database';
 export class AppComponent {
   title = 'Cryptarsi';
   collection: any = undefined;
-    /*
-  [
-    {name: 'first', select: false},
-    {name: 'two', select: false},
-    {name: 'third', select: false}
-  ];
-    */
   databaseSelected = null;
   menuSelected = null;
 
@@ -28,10 +21,7 @@ export class AppComponent {
     setTimeout(() => { // TODO: to be converted into events instead of polling
       DbList.list().then((dbList: any) => {
         console.log('Database list is', dbList);
-        this.collection = dbList.map((n) => {
-          n.select = (n.name == this.databaseSelected) ? true : false;
-          return n;
-        });
+        this.collection = dbList;
       });
     }, 500);
 
@@ -94,12 +84,5 @@ export class AppComponent {
   selectDatabase(name: string) {
     this.menuSelected = null;
     this.databaseSelected = name;
-    this.collection.forEach((n) => {
-      if (n.name === name) {
-        n.select = true;
-      } else {
-        n.select = false;
-      }
-    });
   }
 }

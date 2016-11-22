@@ -28,6 +28,8 @@ export class FileReaderAPI {
                 });
                 let v = {
                     name: file.name,
+                    type: file.type,
+                    size: file.size,
                     index: index,
                     file: file,
                     group: gname

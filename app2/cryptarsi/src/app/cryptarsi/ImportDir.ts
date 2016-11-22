@@ -13,6 +13,7 @@ export class ImportDir {
         return new Promise((resolve, reject) => {
             let r = new FileReaderAPI();
             this.store.open().then(() => {
+                console.log('Starting the import');
                 let lastIndex = 0;
                 r.readAll(files, (f, text, obj) => {
                     console.log('Downloaded', f.name, f.type, obj);

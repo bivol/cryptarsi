@@ -67,26 +67,27 @@ class DatabaseList {
 
     getDatabase(name) {
         return new Promise((resolve, reject) => {
-            return this.listDb.getByKey(this.listStoreName, name)
+            this.listDb.getByKey(this.listStoreName, name).then(resolve).catch(reject);
         });
     }
 
     addDatabase(name) {
         return new Promise((resolve, reject) => {
-            return this.listDb.add(this.listStoreName, { name: name, id: name })
+            this.listDb.add(this.listStoreName, { name: name, id: name })
                 .catch((e) => {
                     if (e.target.error.code === 0) {
                         resolve();
                     } else {
                         reject();
                     }
-                });
+                }).then(resolve).catch(reject);
         });
     }
 
     dropDatabase(name) {
         return new Promise((resolve, reject) => {
-            return this.listDb.delete(this.listStoreName, name )
+            this.listDb.delete(this.listStoreName, name)
+                .then(resolve).catch(reject);
         });
     }
 }
@@ -114,6 +115,21 @@ export class DbList {
             listOk().then(() => {
                 return dbList.listDatabases();
             }).then(resolve).catch(reject);
+        });
+    }
+
+    static isPresent(name) {
+        return new Promise((resolve, reject) => {
+            listOk().then(() => {
+                console.log('Get db name', name);
+                dbList.getDatabase(name).then((v) => {
+                    if (v) {
+                        resolve(v);
+                    } else {
+                        reject();
+                    }
+                }).catch(reject);
+            }).catch(reject);
         });
     }
 }

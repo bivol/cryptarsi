@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Crypto } from '../cryptarsi/CryptoAPI';
+import { DbList } from '../cryptarsi/Database';
 
 @Component({
     // moduleId: module.id,
@@ -60,18 +61,31 @@ export class ImportDirComponent {
         return true;
     }
 
-    checkForm(): boolean {
-        if (!this.validateDbName()) {
-            this.dbName.focus();
-            return false;
-        }
+    checkDb() {
+        return new Promise((resolve, reject) => {
+            console.log('Checking db');
+            DbList.isPresent(this.dbName.value).then(() => {
+                console.log('DB exist');
+                this.dbName.dividerColor = 'warn';
+                this.dbName.hintLabel = 'Already exist!';
+            }).catch(resolve);
+        });
+    }
 
-        if (!this.validateKeys()) {
-            this.encKey1.focus();
-            return false;
-        }
+    checkForm() {
+        return new Promise((resolve, reject) => {
+            if (!this.validateDbName()) {
+                this.dbName.focus();
+                reject();
+            }
 
-        return true;
+            if (!this.validateKeys()) {
+                this.encKey1.focus();
+                return reject();
+            }
+
+            this.checkDb().then(resolve).catch(reject); // Check if the db exist
+        });
     }
 
     onDirChange(e) {
@@ -80,7 +94,7 @@ export class ImportDirComponent {
     }
 
     submit() {
-        if (this.checkForm()) {
+        this.checkForm().then(() => {
             this.processing = true;
             let r = new ImportDir(this.dbName.value, this.encKey1.value);
             r.importFiles(this.files,
@@ -95,6 +109,6 @@ export class ImportDirComponent {
                 this.processing = false;
                 this._snackbar.open('The database is created and imported','OK');
             });
-        }
+        }).catch(() => {});
     }
 }

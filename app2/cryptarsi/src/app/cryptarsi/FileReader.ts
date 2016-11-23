@@ -1,3 +1,5 @@
+import { log } from '../log';
+
 export class FileReaderAPI {
     constructor() {
     }
@@ -49,12 +51,12 @@ export class FileReaderAPI {
                 }
                 let file = q.shift();
                 me.readFile(file, (file, l, t) => {
-                    // console.log('file - 2', file.name, loaded, total);
+                    // log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
                         cbprogress(file, loaded + l, total, cnt, files.length);
                     }
                 }).then((text) => {
-                    // console.log('File', file.name, 'loaded');
+                    // log('File', file.name, 'loaded');
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
@@ -80,7 +82,7 @@ export class FileReaderAPI {
 
             reader.onprogress = (d) => {
                 if (d.lengthComputable) {
-                    // console.log('file', file.name, d.loaded, d.total);
+                    // log('file', file.name, d.loaded, d.total);
                     if (cb) {
                         cb(file, d.loaded, d.total);
                     }

@@ -1,19 +1,20 @@
 import { Crypto } from './CryptoAPI';
 import { AngularIndexedDB } from './Storage';
 import { WaitOK } from './WaitOK';
+import { log } from '../log';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
-        console.log('Going to create store', db, version, name);
+        log('Going to create store', db, version, name);
         db.createStore(version, (evt) => {
             function oneStore(n) {
-                console.log('Creating non existing objStore', n);
+                log('Creating non existing objStore', n);
                 let obj = evt.currentTarget.result.createObjectStore(n, {
                     keyPath: 'id',
                     //autoIncrement: true
                 });
                 obj.onerror = (e) => {
-                    console.log('Cannot create objectStore', e);
+                    log('Cannot create objectStore', e);
                     reject(e);
                 };
             }
@@ -23,7 +24,7 @@ function createStoreInDb(db, version, name) {
                 oneStore(name);
             }
         }).then(() => {
-            console.log('No errors during creation/opening of', name);
+            log('No errors during creation/opening of', name);
             resolve();
         }).catch(reject);
     });
@@ -55,10 +56,10 @@ class DatabaseList {
             }).catch((e) => {
                 this.createListDb()
                     .then(() => {
-                        console.log('Supposedly the store is ready');
+                        log('Supposedly the store is ready');
                         resolve({});
                     }).catch(() => {
-                        console.log('Some error has happened');
+                        log('Some error has happened');
                         reject();
                     });
             });
@@ -94,7 +95,7 @@ class DatabaseList {
 
 let listReady = false;
 let dbList: DatabaseList = new DatabaseList();
-dbList.createListDb().then(() => { listReady = true; }).catch((e) => { console.log('Error', e); });
+dbList.createListDb().then(() => { listReady = true; }).catch((e) => { log('Error', e); });
 
 function listOk() {
     return WaitOK(() => {
@@ -121,7 +122,7 @@ export class DbList {
     static isPresent(name) {
         return new Promise((resolve, reject) => {
             listOk().then(() => {
-                console.log('Get db name', name);
+                log('Get db name', name);
                 dbList.getDatabase(name).then((v) => {
                     if (v) {
                         resolve(v);
@@ -154,7 +155,7 @@ export class DB {
                 this.dataVersion,
                 [this.indexStoreName, this.dataStoreName]
             ).then(() => {
-                console.log('Stores created');
+                log('Stores created');
                 resolve();
             }).catch(reject);
         });
@@ -163,9 +164,9 @@ export class DB {
     open() {
         return new Promise((resolve, reject) => {
             listOk().then(() => {
-                console.log('Openning', this.dbName);
+                log('Openning', this.dbName);
                 this.createStores().then(() => {
-                    console.log('Stores are ready, add it to the list', this.dbName);
+                    log('Stores are ready, add it to the list', this.dbName);
                     dbList.addDatabase(this.dbName)
                         .then(resolve)
                         .catch(reject);
@@ -179,7 +180,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             this.store.drop()
                 .then(() => {
-                    console.log('Going to remove it from the list');
+                    log('Going to remove it from the list');
                     dbList.dropDatabase(this.dbName)
                         .then(resolve)
                         .catch(reject);
@@ -194,9 +195,9 @@ export class DB {
                 id: this.crypto.encryptIndex(index),
                 data: this.crypto.encrypt(content)
             };
-            console.log('data...', this.dataStoreName, data);
+            log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
-                console.log('error add data', e);
+                log('error add data', e);
                 if (e.target.error.code === 0) { // Key duplication
                     this.store.update(this.dataStoreName, data)
                         .then(resolve).catch(reject);
@@ -279,17 +280,17 @@ export class DB {
     getNextIndex() { // TODO: Better method to keep it in order
         return new Promise((resolve, reject) => {
             this.getData(0).then((data) => {
-                console.log('getData for 0 is', data);
+                log('getData for 0 is', data);
                 let d = data ? data : 1;
                 let next = parseInt(<string>d) + 1;
-                console.log('d is', d, next);
+                log('d is', d, next);
                 this.setNextIndex(next).then(() => resolve(d)).catch(reject);
             }).catch(reject);
         });
     }
 
     setNextIndex(index: number) {
-        console.log('setnextindex', index);
+        log('setnextindex', index);
         return this.modifyData(0, index + ' ');
     }
 

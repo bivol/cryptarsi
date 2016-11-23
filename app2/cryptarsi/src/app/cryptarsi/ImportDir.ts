@@ -1,6 +1,7 @@
 import { FileReaderAPI } from './FileReader';
 import { DB } from './Database';
 import { WordHash } from './Hash';
+import { log } from '../log';
 
 export class ImportDir {
     store: DB = null;
@@ -14,10 +15,10 @@ export class ImportDir {
         return new Promise((resolve, reject) => {
             let r = new FileReaderAPI();
             this.store.open().then(() => {
-                console.log('Starting the import');
+                log('Starting the import');
                 let lastIndex = 0;
                 r.readAll(files, (f, text, obj) => {
-                    console.log('Downloaded', f.name, f.type, obj);
+                    log('Downloaded', f.name, f.type, obj);
                     // let enc = this.crypto.encrypt(text);
                     lastIndex = Math.max(obj.index, lastIndex);
 
@@ -33,25 +34,27 @@ export class ImportDir {
 
                         this.store.modifyData(obj.index, data)
                             .then(() => {
-                                console.log('Successfuly imported, still need index', f, obj);
+                                log('Successfuly imported, still need index', f, obj);
                                 for (let hash in hashes) {
                                     this.store.addIndexToHash(hash, obj.index)
-                                        .then(() => {})
+                                        .then(() => {
+                                            log('Updated hash', hash, f.name);
+                                        })
                                         .catch((e) => {
-                                            console.log('Error inserting hash to index');
+                                            log('Error inserting hash to index');
                                         });
                                 };
                             })
                             .catch((e) => {
-                                console.log('Error inserting', f, e, obj);
+                                log('Error inserting', f, e, obj);
                             });
                     } else {
                         this.store.modifyData(obj.index, text)
                             .then(() => {
-                                console.log('Successfuly imported', f, obj);
+                                log('Successfuly imported', f, obj);
                             })
                             .catch((e) => {
-                                console.log('Error inserting', f, e, obj);
+                                log('Error inserting', f, e, obj);
                             });
                     }
 

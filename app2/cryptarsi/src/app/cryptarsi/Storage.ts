@@ -5,6 +5,7 @@
  */
 
 import {Injectable} from '@angular/core';
+import { log } from '../log';
 
 @Injectable()
 export class AngularIndexedDB {
@@ -21,7 +22,7 @@ export class AngularIndexedDB {
             let request = this.utils.indexedDB.deleteDatabase(this.dbWrapper.dbName);
             request.onerror = reject;
             request.onsuccess = () => {
-                console.log('Database dropped', this.dbWrapper.dbName);
+                log('Database dropped', this.dbWrapper.dbName);
                 resolve();
             };
         });

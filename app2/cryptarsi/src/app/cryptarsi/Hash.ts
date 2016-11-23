@@ -1,3 +1,5 @@
+import { log } from '../log';
+
 export class WordHash {
     static regex = /[^\x20-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]{2,15}/g; // TODO: the regex must be more correct
 
@@ -7,7 +9,7 @@ export class WordHash {
 
     static cbPerHash(text: string, cb: any) {
         text.replace(WordHash.regex, (m) => {
-            console.log('we have matched', m);
+            log('we have matched', m);
             cb(WordHash.hash(m));
             return m;
         });

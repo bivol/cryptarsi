@@ -1,5 +1,5 @@
 /// <reference path="../../typings/index.d.ts"/>
-
+import { log } from '../log';
 import * as CryptoJS from 'crypto-js';
 
 export class Crypto {
@@ -15,7 +15,7 @@ export class Crypto {
     }
 
     encrypt(data: string): string {
-        //console.log('Encrypt data', data);
+        //log('Encrypt data', data);
         return CryptoJS.AES.encrypt(data, this.password).toString();
     }
 
@@ -44,7 +44,7 @@ export class Crypto {
 
     encryptHash(hash: string): string {
         let o = this.buildKeyIv(hash + this.hashSuffix);
-        console.log('Hash is', hash, o);
+        log('Hash is', hash, o);
         return CryptoJS.AES.encrypt(hash + this.hashSuffix,
             o.key, o).toString();
     }

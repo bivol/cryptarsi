@@ -3,6 +3,7 @@ import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Crypto } from '../cryptarsi/CryptoAPI';
 import { DbList } from '../cryptarsi/Database';
+import { log } from '../log';
 
 @Component({
     // moduleId: module.id,
@@ -31,9 +32,9 @@ export class ImportDirComponent {
     constructor(private _snackbar: MdSnackBar) {
         let c = new Crypto('parola');
         let cr = c.encrypt('moiat test');
-        console.log('ENC', cr);
+        log('ENC', cr);
         let rc = c.decrypt(cr);
-        console.log('DEC', rc);
+        log('DEC', rc);
     }
 
     validateDbName(): boolean {
@@ -65,9 +66,9 @@ export class ImportDirComponent {
 
     checkDb() {
         return new Promise((resolve, reject) => {
-            console.log('Checking db');
+            log('Checking db');
             DbList.isPresent(this.dbName.value).then(() => {
-                console.log('DB exist');
+                log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';
             }).catch(resolve);
@@ -92,7 +93,7 @@ export class ImportDirComponent {
 
     onDirChange(e) {
         this.files = e.srcElement.files;
-        console.log('files', this.files);
+        log('files', this.files);
     }
 
     submit() {
@@ -101,7 +102,7 @@ export class ImportDirComponent {
             let r = new ImportDir(this.dbName.value, this.encKey1.value);
             r.importFiles(this.files,
                 (f, loaded, total, count, totalcnt) => {
-                console.log('Downloading', f.name, loaded, total, count, totalcnt);
+                log('Downloading', f.name, loaded, total, count, totalcnt);
                 this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
                 this.nofile = count;
                 this.nofiles = totalcnt;

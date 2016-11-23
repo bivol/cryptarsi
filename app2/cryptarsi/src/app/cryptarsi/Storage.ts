@@ -16,6 +16,17 @@ export class AngularIndexedDB {
         this.dbWrapper = new DbWrapper(dbName, version);
     }
 
+    drop() {
+        return new Promise((resolve, reject) => {
+            let request = this.utils.indexedDB.deleteDatabase(this.dbWrapper.dbName);
+            request.onerror = reject;
+            request.onsuccess = () => {
+                console.log('Database dropped', this.dbWrapper.dbName);
+                resolve();
+            };
+        });
+    }
+
     createStore(version, upgradeCallback) {
         let self = this,
             promise = new Promise<any>((resolve, reject) => {
@@ -25,7 +36,7 @@ export class AngularIndexedDB {
                     self.dbWrapper.db = request.result;
                     setTimeout(() => {
                         resolve(e);
-                    },500);
+                    }, 500);
                 };
 
                 request.onerror = function (e) {

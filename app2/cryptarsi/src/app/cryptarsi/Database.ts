@@ -136,7 +136,7 @@ export class DbList {
 
 export class DB {
     private crypto;
-    private store;
+    private store: AngularIndexedDB;
 
     private indexStoreName = 'index';
     private dataStoreName = 'data';
@@ -171,6 +171,20 @@ export class DB {
                         .catch(reject);
                 }).catch(reject);
             });
+        });
+    }
+
+    // Drop database
+    drop() {
+        return new Promise((resolve, reject) => {
+            this.store.drop()
+                .then(() => {
+                    console.log('Going to remove it from the list');
+                    dbList.dropDatabase(this.dbName)
+                        .then(resolve)
+                        .catch(reject);
+                })
+                .catch(reject);
         });
     }
 
@@ -278,4 +292,5 @@ export class DB {
         console.log('setnextindex', index);
         return this.modifyData(0, index + ' ');
     }
+
 }

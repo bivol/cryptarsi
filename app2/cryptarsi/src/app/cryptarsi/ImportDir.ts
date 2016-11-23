@@ -1,5 +1,6 @@
 import { FileReaderAPI } from './FileReader';
 import { DB } from './Database';
+import { WordHash } from './Hash';
 
 export class ImportDir {
     store: DB = null;
@@ -22,6 +23,18 @@ export class ImportDir {
                     this.store.modifyData(obj.index, text)
                         .then(() => {
                             console.log('Successfuly imported', f, obj);
+                            // Lets fix the index
+                            let hashes = {};
+                            WordHash.cbPerHash(text, (hash) => {
+                                hashes[hash] = obj.index;
+                            });
+                            for (let hash in hashes) {
+                                this.store.addIndexToHash(hash, obj.index)
+                                    .then(() => {})
+                                    .catch((e) => {
+                                        console.log('Error inserting hash to index');
+                                    });
+                            };
                         })
                         .catch((e) => {
                             console.log('Error inserting', f, e, obj);

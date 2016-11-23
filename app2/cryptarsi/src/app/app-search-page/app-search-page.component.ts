@@ -24,9 +24,24 @@ export class AppSearchPageComponent {
     }
 
     openDb() {
-        this.open = true; // TODO: Implement check that the database is decodeable
         console.log('Opening database', this.database, this.encKey.value);
         this.db = new DB(this.database, this.encKey.value);
+        this.db.open().then(() => {
+            this.db.getData(0).then((v: string) => {
+                console.log('Decrypted index 0 is', v);
+                if (v.match(/^[0-9 ]+$/)) {
+                    this.open = true;
+                } else {
+                    this._snackbar.open('Your encryption key is probably wrong', 'OK');
+                }
+            }).catch((e) => {
+                console.log('Cannot open the db', e);
+                this._snackbar.open('Cannot read the database', 'OK');
+            });
+        }).catch((e) => {
+            console.log('Cannot open the db', e);
+            this._snackbar.open('Cannot open the database', 'OK');
+        });
     }
 
     closeDb() {

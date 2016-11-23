@@ -93,4 +93,8 @@ export class AppComponent {
     this.databaseSelected = null;
     this.refreshDbList();
   }
+
+  importedDir() {
+    this.refreshDbList();
+  }
 }

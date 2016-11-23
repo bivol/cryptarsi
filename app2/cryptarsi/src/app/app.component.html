@@ -29,7 +29,7 @@
   <div class="app-content">
     <span [ngSwitch]="menuSelected">
       <span *ngSwitchCase="'importDir'">
-        <app-import-dir></app-import-dir>
+        <app-import-dir (onImport)="importedDir()"></app-import-dir>
       </span>
       <span *ngSwitchDefault>
           <md-card *ngIf="!databaseSelected">

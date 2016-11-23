@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Crypto } from '../cryptarsi/CryptoAPI';
@@ -12,6 +12,8 @@ import { DbList } from '../cryptarsi/Database';
 })
 export class ImportDirComponent {
     componentName: 'ImportDirComponent';
+
+    @Output() onImport = new EventEmitter();
 
     @ViewChild('dbName') dbName: MdInput;
     @ViewChild('encKey1') encKey1: MdInput;
@@ -108,6 +110,7 @@ export class ImportDirComponent {
                 this.progress = 100;
                 this.processing = false;
                 this._snackbar.open('The database is created and imported', 'OK');
+                this.onImport.emit();
             });
         }).catch(() => {});
     }

@@ -107,7 +107,7 @@ export class ImportDirComponent {
             }).then(() => {
                 this.progress = 100;
                 this.processing = false;
-                this._snackbar.open('The database is created and imported','OK');
+                this._snackbar.open('The database is created and imported', 'OK');
             });
         }).catch(() => {});
     }

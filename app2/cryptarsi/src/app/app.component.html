@@ -36,9 +36,14 @@
             Please select database
           </md-card>
           <div *ngIf="databaseSelected">
-            <!--<div>Database selected: {{databaseSelected}}</div>-->
+            <!--<div>Database selected: {{databaseSelected.name}}</div>-->
             <div *ngFor="let item of collection">
-              <app-search-page [hidden]="item.name!=databaseSelected" [database]="item.name"></app-search-page>
+              <app-search-page
+                [hidden]="item.name!=databaseSelected"
+                [database]="item.name"
+                (onDrop)="clearSelection()"
+              >
+              </app-search-page>
             </div>
           </div>
       </span>

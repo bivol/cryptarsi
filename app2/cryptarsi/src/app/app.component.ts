@@ -9,7 +9,7 @@ import { DB, DbList } from './cryptarsi/Database';
 export class AppComponent {
   title = 'Cryptarsi';
   collection: any = undefined;
-  databaseSelected = null;
+  databaseSelected: string = null;
   menuSelected = null;
 
   db: DB;
@@ -17,13 +17,7 @@ export class AppComponent {
   constructor() {
 
     this.db = new DB('aa', 'enc');
-
-    setTimeout(() => { // TODO: to be converted into events instead of polling
-      DbList.list().then((dbList: any) => {
-        console.log('Database list is', dbList);
-        this.collection = dbList;
-      });
-    }, 500);
+    this.refreshDbList();
 
     console.log('Try to open the db');
     this.db.open().then(() => {
@@ -84,5 +78,19 @@ export class AppComponent {
   selectDatabase(name: string) {
     this.menuSelected = null;
     this.databaseSelected = name;
+  }
+
+  refreshDbList() {
+    setTimeout(() => { // TODO: to be converted into events instead of polling
+      DbList.list().then((dbList: any) => {
+        console.log('Database list is', dbList);
+        this.collection = dbList;
+      });
+    }, 500);
+  }
+
+  clearSelection() {
+    this.databaseSelected = null;
+    this.refreshDbList();
   }
 }

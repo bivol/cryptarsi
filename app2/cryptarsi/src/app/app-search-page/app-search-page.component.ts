@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Dialog } from '../app-dialog/app-dialog.component';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSnackBar } from '@angular/material';
 import { DB } from '../cryptarsi/Database';
 
 @Component({
@@ -12,13 +12,14 @@ import { DB } from '../cryptarsi/Database';
 
 export class AppSearchPageComponent {
     @Input('database') database;
+    @Output() onDrop = new EventEmitter();
     @ViewChild('encKey') encKey;
 
     open = false;
 
     db: DB;
 
-    constructor(private _dialog: MdDialog) {
+    constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
         console.log('Input is', this.database);
     }
 
@@ -40,8 +41,11 @@ export class AppSearchPageComponent {
             if (v === 'yes') {
                 this.db.drop().then(() => {
                     console.log('Successfully dropped');
+                    this.onDrop.emit();
+                    this._snackbar.open('The database is removed!', 'OK');
                 }).catch((e) => {
                     console.log('Cannot drop the database', this.database);
+                    this._snackbar.open('The database cannot be removed!', 'OK');
                 });
             }
         });

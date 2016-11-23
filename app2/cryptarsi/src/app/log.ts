@@ -1,4 +1,4 @@
-//export function log {
+//export function log(...argv) {
 //
 //}
 

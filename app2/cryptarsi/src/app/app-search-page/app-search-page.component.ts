@@ -54,7 +54,8 @@ export class AppSearchPageComponent {
         let dialog = new Dialog(this._dialog);
         dialog.open('Are you sure you want to drop the database?', (v) => {
             if (v === 'yes') {
-                this.db.drop().then(() => {
+                let db = new DB(this.database, 'xxxxxxx');
+                db.drop().then(() => {
                     console.log('Successfully dropped');
                     this.onDrop.emit();
                     this._snackbar.open('The database is removed!', 'OK');

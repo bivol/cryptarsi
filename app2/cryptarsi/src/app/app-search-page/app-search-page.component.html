@@ -2,22 +2,24 @@
     <md-card-title>
         Database: {{database}}
     </md-card-title>
-    <md-card *ngIf="!open">
+    <div *ngIf="!open">
         <md-card-actions layout="row" layout-align="center">
             <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
             Drop Database
             </button>
         </md-card-actions>
-        <md-input
-            #encKey
-            type="password"
-            placeholder="Encryption key"
-        >
-        </md-input>
-        <button type=submit md-raised-button (click)="openDb()">
-            Open
-        </button>
-    </md-card>
+        <md-card>
+            <md-input
+                #encKey
+                type="password"
+                placeholder="Encryption key"
+            >
+            </md-input>
+            <button type=submit md-raised-button (click)="openDb()">
+                Open
+            </button>
+        </md-card>
+    </div>
     <div *ngIf="open">
         <md-card-actions layout="row" layout-align="center">
             <button md-button class="md-button" aria-label="Settings" (click)="closeDb()">

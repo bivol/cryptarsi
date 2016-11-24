@@ -13,6 +13,7 @@
                 #encKey
                 type="password"
                 placeholder="Encryption key"
+                (keyup.enter)="openDb()"
             >
             </md-input>
             <button md-raised-button (click)="openDb()">
@@ -44,6 +45,7 @@
                             placeholder="Search"
                             maxlength="128"
                             class="app-input"
+                            (keyup.enter)="search()"
                         >
                         </md-input>
                         &nbsp;

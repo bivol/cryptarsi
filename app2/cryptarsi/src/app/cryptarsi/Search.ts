@@ -8,8 +8,8 @@ import {Crypto} from './Crypto';
 import {Storage} from './Storage';
 import {WordHash} from './WordHash';
 
-var crypt = new Crypto('parola','nonce'); //TODO: password store
-var storage = new Storage();
+let crypt = new Crypto('parola','nonce'); //TODO: password store
+let storage = new Storage();
 
 interface IAndNot {
     not: any;
@@ -140,17 +140,19 @@ export class Search {
                         });
                     }
                     words = words.replace(/^([\+\-])(\S+)?/, function(m, p, a) {
-                        pushA.push({ match: (((inv?1:0)^(p!='-'?1:0))?"+":"-"), string: a});
-                        return "";
+                        pushA.push({ match: (((inv ? 1 : 0)^( p != '-' ? 1 : 0)) ? '+' : '-'), string: a});
+                        return '';
                     });
                 }
-                if (words) pushA.push({match:(inv?"-":"+"), string:words});
+                if (words) {
+                    pushA.push({match: (inv ? '-' : '+'), string: words});
+                }
             }
 
             function branches() {
-                w=w.replace(/([\+\-]?)\((.+?)\)/g,function(m,p,a) {
-                    splitPush(a,p=='-');
-                    return "";
+                w = w.replace(/([\+\-]?)\((.+?)\)/g, function(m, p, a) {
+                    splitPush(a, p == '-');
+                    return '';
                 });
             }
 
@@ -166,51 +168,63 @@ export class Search {
     }
 
     searchRule(srch: string): string[] {
-        var out = this.andNot(srch);
+        let out = this.andNot(srch);
 
-        if (Object.keys(out.and).length==0) return [];
-        var w = Object.keys(out.and).concat(Object.keys(out.not)).sort((x:string,y:string):number=>{ return x.length<=y.length?1:0 });
-        var w1 = Object.keys(out.and).sort((x:string,y:string):number=>{ return x.length<=y.length?1:0 });
+        if (Object.keys(out.and).length == 0) {
+            return [];
+        }
+        let w = Object.keys(out.and)
+                    .concat(Object.keys(out.not))
+                    .sort((x: string, y: string): number => {
+                        return x.length <= y.length ? 1 : 0;
+                    });
+        let w1 = Object.keys(out.and)
+                    .sort((x: string, y: string): number => {
+                        return x.length <= y.length ? 1 : 0;
+                    });
 
         w.unshift(w.splice(w.indexOf(w1[0]),1)[0]); // Put the largest AND word at the front
 
-        var myset = storage.setextr(WordHash.hash(w[0]),function() {
-
+        let myset = storage.setextr(WordHash.hash(w[0]), function() {
+            // TODO: What is this for?
         });
+
         for (let i:number = 1; i < w.length  && (myset.length >= (w.length-i)); i++) myset = (out.and[w[i]])?crossset(myset, setextr(myhash(w[i]))):notcrossset(myset, setextr(myhash(w[i])));
 
         // Now we have a set with probable matching, lets do the second match
 
-        var outset = [];
-        var regArray = this.coRegexProc(srch);
+        let outset = [];
+        let regArray = this.coRegexProc(srch);
 
-        var fullStrings = srch.match(/([\+\-])?\"(.+?)\"/g);
+        let fullStrings = srch.match(/([\+\-])?\"(.+?)\"/g);
         if (fullStrings) {
             fullStrings.forEach(function(n) {
-                var o:IPushA = { match: '+', string: '' };
-                if (n.match(/^\-/)) o.match = '-';
-                o.string = n.replace(/^[\+\-]?\"/,"").replace(/\"$/,"").replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g,"[\\s\\!-\\/\\:-\\@\\[-\\]\\'\\{-~]*");
-                o.regex = new RegExp(o.string,"i");
+                let o: IPushA = { match: '+', string: '' };
+                if (n.match(/^\-/)) {
+                    o.match = '-';
+                }
+                o.string = n.replace(/^[\+\-]?\"/, '')
+                    .replace(/\"$/, '')
+                    .replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, "[\\s\\!-\\/\\:-\\@\\[-\\]\\'\\{-~]*");
+                o.regex = new RegExp(o.string, 'i');
                 regArray.unshift(o);
-            })
+            });
         }
 
         myset.forEach(function(n) {
-            var s = trd(n+".data");
+            let s = trd(n+".data");
 
             // Stings match
 
 
-            for (var i=0;i<regArray.length;i++) {
-                var t = regArray[i].regex.test(s);
-                if (t && regArray[i].match == '-') return;
-                if ((!t) && regArray[i].match == '+') return;
+            for (let i = 0; i < regArray.length; i++) {
+                let t = regArray[i].regex.test(s);
+                if (t && regArray[i].match == '-') { return; }
+                if ((!t) && regArray[i].match == '+') { return; }
             }
             outset.push(n);
         });
 
         return outset;
     }
-
-
 }

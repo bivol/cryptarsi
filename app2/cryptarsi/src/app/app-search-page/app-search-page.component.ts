@@ -23,6 +23,8 @@ export class AppSearchPageComponent {
     db: DB;
     srch: Search;
 
+    results = [];
+
     constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
         log('Input is', this.database);
     }
@@ -74,8 +76,13 @@ export class AppSearchPageComponent {
 
     search() {
         log('Search pressed', this.searchInput.value);
+        this.results = [];
         this.srch.searchRule(this.searchInput.value, (index, data) => {
-            console.log('Found', index, data);
+            this.results.push({
+                position: this.results.length,
+                index: index,
+                text: data
+            });
         });
     }
 

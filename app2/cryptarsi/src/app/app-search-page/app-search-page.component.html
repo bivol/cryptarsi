@@ -1,8 +1,8 @@
-<md-card>
-    <md-card-title>
-        Database: {{database}}
-    </md-card-title>
-    <div *ngIf="!open">
+<div *ngIf="!open">
+    <md-card>
+        <md-card-title>
+            Database: {{database}}
+        </md-card-title>
         <md-card-actions layout="row" layout-align="center">
             <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
             Drop Database
@@ -19,32 +19,48 @@
                 Open
             </button>
         </form>
-    </div>
-    <div *ngIf="open">
-        <md-card-actions layout="row" layout-align="center">
-            <button md-button class="md-button" aria-label="Settings" (click)="closeDb()">
-            Close Database
-            </button>
-            <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
-            Drop Database
-            </button>
-        </md-card-actions>
-        <md-card-content>
-            <!--<form novalidate (ngSubmit)="search()" >-->
-                <md-input
-                    #searchInput
-                    type="text"
-                    placeholder="Search"
-                    maxlength="128"
-                    class="app-input"
-                >
-                </md-input>
-                &nbsp;
-                <button md-raised-button (click)="search()">
-                    Search
-                </button>
-            <!--</form>-->
-            <br>
-        </md-card-content>
-    </div>
-</md-card>
+    </md-card>
+</div>
+<div *ngIf="open">
+    <md-tab-group [selectedIndex]="0">
+        <md-tab label="Search">
+            <md-card>
+                <md-card-title>
+                    Database: {{database}}
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="center">
+                    <button md-button class="md-button" aria-label="Settings" (click)="closeDb()">
+                    Close Database
+                    </button>
+                    <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
+                    Drop Database
+                    </button>
+                </md-card-actions>
+                <md-card-content>
+                    <!--<form novalidate (ngSubmit)="search()" >-->
+                        <md-input
+                            #searchInput
+                            type="text"
+                            placeholder="Search"
+                            maxlength="128"
+                            class="app-input"
+                        >
+                        </md-input>
+                        &nbsp;
+                        <button md-raised-button (click)="search()">
+                            Search
+                        </button>
+                    <!--</form>-->
+                    <br>
+                    <div *ngFor="let item of results">
+                        <app-search-line
+                            [database]="item.name"
+                        >
+                        </app-search-line>
+                        <br>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </md-tab>
+    </md-tab-group>
+</div>

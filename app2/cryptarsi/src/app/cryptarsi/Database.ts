@@ -238,7 +238,9 @@ export class DB {
                 .then((v) => {
                     log('getHash then', v);
                     if (v && v.data) {
-                        resolve(this.crypto.decrypt(v.data).split(','));
+                        let out = this.crypto.decrypt(v.data).split(',');
+                        out.splice(out.indexOf(''), 1); // TODO: find why we have empty element
+                        resolve(out);
                     } else {
                         resolve([]);
                     }
@@ -254,6 +256,9 @@ export class DB {
 
     addIndexToHash(hash, index) { // TODO: test for non existing index
         return new Promise((resolve, reject) => {
+            if (index == '') {
+                resolve();
+            }
             this.getHash(hash)
                 .then((ar: any[]) => {
                     if (ar.indexOf(index.toString()) < 0) {

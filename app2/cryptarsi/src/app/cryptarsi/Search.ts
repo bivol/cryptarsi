@@ -191,6 +191,8 @@ export class Search {
 
             w.unshift(w.splice(w.indexOf(w1[0]), 1)[0]); // Put the largest AND word at the front
 
+            let me = this;
+
             this.db.getWordHash(w[0]).then((myset: any[]) => {
                 let i = 1;
 
@@ -199,11 +201,11 @@ export class Search {
                 let chain = new Promise( (res, rej) => {
                     function nextStep() {
                         if (i < w.length && (myset.length >= (w.length - i))) {
-                            this.db.getWordHash(w[i]).then((data) => {
+                            me.db.getWordHash(w[i]).then((data: string[]) => {
                                 if (out.and[w[i]]) {
-                                    myset = this.crossset(myset, data);
+                                    myset = me.crossset(myset, data);
                                 } else {
-                                    myset = this.notcrossset(myset, data);
+                                    myset = me.notcrossset(myset, data);
                                 }
                                 i++;
                                 nextStep(); // Close the loop
@@ -216,7 +218,7 @@ export class Search {
                 });
                 chain.then(() => {
                     // Now we have a set with probable matching, lets do the second match
-                    let regArray = this.coRegexProc(srch);
+                    let regArray = me.coRegexProc(srch);
 
                     let fullStrings = srch.match(/([\+\-])?\"(.+?)\"/g);
                     if (fullStrings) {
@@ -235,9 +237,12 @@ export class Search {
 
                     console.log('MySet is', myset);
                     myset.forEach((n) => {
-                        this.db.getData(n).then((s) => {
+                        console.log('retrieve', n);
+                        me.db.getData(n).then((s) => {
+                            console.log('retrieved', n, 'run', regArray);
                             for (let i = 0; i < regArray.length; i++) {
                                 let t = regArray[i].regex.test(s);
+                                console.log('match is', t, regArray[i].match);
                                 if (t && regArray[i].match == '-') { return; }
                                 if ((!t) && regArray[i].match == '+') { return; }
                             }

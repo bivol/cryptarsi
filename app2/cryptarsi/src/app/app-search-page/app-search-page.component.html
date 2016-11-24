@@ -54,7 +54,9 @@
                     <br>
                     <div *ngFor="let item of results">
                         <app-search-line
-                            [database]="item.name"
+                            [position]="item.position"
+                            [index]="item.index"
+                            [text]="item.text"
                         >
                         </app-search-line>
                         <br>

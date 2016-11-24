@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     //moduleId: module.id,
@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
     styleUrls: ['app-search-line.component.css']
 })
 export class AppSearchLineComponent {
-
+    @Input('position') position;
+    @Input('index') index;
+    @Input('text') text;
 }

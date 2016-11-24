@@ -3,13 +3,7 @@
  */
 
 import { log } from '../log';
-
-import {Crypto} from './Crypto';
-import {Storage} from './Storage';
-import {WordHash} from './WordHash';
-
-let crypt = new Crypto('parola','nonce'); //TODO: password store
-let storage = new Storage();
+import { DB } from './Database';
 
 interface IAndNot {
     not: any;
@@ -23,7 +17,8 @@ interface IPushA {
 }
 
 export class Search {
-    constructor() {
+
+    constructor(private db: DB) {
     }
 
     crossset(w: string[], s: string[]): string[] {
@@ -57,19 +52,19 @@ export class Search {
                 return text.length;
             }
             for (i = 1, count = 1; count && i < words.length; i++) {
-                count += (words.charAt(i) == '(') ? 1 : 0;
-                count -= (words.charAt(i) == ')') ? 1 : 0;
+                count += (words.charAt(i) === '(') ? 1 : 0;
+                count -= (words.charAt(i) === ')') ? 1 : 0;
             }
             return i;
         }
 
         function mixout(a: IAndNot, b: IAndNot): IAndNot {
-            if (typeof a != 'object'
-             || typeof b != 'object'
-             || typeof a.and != 'object'
-             || typeof a.not != 'object'
-             || typeof b.and != 'object'
-             || typeof b.not != 'object'
+            if (typeof a !== 'object'
+             || typeof b !== 'object'
+             || typeof a.and !== 'object'
+             || typeof a.not !== 'object'
+             || typeof b.and !== 'object'
+             || typeof b.not !== 'object'
             ) {
                 return a;
             }
@@ -80,17 +75,17 @@ export class Search {
 
         let out: IAndNot;
         let out2: IAndNot;
-        if (typeof words != 'string' || words == '') {
+        if (typeof words !== 'string' || words == '') {
             return { and: {}, not: {} };
         }
 
         words = words.replace(/^\s+/, '').replace(/\s+$/, '');
-        if (words.length == 0) {
+        if (words.length === 0) {
             return { and: {}, not: {} };
         }
         //log('Words',words);
 
-        if (words.charAt(0) == '(') {
+        if (words.charAt(0) === '(') {
             let blen = branchLen(words);
             let myset = words.substr(0, blen);
             let outset = words.substr(blen);
@@ -100,11 +95,11 @@ export class Search {
             return mixout(isnt ? { and: out.not, not: out.and } : out , out2);
         }
 
-        if (words.charAt(0) == '-') { // Inverse
+        if (words.charAt(0) === '-') { // Inverse
             return this.andNot(words.substr(1), isnt ? false : true);
         }
 
-        if (words.charAt(0) == '+') {
+        if (words.charAt(0) === '+') {
             return this.andNot(words.substr(1), isnt);
         }
 
@@ -118,11 +113,11 @@ export class Search {
     }
 
     coRegexProc(words: string): IPushA[] {
-        if (typeof words != 'string' || words == '') {
+        if (typeof words !== 'string' || words == '') {
             return [];
         }
-        words = words.replace(/^\s+/, "").replace(/\s+$/, []);
-        if (words.length == 0) {
+        words = words.replace(/^\s+/, '').replace(/\s+$/, '');
+        if (words.length === 0) {
             return [];
         }
 
@@ -159,7 +154,10 @@ export class Search {
             branches();
             splitPush(w);
 
-            pushA.forEach(function(n) {n.string = n.string.replace(/^\s+/,"").replace(/\s+$/,"").replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g,".*");n.regex = new RegExp(n.string,"i"); });
+            pushA.forEach(function(n) {
+                n.string = n.string.replace(/^\s+/, '').replace(/\s+$/, '').replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, '.*');
+                n.regex = new RegExp(n.string, 'i');
+            });
 
             return pushA;
         }
@@ -167,64 +165,85 @@ export class Search {
         return regexArray(words);
     }
 
-    searchRule(srch: string): string[] {
-        let out = this.andNot(srch);
+    /**
+     *  This function implements the search
+     * @param {string} srch
+     * @returns {string[]}
+     * 
+     * @memberOf Search
+     */
+    searchRule(srch: string, cb = (n, s) => {}) {
+        return new Promise((resolve, reject) => {
+            let out = this.andNot(srch);
 
-        if (Object.keys(out.and).length == 0) {
-            return [];
-        }
-        let w = Object.keys(out.and)
-                    .concat(Object.keys(out.not))
-                    .sort((x: string, y: string): number => {
-                        return x.length <= y.length ? 1 : 0;
-                    });
-        let w1 = Object.keys(out.and)
-                    .sort((x: string, y: string): number => {
-                        return x.length <= y.length ? 1 : 0;
-                    });
-
-        w.unshift(w.splice(w.indexOf(w1[0]),1)[0]); // Put the largest AND word at the front
-
-        let myset = storage.setextr(WordHash.hash(w[0]), function() {
-            // TODO: What is this for?
-        });
-
-        for (let i:number = 1; i < w.length  && (myset.length >= (w.length-i)); i++) myset = (out.and[w[i]])?crossset(myset, setextr(myhash(w[i]))):notcrossset(myset, setextr(myhash(w[i])));
-
-        // Now we have a set with probable matching, lets do the second match
-
-        let outset = [];
-        let regArray = this.coRegexProc(srch);
-
-        let fullStrings = srch.match(/([\+\-])?\"(.+?)\"/g);
-        if (fullStrings) {
-            fullStrings.forEach(function(n) {
-                let o: IPushA = { match: '+', string: '' };
-                if (n.match(/^\-/)) {
-                    o.match = '-';
-                }
-                o.string = n.replace(/^[\+\-]?\"/, '')
-                    .replace(/\"$/, '')
-                    .replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, "[\\s\\!-\\/\\:-\\@\\[-\\]\\'\\{-~]*");
-                o.regex = new RegExp(o.string, 'i');
-                regArray.unshift(o);
-            });
-        }
-
-        myset.forEach(function(n) {
-            let s = trd(n+".data");
-
-            // Stings match
-
-
-            for (let i = 0; i < regArray.length; i++) {
-                let t = regArray[i].regex.test(s);
-                if (t && regArray[i].match == '-') { return; }
-                if ((!t) && regArray[i].match == '+') { return; }
+            if (Object.keys(out.and).length === 0) {
+                return resolve([]); // TODO: check it, if we go for callbacks
             }
-            outset.push(n);
-        });
+            let w = Object.keys(out.and)
+                        .concat(Object.keys(out.not))
+                        .sort((x: string, y: string): number => {
+                            return x.length <= y.length ? 1 : 0;
+                        });
+            let w1 = Object.keys(out.and)
+                        .sort((x: string, y: string): number => {
+                            return x.length <= y.length ? 1 : 0;
+                        });
 
-        return outset;
+            w.unshift(w.splice(w.indexOf(w1[0]), 1)[0]); // Put the largest AND word at the front
+
+            this.db.getWordHash(w[0]).then((myset: any[]) => {
+                let i = 1;
+
+                let chain = new Promise( (res, rej) => {
+                    function nextStep() {
+                        if (i < w.length && (myset.length >= (w.length - i))) {
+                            this.db.getWordHash(w[i]).then((data) => {
+                                if (out.and[w[i]]) {
+                                    myset = this.crossset(myset, data);
+                                } else {
+                                    myset = this.notcrossset(myset, data);
+                                }
+                                i++;
+                                nextStep(); // Close the loop
+                            }).catch(rej);
+                        } else {
+                            res();
+                        }
+                    }
+                    nextStep();
+                });
+                chain.then(() => {
+                    // Now we have a set with probable matching, lets do the second match
+                    let regArray = this.coRegexProc(srch);
+
+                    let fullStrings = srch.match(/([\+\-])?\"(.+?)\"/g);
+                    if (fullStrings) {
+                        fullStrings.forEach(function(n) {
+                            let o: IPushA = { match: '+', string: '' };
+                            if (n.match(/^\-/)) {
+                                o.match = '-';
+                            }
+                            o.string = n.replace(/^[\+\-]?\"/, '')
+                                .replace(/\"$/, '')
+                                .replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, "[\\s\\!-\\/\\:-\\@\\[-\\]\\'\\{-~]*");
+                            o.regex = new RegExp(o.string, 'i');
+                            regArray.unshift(o);
+                        });
+                    }
+
+                    myset.forEach((n) => {
+                        this.db.getData(n).then((s) => {
+                            for (let i = 0; i < regArray.length; i++) {
+                                let t = regArray[i].regex.test(s);
+                                if (t && regArray[i].match == '-') { return; }
+                                if ((!t) && regArray[i].match == '+') { return; }
+                            }
+                            cb(n, s);
+                        }).catch(reject);
+                    });
+                    resolve();
+                }).catch(reject);
+            }).catch(reject);
+        });
     }
 }

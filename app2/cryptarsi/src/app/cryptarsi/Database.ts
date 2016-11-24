@@ -1,6 +1,7 @@
 import { Crypto } from './CryptoAPI';
 import { AngularIndexedDB } from './Storage';
 import { WaitOK } from './WaitOK';
+import { WordHash } from './Hash';
 import { log } from '../log';
 
 function createStoreInDb(db, version, name) {
@@ -220,7 +221,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             let data = {
                 id: this.crypto.encryptHash(hash),
-                data: this.crypto.encrypt(content)
+                data: this.crypto.encrypt(content instanceof Array ? content.join(',') : content)
             };
             this.store.add(this.indexStoreName, data).then(resolve).catch((e) => {
                 if (e.target.error.code === 0) { // Key duplication
@@ -235,10 +236,14 @@ export class DB {
         return new Promise((resolve, reject) => {
             this.store.getByKey(this.indexStoreName, this.crypto.encryptHash(hash))
                 .then((v) => {
-                    resolve(this.crypto.decrypt((v && v.data) ? v.data : ''));
+                    resolve(this.crypto.decrypt((v && v.data) ? v.data.split(',') : []));
                 })
                 .catch(reject);
         });
+    }
+
+    getWordHash(word) {
+        return this.getHash(WordHash.hash(word));
     }
 
     addIndexToHash(hash, index) { // TODO: test for non existing index

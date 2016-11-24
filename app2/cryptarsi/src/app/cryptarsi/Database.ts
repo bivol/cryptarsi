@@ -236,21 +236,26 @@ export class DB {
         return new Promise((resolve, reject) => {
             this.store.getByKey(this.indexStoreName, this.crypto.encryptHash(hash))
                 .then((v) => {
-                    resolve(this.crypto.decrypt((v && v.data) ? v.data.split(',') : []));
+                    log('getHash then', v);
+                    if (v && v.data) {
+                        resolve(this.crypto.decrypt(v.data).split(','));
+                    } else {
+                        resolve([]);
+                    }
                 })
                 .catch(reject);
         });
     }
 
     getWordHash(word) {
+        log('getWordHash', word, WordHash.hash(word));
         return this.getHash(WordHash.hash(word));
     }
 
     addIndexToHash(hash, index) { // TODO: test for non existing index
         return new Promise((resolve, reject) => {
             this.getHash(hash)
-                .then((data) => {
-                    let ar = data.toString().split(',');
+                .then((ar: any[]) => {
                     if (ar.indexOf(index.toString()) < 0) {
                         ar.push(index.toString());
                         this.modifyHash(hash, ar.join(','))
@@ -267,8 +272,7 @@ export class DB {
     removeIndexFromHash(hash, index) {
         return new Promise((resolve, reject) => {
             this.getHash(hash)
-                .then((data) => {
-                    let ar = data.toString().split(',');
+                .then((ar: any[]) => {
                     if (ar.indexOf(index.toString()) >= 0) {
                         ar.splice(ar.indexOf(index.toString()), 1);
                         this.modifyHash(hash, ar.join(','))

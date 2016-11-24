@@ -21,7 +21,7 @@ export class Search {
     constructor(private db: DB) {
     }
 
-    crossset(w: string[], s: string[]): string[] {
+    private crossset(w: string[], s: string[]): string[] {
         let a: string[] = [];
         for (let i: number = s.length - 1; i >= 0; i--) {
             if (w.indexOf(s[i]) >= 0) {
@@ -31,7 +31,7 @@ export class Search {
         return a;
     }
 
-    notcrossset(w: string[], s: string[]): string[] {
+    private notcrossset(w: string[], s: string[]): string[] {
         let a: string[] = w;
         for (let i: number = s.length - 1; i >= 0; i--) {
             if (a.indexOf(s[i]) >= 0) {
@@ -41,7 +41,7 @@ export class Search {
         return a;
     }
 
-    andNot(words: string, isnt = false): IAndNot {
+    private andNot(words: string, isnt = false): IAndNot {
 
         function branchLen(text: string): number {
             let words: string = text.replace(/^\s+/, '').replace(/\s+$/, '');
@@ -112,7 +112,7 @@ export class Search {
         return mixout(isnt ? { and: {} , not: y } : { and: y, not: {} } , this.andNot(x[2]));
     }
 
-    coRegexProc(words: string): IPushA[] {
+    private coRegexProc(words: string): IPushA[] {
         if (typeof words !== 'string' || words == '') {
             return [];
         }
@@ -194,6 +194,8 @@ export class Search {
             this.db.getWordHash(w[0]).then((myset: any[]) => {
                 let i = 1;
 
+                console.log('MySet is now', myset, 'w', w, 'i', i);
+
                 let chain = new Promise( (res, rej) => {
                     function nextStep() {
                         if (i < w.length && (myset.length >= (w.length - i))) {
@@ -231,6 +233,7 @@ export class Search {
                         });
                     }
 
+                    console.log('MySet is', myset);
                     myset.forEach((n) => {
                         this.db.getData(n).then((s) => {
                             for (let i = 0; i < regArray.length; i++) {

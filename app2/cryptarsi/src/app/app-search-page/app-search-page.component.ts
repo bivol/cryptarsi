@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core
 import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import { DB } from '../cryptarsi/Database';
+import { Search } from '../cryptarsi/Search';
 import { log } from '../log';
 
 @Component({
@@ -15,10 +16,12 @@ export class AppSearchPageComponent {
     @Input('database') database;
     @Output() onDrop = new EventEmitter();
     @ViewChild('encKey') encKey;
+    @ViewChild('searchInput') searchInput;
 
     open = false;
 
     db: DB;
+    srch: Search;
 
     constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
         log('Input is', this.database);
@@ -32,6 +35,7 @@ export class AppSearchPageComponent {
                 log('Decrypted index 0 is', v);
                 if (v.match(/^[0-9 ]+$/)) {
                     this.open = true;
+                    this.srch = new Search(this.db);
                 } else {
                     this._snackbar.open('Your encryption key is probably wrong', 'OK');
                 }
@@ -69,6 +73,10 @@ export class AppSearchPageComponent {
     }
 
     search() {
+        log('Search pressed', this.searchInput.value);
+        this.srch.searchRule(this.searchInput.value, (index, data) => {
+            console.log('Found', index, data);
+        });
     }
 
 }

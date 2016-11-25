@@ -9,7 +9,7 @@ export class WordHash {
 
     static cbPerHash(text: string, cb: any) {
         text.replace(WordHash.regex, (m) => {
-            log('we have matched', m);
+            //log('we have matched', m);
             cb(WordHash.hash(m));
             return m;
         });

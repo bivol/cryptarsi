@@ -44,7 +44,7 @@ export class Crypto {
 
     encryptHash(hash: string): string {
         let o = this.buildKeyIv(hash + this.hashSuffix);
-        log('Hash is', hash, o);
+        log('Hash is', hash, o, CryptoJS.AES.encrypt(hash + this.hashSuffix, o.key, o).toString());
         return CryptoJS.AES.encrypt(hash + this.hashSuffix,
             o.key, o).toString();
     }

@@ -199,6 +199,7 @@ export class DB {
 
     addFile(file, content, obj, progress = (c) => {}) {
         return new Promise((resolve, reject) => {
+            let me = this;
             if (file.type === 'text/plain') {
                 let hashes = {};
                 WordHash.cbPerHash(content, (hash) => {
@@ -207,7 +208,7 @@ export class DB {
 
                 let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + content; // Metadata in every text file shall include the groups
 
-                this.modifyData(obj.index, data)
+                me.modifyData(obj.index, data)
                     .then(() => {
                         log('Successfuly imported, still need index', file, obj);
                         let hashQ = [];
@@ -223,10 +224,10 @@ export class DB {
                                 resolve();
                             }
                             let hash = hashQ.shift();
-                            this.addIndexToHash(hash, obj.index)
+                            me.addIndexToHash(hash, obj.index)
                                 .then(() => {
                                     log('Updated hash', hash, obj.index, file.name);
-                                    procHash();
+                                    //procHash();
                                 })
                                 .catch((e) => {
                                     log('Error inserting hash to index');
@@ -241,7 +242,7 @@ export class DB {
                         reject(e);
                     });
             } else {
-                this.modifyData(obj.index, content)
+                me.modifyData(obj.index, content)
                     .then(() => {
                         log('Successfuly imported', file, obj);
                         progress(1);
@@ -304,7 +305,10 @@ export class DB {
                     log('getHash then', v);
                     if (v && v.data) {
                         let out = this.crypto.decrypt(v.data).split(',');
-                        out.splice(out.indexOf(''), 1); // TODO: find why we have empty element
+                        log('getHash out', out);
+                        if (out.indexOf('') >= 0) {
+                            out.splice(out.indexOf(''), 1); // TODO: find why we have empty element
+                        }
                         resolve(out);
                     } else {
                         resolve([]);
@@ -319,15 +323,22 @@ export class DB {
         return this.getHash(WordHash.hash(word));
     }
 
+    addIndexToWordHash(word, index) {
+        log('addIndexToWordHash', word, WordHash.hash(word));
+        return this.addIndexToHash(WordHash.hash(word), index);
+    }
+
     addIndexToHash(hash, index) { // TODO: test for non existing index
         return new Promise((resolve, reject) => {
-            if (index == '') {
-                resolve();
+            log('addIndexToHash, index is', index, hash);
+            if (!index) {
+                return resolve();
             }
             this.getHash(hash)
                 .then((ar: any[]) => {
                     if (ar.indexOf(index.toString()) < 0) {
                         ar.push(index.toString());
+                        log('Index is added to hash', index, hash, ar);
                         this.modifyHash(hash, ar.join(','))
                             .then(resolve)
                             .catch(reject);

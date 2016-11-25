@@ -8,6 +8,7 @@ import { ImportDirComponent } from './import-dir/import-dir.component';
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { AppDialogComponent } from './app-dialog/app-dialog.component';
 import { AppSearchLineComponent } from './app-search-line/app-search-line.component';
+import { AppViewFileComponent } from './app-view-file/app-view-file.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AppSearchLineComponent } from './app-search-line/app-search-line.compon
     ImportDirComponent,
     AppSearchPageComponent,
     AppSearchLineComponent,
+    AppViewFileComponent,
     AppDialogComponent
   ],
   imports: [

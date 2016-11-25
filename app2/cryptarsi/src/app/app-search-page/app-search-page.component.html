@@ -59,12 +59,24 @@
                             [position]="item.position"
                             [index]="item.index"
                             [text]="item.text"
+                            [query]="item.query"
+                            (onOpen)="openNewTab($event)"
                         >
                         </app-search-line>
                         <br>
                     </div>
                 </md-card-content>
             </md-card>
+        </md-tab>
+        <md-tab *ngFor="let tab of openTabs" [label]="tab.name">
+            <app-view-file
+                [index]="tab.index"
+                [name]="tab.name"
+                [obj]="tab"
+                (onOpen)="openNewTab($event)"
+                (onClose)="closeTab(tab)"
+            >
+            </app-view-file>
         </md-tab>
     </md-tab-group>
 </div>

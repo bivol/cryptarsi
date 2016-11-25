@@ -26,6 +26,8 @@ export class FileReaderAPI {
                 }
                 groups[gname].push({
                     index: index,
+                    type: file.type,
+                    size: file.size,
                     name: file.name
                 });
                 let v = {

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import { DB } from '../cryptarsi/Database';
@@ -12,7 +12,7 @@ import { log } from '../log';
     styleUrls: ['app-search-page.component.css'],
 })
 
-export class AppSearchPageComponent {
+export class AppSearchPageComponent implements OnInit {
     @Input('database') database;
     @Output() onDrop = new EventEmitter();
     @ViewChild('encKey') encKey;
@@ -25,7 +25,12 @@ export class AppSearchPageComponent {
 
     results = [];
 
+    openTabs = [];
+
     constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
+    }
+
+    ngOnInit() {
         log('Input is', this.database);
     }
 
@@ -88,9 +93,14 @@ export class AppSearchPageComponent {
             this.results.push({
                 position: this.results.length,
                 index: index,
-                text: data
+                text: data,
+                query: this.searchInput.value
             });
         });
     }
 
+    openNewTab(item) {
+        console.log('New tab has to be open', item);
+        this.openTabs.push(item);
+    }
 }

@@ -18,13 +18,36 @@ export class AngularIndexedDB {
     }
 
     drop() {
+        log('Store: drop database', this.dbWrapper.dbName);
         return new Promise((resolve, reject) => {
+            log('Dropping');
             let request = this.utils.indexedDB.deleteDatabase(this.dbWrapper.dbName);
-            request.onerror = reject;
+            request.onerror = (e) => {
+                log('Dropping error', e);
+                reject(e);
+            };
+            request.onblocked = (e) => {
+                log('Dropping (b) error', e);
+                reject(e);
+            };
             request.onsuccess = () => {
                 log('Database dropped', this.dbWrapper.dbName);
                 resolve();
             };
+            log('request', request);
+        });
+    }
+
+    close() {
+        log('Lets close the database', this.dbWrapper.dbName);
+        return new Promise((resolve, reject) => {
+            log('Closing');
+            if (this.dbWrapper.db) {
+                this.dbWrapper.db.close();
+                setTimeout(() => { resolve(); }, 300); // Response when the db is supposed to be closed
+            } else {
+                resolve();
+            }
         });
     }
 

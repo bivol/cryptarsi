@@ -20,7 +20,7 @@ export class AppSearchPageComponent {
 
     open = false;
 
-    db: DB;
+    db: DB = null;
     srch: Search;
 
     results = [];
@@ -53,16 +53,23 @@ export class AppSearchPageComponent {
 
     closeDb() {
         this.open = false;
-        this.db = null;
+        if (this.db) {
+            this.db.close().then(() => {
+                this.db = null;
+            });
+        }
     }
 
     dropDb() {
         log('We call dropDb', this.database);
         let dialog = new Dialog(this._dialog);
+        log('New dialog', this._dialog);
         dialog.open('Are you sure you want to drop the database?', (v) => {
+            log('Dialog Call back', v);
             if (v === 'yes') {
-                let db = new DB(this.database, 'xxxxxxx');
-                db.drop().then(() => {
+                let myDb = this.db ? this.db : new DB(this.database, 'xxxxxxx');
+                log('yes, db is', myDb);
+                myDb.drop().then(() => {
                     log('Successfully dropped');
                     this.onDrop.emit();
                     this._snackbar.open('The database is removed!', 'OK');

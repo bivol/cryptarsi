@@ -178,16 +178,23 @@ export class DB {
 
     // Drop database
     drop() {
+        console.log('Called drop database', this.dbName);
         return new Promise((resolve, reject) => {
-            this.store.drop()
-                .then(() => {
-                    log('Going to remove it from the list');
-                    dbList.dropDatabase(this.dbName)
-                        .then(resolve)
-                        .catch(reject);
-                })
-                .catch(reject);
+            this.close().then(() => {
+                this.store.drop()
+                    .then(() => {
+                        log('Going to remove it from the list');
+                        dbList.dropDatabase(this.dbName)
+                            .then(resolve)
+                            .catch(reject);
+                    })
+                    .catch(reject);
+            });
         });
+    }
+
+    close() {
+        return this.store.close();
     }
 
     modifyData(index, content) {

@@ -214,11 +214,16 @@ export class DB {
                         let hashQ = [];
                         progress(0.5);
 
+                        let d = new Date();
+
                         for (let hash in hashes) { hashQ.push(hash); }
                         let hashQlen = hashQ.length;
 
                         function procHash() {
-                            progress((hashQlen - hashQ.length) / (2 * hashQlen));
+                            if ((<any>(new Date()) - <any>d) > 150) {
+                                d = new Date();
+                                progress(0.5 + (hashQlen - hashQ.length) / (2 * hashQlen));
+                            }
                             if (hashQ.length === 0) {
                                 progress(1);
                                 resolve();
@@ -227,7 +232,7 @@ export class DB {
                             me.addIndexToHash(hash, obj.index)
                                 .then(() => {
                                     log('Updated hash', hash, obj.index, file.name);
-                                    //procHash();
+                                    procHash();
                                 })
                                 .catch((e) => {
                                     log('Error inserting hash to index');

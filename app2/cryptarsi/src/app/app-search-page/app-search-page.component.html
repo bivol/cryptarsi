@@ -23,7 +23,7 @@
     </md-card>
 </div>
 <div *ngIf="open">
-    <md-tab-group [selectedIndex]="0">
+    <md-tab-group [(selectedIndex)]="selectedTab">
         <md-tab label="Search">
             <md-card>
                 <md-card-title>
@@ -60,6 +60,7 @@
                             [index]="item.index"
                             [text]="item.text"
                             [query]="item.query"
+                            [db]="item.db"
                             (onOpen)="openNewTab($event)"
                         >
                         </app-search-line>
@@ -72,7 +73,7 @@
             <app-view-file
                 [index]="tab.index"
                 [name]="tab.name"
-                [obj]="tab"
+                [tab]="tab"
                 (onOpen)="openNewTab($event)"
                 (onClose)="closeTab(tab)"
             >

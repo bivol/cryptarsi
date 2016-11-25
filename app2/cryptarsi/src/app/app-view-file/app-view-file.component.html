@@ -1,4 +1,15 @@
+<button md-button class="md-button" aria-label="Close Tab" (click)="closeTab()">
+Close Tab
+</button>
+<br>
+
 File Name: {{name}}<br>
 File Index: {{index}}<br>
 
-File
+<div *ngFor="let item of files">
+    <b><a href="#" (click)="viewFile(item)">{{item.name}} {{item.index}}</a></b>;
+</div>
+
+<pre>
+{{data}}
+</pre>

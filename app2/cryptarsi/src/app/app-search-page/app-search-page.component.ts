@@ -23,6 +23,8 @@ export class AppSearchPageComponent implements OnInit {
     db: DB = null;
     srch: Search;
 
+    selectedTab = 0;
+
     results = [];
 
     openTabs = [];
@@ -94,6 +96,7 @@ export class AppSearchPageComponent implements OnInit {
                 position: this.results.length,
                 index: index,
                 text: data,
+                db: this.db,
                 query: this.searchInput.value
             });
         });
@@ -101,6 +104,18 @@ export class AppSearchPageComponent implements OnInit {
 
     openNewTab(item) {
         console.log('New tab has to be open', item);
-        this.openTabs.push(item);
+        // Add it only if it does not exist
+        if (this.openTabs.filter(n => n.name === item.name).length === 0) {
+            this.openTabs.push(item);
+            this.selectedTab = this.openTabs.length;
+        }
+    }
+
+    closeTab(item) {
+        console.log('This tab is closed', item);
+        if (this.openTabs.filter(n => n.name === item.name).length > 0) {
+            this.openTabs.splice(this.openTabs.map(n => n.name === item.name).indexOf(true), 1);
+            this.selectedTab = 0;
+        }
     }
 }

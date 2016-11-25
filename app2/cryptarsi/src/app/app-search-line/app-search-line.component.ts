@@ -21,6 +21,7 @@ export class AppSearchLineComponent implements OnInit {
     @Input('index') index;
     @Input('text') text;
     @Input('query') query;
+    @Input('db') db;
 
     @Output() onOpen = new EventEmitter();
 
@@ -43,7 +44,8 @@ export class AppSearchLineComponent implements OnInit {
     }
 
     viewFile(item) {
-        console.log('View is clicked', item);
+        console.log('View is clicked', item, this.db);
+        item.db = this.db;
         this.onOpen.emit(item);
     }
 }

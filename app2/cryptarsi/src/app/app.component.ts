@@ -17,6 +17,7 @@ export class AppComponent {
 
   constructor() {
 
+    /*
     this.db = new DB('aa', 'enc');
     this.refreshDbList();
 
@@ -26,6 +27,7 @@ export class AppComponent {
       this.db.getNextIndex()
         .then((n) => log('next index is', n))
         .catch((e) => log('err', e));
+        */
       /*
       this.db.addIndexToHash('pesho', Math.random() * 100)
         .then(() => {
@@ -43,9 +45,9 @@ export class AppComponent {
         })
         .catch((e) => log('error', e));
         */
-    }).catch(() => {
+/*    }).catch(() => {
       log('Error');
-    });
+    }); */
     /*
     this.db.createListDb().then(() => {
       log('ListDB created');

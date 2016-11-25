@@ -5,7 +5,7 @@ export class FileReaderAPI {
     }
 
     readAll(files, cbfile = (f, text, obj?) => {
-    }, cbprogress = (f, loaded, total, count?, totalcount?) => {
+    }, cbprogress = (f, loaded, total, count?, totalcount?, clength?) => {
     }) {
         let me = this;
         return new Promise((resolve, reject) => {
@@ -53,7 +53,7 @@ export class FileReaderAPI {
                 me.readFile(file, (file, l, t) => {
                     // log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
-                        cbprogress(file, loaded + l, total, cnt, files.length);
+                        cbprogress(file, loaded + l, total, cnt, files.length, l);
                     }
                 }).then((text) => {
                     // log('File', file.name, 'loaded');

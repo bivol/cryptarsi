@@ -17,50 +17,33 @@ export class ImportDir {
             this.store.open().then(() => {
                 log('Starting the import');
                 let lastIndex = 0;
+                let gTotal = 0;
+                let gLoaded = 0;
+                let gCount = 0;
+                let gTotalcnt = 0;
+                let gL = 0;
+
                 r.readAll(files, (f, text, obj) => {
                     log('Downloaded', f.name, f.type, obj);
-                    // let enc = this.crypto.encrypt(text);
                     lastIndex = Math.max(obj.index, lastIndex);
 
-                    if (f.type == 'text/plain') {
-                        // We must build index
-                        // Lets fix the index
-                        let hashes = {};
-                        WordHash.cbPerHash(text, (hash) => {
-                            hashes[hash] = obj.index;
+                    this.store.addFile(f, text, obj, (c) => {
+                        // This is called in case of a progress. C will be between 0 and 1 (for 100%)
+                        progress(f, (gLoaded - gL) * 3 + 2 * gL * c, gTotal * 3, gCount, gTotalcnt);
+                    })
+                        .then(() => {
+                        })
+                        .catch((e) => {
+                            log('Error inserting file', e);
                         });
-
-                        let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + text; // Metadata in every text file shall include the groups
-
-                        this.store.modifyData(obj.index, data)
-                            .then(() => {
-                                log('Successfuly imported, still need index', f, obj);
-                                for (let hash in hashes) {
-                                    this.store.addIndexToHash(hash, obj.index)
-                                        .then(() => {
-                                            log('Updated hash', hash, f.name);
-                                        })
-                                        .catch((e) => {
-                                            log('Error inserting hash to index');
-                                        });
-                                };
-                            })
-                            .catch((e) => {
-                                log('Error inserting', f, e, obj);
-                            });
-                    } else {
-                        this.store.modifyData(obj.index, text)
-                            .then(() => {
-                                log('Successfuly imported', f, obj);
-                            })
-                            .catch((e) => {
-                                log('Error inserting', f, e, obj);
-                            });
-                    }
-
-                }, (f, loaded, total, count, totalcnt) => {
+                }, (f, loaded, total, count, totalcnt, l) => {
                     if (progress) {
-                        progress(f, loaded, total, count, totalcnt);
+                        gTotal = total;
+                        gLoaded = loaded;
+                        gCount = count;
+                        gTotalcnt = totalcnt;
+                        gL = l;
+                        progress(f, (loaded - l) * 3 + l, total * 3, count, totalcnt);
                     }
                 }).then(() => {
                     this.store.setNextIndex(lastIndex)

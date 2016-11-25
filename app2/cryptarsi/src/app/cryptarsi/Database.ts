@@ -197,6 +197,64 @@ export class DB {
         return this.store.close();
     }
 
+    addFile(file, content, obj, progress = (c) => {}) {
+        return new Promise((resolve, reject) => {
+            if (file.type === 'text/plain') {
+                let hashes = {};
+                WordHash.cbPerHash(content, (hash) => {
+                    hashes[hash] = obj.index;
+                });
+
+                let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + content; // Metadata in every text file shall include the groups
+
+                this.modifyData(obj.index, data)
+                    .then(() => {
+                        log('Successfuly imported, still need index', file, obj);
+                        let hashQ = [];
+                        progress(0.5);
+
+                        for (let hash in hashes) { hashQ.push(hash); }
+                        let hashQlen = hashQ.length;
+
+                        function procHash() {
+                            progress((hashQlen - hashQ.length) / (2 * hashQlen));
+                            if (hashQ.length === 0) {
+                                progress(1);
+                                resolve();
+                            }
+                            let hash = hashQ.shift();
+                            this.addIndexToHash(hash, obj.index)
+                                .then(() => {
+                                    log('Updated hash', hash, obj.index, file.name);
+                                    procHash();
+                                })
+                                .catch((e) => {
+                                    log('Error inserting hash to index');
+                                });
+                        }
+
+                        procHash();
+
+                    })
+                    .catch((e) => {
+                        log('Error inserting', file, e, obj);
+                        reject(e);
+                    });
+            } else {
+                this.modifyData(obj.index, content)
+                    .then(() => {
+                        log('Successfuly imported', file, obj);
+                        progress(1);
+                        resolve();
+                    })
+                    .catch((e) => {
+                        log('Error inserting', file, e, obj);
+                        reject(e);
+                    });
+            }
+        });
+    }
+
     modifyData(index, content) {
         return new Promise((resolve, reject) => {
             let data = {

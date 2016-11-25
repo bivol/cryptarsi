@@ -64,6 +64,14 @@ export class ImportDirComponent {
         return true;
     }
 
+    validateFiles(): boolean {
+        if ((!this.files) || (this.files.length === 0)) {
+            this._snackbar.open('Please select directory to encrypt', 'OK');
+            return false;
+        }
+        return true;
+    }
+
     checkDb() {
         return new Promise((resolve, reject) => {
             log('Checking db');
@@ -84,6 +92,10 @@ export class ImportDirComponent {
 
             if (!this.validateKeys()) {
                 this.encKey1.focus();
+                return reject();
+            }
+
+            if (!this.validateFiles()) {
                 return reject();
             }
 

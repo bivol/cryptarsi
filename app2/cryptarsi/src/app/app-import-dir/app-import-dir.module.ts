@@ -2,19 +2,19 @@
 import { NgModule } from '@angular/core';
 
 // This Module's Components
-import { ImportDirComponent } from './import-dir.component';
+import { AppImportDirComponent } from './app-import-dir.component';
 
 @NgModule({
     imports: [
 
     ],
     declarations: [
-        ImportDirComponent,
+        AppImportDirComponent,
     ],
     exports: [
-        ImportDirComponent,
+        AppImportDirComponent,
     ]
 })
-export class ImportDirModule {
+export class AppImportDirModule {
 
 }

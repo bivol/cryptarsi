@@ -8,11 +8,11 @@ import { log } from '../log';
 @Component({
     // moduleId: module.id,
     selector: 'app-import-dir',
-    templateUrl: 'import-dir.component.html',
-    styleUrls: ['import-dir.component.css']
+    templateUrl: 'app-import-dir.component.html',
+    styleUrls: ['app-import-dir.component.css']
 })
-export class ImportDirComponent {
-    componentName: 'ImportDirComponent';
+export class AppImportDirComponent {
+    componentName: 'AppImportDirComponent';
 
     @Output() onImport = new EventEmitter();
 

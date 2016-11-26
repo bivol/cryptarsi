@@ -180,6 +180,6 @@ export class Tar {
     }
 
     readTar(buffer) {
-        
+        // TODO: implement reading a tar file
     }
 }

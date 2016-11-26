@@ -226,7 +226,7 @@ export class DB {
                             }
                             if (hashQ.length === 0) {
                                 progress(1);
-                                resolve();
+                                return resolve();
                             }
                             let hash = hashQ.shift();
                             me.addIndexToHash(hash, obj.index)

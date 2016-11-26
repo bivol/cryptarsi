@@ -9,6 +9,7 @@ import { AppSearchPageComponent } from './app-search-page/app-search-page.compon
 import { AppDialogComponent } from './app-dialog/app-dialog.component';
 import { AppSearchLineComponent } from './app-search-line/app-search-line.component';
 import { AppViewFileComponent } from './app-view-file/app-view-file.component';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppViewFileComponent } from './app-view-file/app-view-file.component';
     AppSearchPageComponent,
     AppSearchLineComponent,
     AppViewFileComponent,
-    AppDialogComponent
+    AppDialogComponent,
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,

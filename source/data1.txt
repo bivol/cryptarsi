@@ -1,0 +1,9 @@
+id 1
+date  26.11.2016
+origin  Cryptarsi 2.0
+tags Cryptarsi Howto
+subject Cryptarsi - encode and query encrypted data
+
+Documents having a .txt extension, containing raw text with UTF-8 encoding are indexed by the system.
+
+All the other files starting with the same name in the source directory are attached to the document. Accepted extensions for attached files are JPG, PNG, PDF, MP3 and OGG

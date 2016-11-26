@@ -2,9 +2,9 @@
 <div>
     {{position}}:{{index}}<br>
     <div *ngFor="let item of files">
-        <b><a href="#" (click)="viewFile(item)">{{item.name}} {{item.index}}</a></b>;
+        <b><a href="#" (click)="viewFile(item)">{{item.name}} {{item.index}}</a></b>
     </div>
-    <pre>
+
     {{content}}
-    </pre>
+
 </div>

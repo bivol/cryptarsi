@@ -27,15 +27,10 @@ export class ImportDir {
                     log('Downloaded', f.name, f.type, obj);
                     lastIndex = Math.max(obj.index, lastIndex);
 
-                    this.store.addFile(f, text, obj, (c) => {
+                    return this.store.addFile(f, text, obj, (c) => {
                         // This is called in case of a progress. C will be between 0 and 1 (for 100%)
                         progress(f, (gLoaded - gL) * 3 + 2 * gL * c, gTotal * 3, gCount, gTotalcnt);
-                    })
-                        .then(() => {
-                        })
-                        .catch((e) => {
-                            log('Error inserting file', e);
-                        });
+                    });
                 }, (f, loaded, total, count, totalcnt, l) => {
                     if (progress) {
                         gTotal = total;

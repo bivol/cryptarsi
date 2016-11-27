@@ -5,6 +5,9 @@ export class FileReaderAPI {
     }
 
     readAll(files, cbfile = (f, text, obj?) => {
+        return new Promise((resolve, reject) => {
+            resolve();
+        });
     }, cbprogress = (f, loaded, total, count?, totalcount?, clength?) => {
     }) {
         let me = this;
@@ -62,9 +65,14 @@ export class FileReaderAPI {
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
-                        cbfile(file, text, hash[nindex[file.name]]);
+                        cbfile(file, text, hash[nindex[file.name]])
+                            .then(() => {
+                                processNextFile();
+                            })
+                            .catch(reject);
+                    } else {
+                        processNextFile();
                     }
-                    processNextFile();
                 }).catch(reject);
             }
 

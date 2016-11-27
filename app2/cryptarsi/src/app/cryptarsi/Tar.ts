@@ -1,6 +1,25 @@
 // Implementation of tar archive
 // Based partially on tar-js by Jameson Little
 
+interface IHeaderField {
+    fileName?;
+    fileMode?;
+    uid?;
+    gid?;
+    fileSize?;
+    mtime?;
+    checksum?;
+    type?;
+    linkName?;
+    ustar?;
+    owner?;
+    group?;
+    majorNumber?;
+    minorNumber?;
+    filenamePrefix?;
+    padding?;
+};
+
 export class Tar {
 
     recordSize = 512;
@@ -138,7 +157,7 @@ export class Tar {
         owner = '',
         group = ''
     ) {
-        let data = {
+        let data: IHeaderField = {
             fileName: name,
             fileMode: this.pad(mode, 7),
             uid: this.pad(uid, 7),
@@ -177,6 +196,7 @@ export class Tar {
 
         //console.log('Tar buf.len', this.buffer.length, 'cont.len', content.length, 'pos', this.writen);
         this.buffer.set(content, this.writen);
+        // TODO: probably the line bellow is having a bug and sometimes adding two extra blocks
         this.writen += content.length + (this.recordSize - (content.length % this.recordSize || this.recordSize));
 
         // Always add 2 extra records, for compatibility with GNU Tar
@@ -192,9 +212,45 @@ export class Tar {
         this.buffer = this.cleanBuffer(this.blockSize);
     }
 
-    readTar(buffer) {
-        // TODO: implement reading a tar file
+    private readHeader(buffer, pos): IHeaderField {
+        let data: IHeaderField = {};
+
+        this.headerFormat.forEach(function (value) {
+            let str = '';
+            for (let i = 0; i < value.length; i++) {
+                if (buffer[pos + i] == 0) {
+                    break;
+                }
+                str += String.fromCharCode(buffer[pos + i]);
+            }
+            data[value.field] = str;
+            pos += value.length;
+        });
+
+        return data;
+    };
+
+    readTar(iBuffer) {
+        let buffer;
+        if (iBuffer instanceof Uint8Array) {
+            buffer = Uint8Array;
+        } else {
+            buffer = new Uint8Array(iBuffer.length);
+            for (let i = iBuffer.length - 1; i >= 0; i--) {
+                buffer[i] = iBuffer.charCodeAt(i);
+            }
+        }
 
         // One file has 512 bytes of header + variable length data
+        console.log('I have data in buffer', buffer);
+        let pos = 0;
+        let data = this.readHeader(buffer, pos);
+        console.log('Return data', data);
+        pos += 512;
+        let content = '';
+        for (let i = 0; i <= data.fileSize; i++) {
+            content += String.fromCharCode(buffer[pos + i]);
+        }
+        console.log('Return content', content);
     }
 }

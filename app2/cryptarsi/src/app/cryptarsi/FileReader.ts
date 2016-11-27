@@ -99,7 +99,11 @@ export class FileReaderAPI {
                 }
             };
 
-            reader.readAsText(file, 'utf-8');
+            if (file.type === 'text/plain') {
+                reader.readAsText(file, 'utf-8');
+            } else {
+                reader.readAsBinaryString(file); // To verify
+            }
         });
     }
 }

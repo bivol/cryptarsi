@@ -2,6 +2,7 @@ import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { log } from '../log';
 import { DbList } from '../cryptarsi/Database';
+import { ImportDB } from '../cryptarsi/ImportDB';
 
 @Component({
     //moduleId: module.id,
@@ -74,6 +75,14 @@ export class AppImportDbComponent {
     submit() {
         this.checkForm().then(() => {
             this.processing = true;
+            let imp = new ImportDB(this.dbName.value);
+            imp.importFile(this.files, (f, loaded, total) => {
+            }).then(() => {
+
+            }).catch((e) => {
+                console.log('Error importing', e);
+                this._snackbar.open('Cannot import the Database', 'OK');
+            });
         }).catch(() => {});
     }
 }

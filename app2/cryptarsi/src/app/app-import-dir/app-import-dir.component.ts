@@ -1,7 +1,6 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
-import { Crypto } from '../cryptarsi/CryptoAPI';
 import { DbList } from '../cryptarsi/Database';
 import { log } from '../log';
 
@@ -30,11 +29,6 @@ export class AppImportDirComponent {
     processing = false;
 
     constructor(private _snackbar: MdSnackBar) {
-        let c = new Crypto('parola');
-        let cr = c.encrypt('moiat test');
-        log('ENC', cr);
-        let rc = c.decrypt(cr);
-        log('DEC', rc);
     }
 
     validateDbName(): boolean {

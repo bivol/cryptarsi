@@ -34,7 +34,7 @@
   <div class="app-content">
     <span [ngSwitch]="menuSelected">
       <span *ngSwitchCase="'importDb'">
-        <app-import-db (onImport)="importedDir()"></app-import-dir>
+        <app-import-db (onImport)="importedDir()"></app-import-db>
       </span>
       <span *ngSwitchCase="'importDir'">
         <app-import-dir (onImport)="importedDir()"></app-import-dir>

@@ -125,6 +125,7 @@ export class DbList {
             listOk().then(() => {
                 log('Get db name', name);
                 dbList.getDatabase(name).then((v) => {
+                    log('isPresent, got', name, v);
                     if (v) {
                         resolve(v);
                     } else {

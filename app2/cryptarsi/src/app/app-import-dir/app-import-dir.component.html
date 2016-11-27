@@ -20,6 +20,8 @@
                 placeholder="Encryption Key 1" 
                 maxlength="128" 
                 dividerColor="accent"
+                md-tooltip="Enter the encryption key"
+                tooltip-position="below"
                 (change)="validateKeys()"
             >
             </md-input>
@@ -28,6 +30,8 @@
                 #encKey2 
                 placeholder="Encryption Key 2" 
                 maxlength="128" 
+                md-tooltip="Enter the encryption key again"
+                tooltip-position="below"
                 dividerColor="accent"
                 (change)="validateKeys()"
             >
@@ -60,7 +64,7 @@
                 color="accent"
                 mode="determinate"
                 [value]="progress"
-                aria-label="Determinate progress-bar example"></md-progress-bar>
+                aria-label="Progress bar"></md-progress-bar>
         </label>
     </md-card>
 </div>

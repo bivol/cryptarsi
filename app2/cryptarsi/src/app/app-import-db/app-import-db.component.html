@@ -1,1 +1,44 @@
-<!--component html goes here -->
+<div>
+    <md-card *ngIf="!processing" class="app-input-selection" >
+        <form novalidate (ngSubmit)="submit()" >
+            <md-input
+                #dbName
+                placeholder="Database Name"
+                (change)="checkDbName" 
+                maxlength="50"
+                md-tooltip="Enter new database name"
+                tooltip-position="below"
+                (change)="validateDbName()"
+            >
+                <md-hint #dbNameHint align="end">
+                    {{dbName.characterCount}}/50
+                </md-hint>
+            </md-input>
+            <label for=fileName>
+            <input 
+                #fileName 
+                id="fileName" 
+                type="file" 
+                (change)="onFileChange($event)"
+            >
+            </label>
+            <button type=submit md-raised-button>
+                Import
+            </button>
+        </form>
+    </md-card>
+    <md-card *ngIf="processing">
+        <label>
+            <div>
+                <div>Total Progress: {{progress}}%</div>
+            </div>
+            <br>
+            <md-progress-bar
+                class="app-progress"
+                color="accent"
+                mode="determinate"
+                [value]="progress"
+                aria-label="Progress bar"></md-progress-bar>
+        </label>
+    </md-card>    
+</div>

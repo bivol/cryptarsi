@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+@import '~@ng2-material/ng2-material.css';
+@import '~@ng2-material/font/font.css';
 
 html {
   height: 100%;

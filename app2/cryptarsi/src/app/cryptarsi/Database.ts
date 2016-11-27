@@ -200,7 +200,7 @@ export class DB {
     addFile(file, content, obj, progress = (c) => {}) {
         return new Promise((resolve, reject) => {
             let me = this;
-            if (file.type === 'text/plain') {
+            if (file.type === 'text/xml' || file.type === 'text/plain') {
                 let hashes = {};
                 WordHash.cbPerHash(content, (hash) => {
                     hashes[hash] = obj.index;

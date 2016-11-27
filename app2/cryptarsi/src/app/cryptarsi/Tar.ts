@@ -248,8 +248,10 @@ export class Tar {
         console.log('Return data', data);
         pos += 512;
         let content = '';
-        for (let i = 0; i <= data.fileSize; i++) {
+        console.log('data.fileSize', data.fileSize);
+        for (let i = 0; i < parseInt(data.fileSize, 10); i++) {
             content += String.fromCharCode(buffer[pos + i]);
+            //console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
         }
         console.log('Return content', content);
     }

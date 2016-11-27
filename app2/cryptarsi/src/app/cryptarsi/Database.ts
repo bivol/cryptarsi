@@ -389,4 +389,20 @@ export class DB {
         return this.modifyData(0, index + ' ');
     }
 
+    getAllIndexes() {
+        return this.store.getAll(this.indexStoreName);
+    }
+
+    getAllData() {
+        return this.store.getAll(this.dataStoreName);
+    }
+
+    getAllCbIndexes(cb) {
+        return this.store.getAllCb(this.indexStoreName, cb);
+    }
+
+    getAllCbData(cb) {
+        return this.store.getAllCb(this.dataStoreName, cb);
+    }
+
 }

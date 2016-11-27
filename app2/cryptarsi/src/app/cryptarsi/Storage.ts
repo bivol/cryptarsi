@@ -114,11 +114,11 @@ export class AngularIndexedDB {
 
     getAll(storeName: string) {
         let self = this;
-        let result = [];
-        let promise = new Promise<any>((resolve, reject)=> {
+        let promise = new Promise<any>((resolve, reject ) => {
             self.dbWrapper.validateBeforeTransaction(storeName, reject);
 
-            let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+            let result = [],
+                transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
                         reject(e);
@@ -128,7 +128,6 @@ export class AngularIndexedDB {
                     }
                 }),
                 objectStore = transaction.objectStore(storeName),
-                result = [],
                 request = objectStore.openCursor();
 
             request.onerror = function (e) {
@@ -140,6 +139,43 @@ export class AngularIndexedDB {
                 if (cursor) {
                     result.push(cursor.value);
                     cursor['continue']();
+                }
+            };
+        });
+
+        return promise;
+    }
+
+    getAllCb(storeName: string, cb) {
+        let self = this;
+        let promise = new Promise<any>((resolve, reject ) => {
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
+
+            let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+                    dbMode: self.utils.dbMode.readOnly,
+                    error: (e: Event) => {
+                        reject(e);
+                    },
+                    complete: (e: Event) => {
+                        resolve();
+                    }
+                }),
+                objectStore = transaction.objectStore(storeName),
+                request = objectStore.openCursor();
+
+            request.onerror = function (e) {
+                reject(e);
+            };
+
+            request.onsuccess = function (evt) {
+                let cursor = (<IDBOpenDBRequest>evt.target).result;
+                if (cursor) {
+                    cb(cursor.value).then(() => {
+                       // console.log('Got back from the cb')
+                        cursor['continue']();
+                    }).catch((e) => {
+                        reject(e);
+                    });
                 }
             };
         });

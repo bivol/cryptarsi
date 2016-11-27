@@ -3,6 +3,7 @@ import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import { DB } from '../cryptarsi/Database';
 import { Search } from '../cryptarsi/Search';
+import { ExportDB } from '../cryptarsi/ExportDB';
 import { log } from '../log';
 
 @Component({
@@ -22,6 +23,8 @@ export class AppSearchPageComponent implements OnInit {
 
     db: DB = null;
     srch: Search;
+
+    exportWorking = false;
 
     selectedTab = 0;
 
@@ -117,5 +120,20 @@ export class AppSearchPageComponent implements OnInit {
             this.openTabs.splice(this.openTabs.map(n => n.name === item.name).indexOf(true), 1);
             this.selectedTab = 0;
         }
+    }
+
+    exportDb() {
+        console.log('Export database');
+        let exp = new ExportDB(this.db);
+        this.exportWorking = true;
+        exp.exportTar().then((buffer) => {
+            console.log('The database is exported, make it downloadable');
+            window.open(window.URL.createObjectURL(buffer));
+            this.exportWorking = false;
+        }).catch((e) => {
+            console.log('Error exporting Tar', e);
+            this._snackbar.open('Cannot export the database');
+            this.exportWorking = false;
+        });
     }
 }

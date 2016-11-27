@@ -36,6 +36,10 @@
                     <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
                     Drop Database
                     </button>
+                    <button md-button class="md-button" aria-label="Settings" (click)="exportDb()">
+                    Export Database
+                    </button>
+                    <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
                 </md-card-actions>
                 <md-card-content>
                     <!--<form novalidate (ngSubmit)="search()" >-->

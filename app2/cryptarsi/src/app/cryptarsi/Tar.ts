@@ -92,6 +92,14 @@ export class Tar {
     private extendBuffer(orig, length: number, addLength: number, multipleOf: number) {
         let newSize = length + addLength,
             buffer = this.cleanBuffer((parseInt((newSize / multipleOf).toString()) + 1) * multipleOf);
+        /*
+        console.log('Extend Buffer org:', orig.length,
+            'to:', (parseInt((newSize / multipleOf).toString()) + 1) * multipleOf,
+            'result:', buffer.length,
+            'length', length,
+            'addLength', addLength
+        );
+        */
         buffer.set(orig);
         return buffer;
 }
@@ -160,9 +168,14 @@ export class Tar {
 
         if (this.writen + content.length > this.buffer.length) {
             // Extend the buffer
-            this.buffer = this.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
+            this.buffer = this.extendBuffer(this.buffer,
+                this.writen,
+                content.length,
+                this.blockSize
+            );
         }
 
+        //console.log('Tar buf.len', this.buffer.length, 'cont.len', content.length, 'pos', this.writen);
         this.buffer.set(content, this.writen);
         this.writen += content.length + (this.recordSize - (content.length % this.recordSize || this.recordSize));
 
@@ -181,5 +194,7 @@ export class Tar {
 
     readTar(buffer) {
         // TODO: implement reading a tar file
+
+        // One file has 512 bytes of header + variable length data
     }
 }

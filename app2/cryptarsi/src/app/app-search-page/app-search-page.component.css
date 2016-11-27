@@ -1,3 +1,9 @@
 .app-input {
     width: 80%
 }
+
+.app-spinner {
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+}

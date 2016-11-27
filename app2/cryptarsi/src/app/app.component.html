@@ -1,7 +1,7 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
     <button md-button (click)="menuSelected='importDir'">Import new directory as database</button><br>
-    <!--<button md-button (click)="menuSelected='importDb'">Import new database</button><br><br>-->
+    <button md-button (click)="menuSelected='importDb'">Import database</button><br><br>
     <hr>
     <div *ngIf="collection && collection.length>0">
       <button md-button (click)="menuSelected=null">Select databases:</button><br>
@@ -33,6 +33,9 @@
 
   <div class="app-content">
     <span [ngSwitch]="menuSelected">
+      <span *ngSwitchCase="'importDb'">
+        <app-import-db (onImport)="importedDir()"></app-import-dir>
+      </span>
       <span *ngSwitchCase="'importDir'">
         <app-import-dir (onImport)="importedDir()"></app-import-dir>
       </span>

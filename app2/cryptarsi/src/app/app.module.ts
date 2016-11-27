@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { AppComponent } from './app.component';
 import { AppImportDirComponent } from './app-import-dir/app-import-dir.component';
+import { AppImportDbComponent } from './app-import-db/app-import-db.component';
 import { AppSearchPageComponent } from './app-search-page/app-search-page.component';
 import { AppDialogComponent } from './app-dialog/app-dialog.component';
 import { AppSearchLineComponent } from './app-search-line/app-search-line.component';
@@ -15,6 +16,7 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
   declarations: [
     AppComponent,
     AppImportDirComponent,
+    AppImportDbComponent,
     AppSearchPageComponent,
     AppSearchLineComponent,
     AppViewFileComponent,

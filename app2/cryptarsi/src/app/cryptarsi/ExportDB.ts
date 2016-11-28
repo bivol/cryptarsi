@@ -29,18 +29,18 @@ export class ExportDB {
             this.db.getAllCbIndexes((data) => {
                 console.log('one index cursor is', data);
                 return new Promise((resolve2, reject2) => {
-                    buffer = tar.addFile('index/' + this.stringToHex(data.id), data.data);
+                    buffer = tar.addFile('i/' + this.stringToHex(atob(data.id)), data.data);
                     resolve2();
                 });
             }).then(() => {
                 this.db.getAllCbData((data) => {
                     console.log('one data cursor is', data);
                     return new Promise((resolve2, reject2) => {
-                        buffer = tar.addFile('data/' + this.stringToHex(data.id), data.data);
+                        buffer = tar.addFile('d/' + this.stringToHex(atob(data.id)), data.data);
                         resolve2();
                     });
                 }).then(() => {
-                    console.log('Indexes are in buffer with length', buffer.length);
+                    console.log('Indexes are in buffer with length', buffer, buffer.length);
                     resolve(new Blob([buffer], { type: 'application/tar' }));
                 }).catch(reject);
             }).catch(reject);

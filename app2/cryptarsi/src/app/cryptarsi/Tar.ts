@@ -127,20 +127,23 @@ export class Tar {
         return '000000000000'.substr(num.length + 12 - bytes) + num;
     }
 
+    private stringToUint8(input, out?, offset = 0) {
+        out = out || this.cleanBuffer(input.length);
+        let o = offset + input.length - 1;
+        for (let i = input.length - 1 ; i >= 0; i--) {
+            out[o--] = input.charCodeAt(i);
+        }
+        return out;
+    }
+
     private format(data, cb?) {
         let buffer = this.cleanBuffer(512),
             offset = 0;
 
-        this.headerFormat.forEach(function (value) {
-            let str = data[value.field] || '',
-                i, length;
-
-            for (i = 0, length = str.length; i < length; i += 1) {
-                buffer[offset] = str.charCodeAt(i);
-                offset += 1;
-            }
-
-            offset += value.length - i; // space it out with nulls
+        this.headerFormat.forEach((value) => {
+            let str = data[value.field] || '';
+            this.stringToUint8(str, buffer, offset);
+            offset += value.length; // space it out with nulls
         });
 
         if (typeof cb === 'function') {
@@ -157,12 +160,20 @@ export class Tar {
         owner = '',
         group = ''
     ) {
-        let data: IHeaderField = {
+        if (name.length > 99) {
+            console.error('Error: name length larger than 99 charactgers!', name);
+        }
+        let data = content;
+        if (typeof data === 'string') {
+            data = this.stringToUint8(content);
+        }
+
+        let header: IHeaderField = {
             fileName: name,
             fileMode: this.pad(mode, 7),
             uid: this.pad(uid, 7),
             gid: this.pad(gid, 7),
-            fileSize: this.pad(content.length, 11),
+            fileSize: this.pad(data.length, 11),
             mtime: this.pad(mtime, 11),
             checksum: '        ',
             type: '0', // just a file
@@ -170,34 +181,43 @@ export class Tar {
             owner: owner || '',
             group: group || ''
         };
+
         let checksum = 0;
 
-        Object.keys(data).forEach((key) => {
-            let value = data[key];
-            let length = value.length;
-            for (let i = length - 1; i >= 0; i --) {
+        Object.keys(header).forEach((key) => {
+            let value = header[key];
+            for (let i = value.length - 1; i >= 0; i --) {
                 checksum += value.charCodeAt(i);
             }
         });
 
-        data.checksum = this.pad(checksum, 6) + '\u0000';
-        let headerArr = this.format(data);
+        header.checksum = this.pad(checksum, 6) + '\u0000';
+
+        let headerArr = this.format(header);
+        //console.log('HeaderArr', headerArr, headerArr.length);
         this.buffer.set(headerArr, this.writen);
         this.writen += headerArr.length;
 
-        if (this.writen + content.length > this.buffer.length) {
+        if (this.writen + data.length > this.buffer.length) {
             // Extend the buffer
             this.buffer = this.extendBuffer(this.buffer,
                 this.writen,
-                content.length,
+                data.length,
                 this.blockSize
             );
         }
 
         //console.log('Tar buf.len', this.buffer.length, 'cont.len', content.length, 'pos', this.writen);
-        this.buffer.set(content, this.writen);
+        this.buffer.set(data, this.writen);
         // TODO: probably the line bellow is having a bug and sometimes adding two extra blocks
-        this.writen += content.length + (this.recordSize - (content.length % this.recordSize || this.recordSize));
+        // this.written += input.length + (recordSize - (input.length % recordSize || recordSize));
+        let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
+        this.writen += (data.length + roundToRecord);
+        console.log('rounding', name, 'data length', data.length,
+            'recordSize', this.recordSize,
+            'lefover', (data.length % this.recordSize),
+            'how much we add', roundToRecord,
+            'where we are after adding', this.writen);
 
         // Always add 2 extra records, for compatibility with GNU Tar
         if (this.buffer.length - this.writen < this.recordSize * 2) {

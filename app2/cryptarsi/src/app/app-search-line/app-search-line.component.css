@@ -1,0 +1,12 @@
+.app-search-line {
+
+}
+
+.app-search-line:hover {
+    background: #F0F0F0;
+    cursor: pointer;
+}
+
+.app-search-line-files {
+    display: inline-flex;
+}

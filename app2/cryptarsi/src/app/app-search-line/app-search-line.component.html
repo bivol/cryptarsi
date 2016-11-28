@@ -1,10 +1,14 @@
 <br>
 <div>
-    {{position}}:{{index}}<br>
-    <div *ngFor="let item of files">
-        <b><a href="#" (click)="viewFile(item)">{{item.name}} {{item.index}}</a></b>
+    {{position}} ({{index}})<br>
+    <div class="app-search-line-files">
+        <div *ngFor="let item of files">
+            <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>&nbsp;
+        </div>
     </div>
 
+    <div class="app-search-line" (click)="viewFile()">
     {{content}}
+    </div>
 
 </div>

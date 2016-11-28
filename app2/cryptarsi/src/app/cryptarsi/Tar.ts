@@ -193,6 +193,7 @@ export class Tar {
 
         header.checksum = this.pad(checksum, 6) + '\u0000';
 
+        console.log('Header', header, header.fileSize, data.length);
         let headerArr = this.format(header);
         //console.log('HeaderArr', headerArr, headerArr.length);
         this.buffer.set(headerArr, this.writen);
@@ -207,7 +208,7 @@ export class Tar {
             );
         }
 
-        //console.log('Tar buf.len', this.buffer.length, 'cont.len', content.length, 'pos', this.writen);
+        console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
         this.buffer.set(data, this.writen);
         // TODO: probably the line bellow is having a bug and sometimes adding two extra blocks
         // this.written += input.length + (recordSize - (input.length % recordSize || recordSize));
@@ -250,7 +251,11 @@ export class Tar {
         return data;
     };
 
-    readTar(iBuffer) {
+    readTar(iBuffer, cb = (header, content, pos, total) => {
+        return new Promise((resolve, reject) => {
+            return resolve();
+        });
+    }) {
         let buffer;
         if (iBuffer instanceof Uint8Array) {
             buffer = Uint8Array;
@@ -262,17 +267,39 @@ export class Tar {
         }
 
         // One file has 512 bytes of header + variable length data
-        console.log('I have data in buffer', buffer);
+        console.log('I have data in buffer', buffer, buffer.length);
         let pos = 0;
-        let data = this.readHeader(buffer, pos);
-        console.log('Return data', data);
-        pos += 512;
-        let content = '';
-        console.log('data.fileSize', data.fileSize);
-        for (let i = 0; i < parseInt(data.fileSize, 10); i++) {
-            content += String.fromCharCode(buffer[pos + i]);
-            //console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
+        while (pos < buffer.length - 512) {
+            console.log('POS', pos, buffer.length);
+            let data = this.readHeader(buffer, pos);
+            if (buffer[pos] === 0
+                && data.fileName === ''
+                && data.fileSize === ''
+            ) {
+                console.log('Trimming block is reached. Reading is complete!');
+                break;
+            }
+            console.log('Return data', data);
+            pos += 512;
+            let content = '';
+            let len = parseInt(data.fileSize, 8);
+            if (isNaN(len)) {
+                console.error('Wrong length');
+                break;
+            }
+            let roundToRecord = this.recordSize - (len % this.recordSize || this.recordSize);
+            console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
+            for (let i = 0; i < len; i++) {
+                content += String.fromCharCode(buffer[pos + i]);
+                //console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
+            }
+            console.log('Return content', content.length/*, content*/);
+            pos += len + roundToRecord;
+            console.log('new pos is', pos, buffer.length);
+            cb(data, content, pos, buffer.length).then(() => {}).catch((e) => {
+                console.log('Error');
+            });
         }
-        console.log('Return content', content);
+        console.log('reading is completed');
     }
 }

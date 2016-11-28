@@ -77,10 +77,16 @@ export class AppImportDbComponent {
             this.processing = true;
             let imp = new ImportDB(this.dbName.value);
             imp.importFile(this.files, (f, loaded, total) => {
+                this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
             }).then(() => {
-
+                this.progress = 0;
+                this.processing = false;
+                this._snackbar.open('Database is imported', 'OK');
+                this.onImport.emit();
             }).catch((e) => {
                 console.log('Error importing', e);
+                this.progress = 0;
+                this.processing = false;
                 this._snackbar.open('Cannot import the Database', 'OK');
             });
         }).catch(() => {});

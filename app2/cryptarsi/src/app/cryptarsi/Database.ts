@@ -262,11 +262,11 @@ export class DB {
         });
     }
 
-    modifyData(index, content) {
+    modifyRawData(index, content) {
         return new Promise((resolve, reject) => {
             let data = {
-                id: this.crypto.encryptIndex(index),
-                data: this.crypto.encrypt(content)
+                id: index,
+                data: content
             };
             log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
@@ -279,6 +279,11 @@ export class DB {
         });
     }
 
+    modifyData(index, content) {
+        return this.modifyRawData(this.crypto.encryptIndex(index),
+            this.crypto.encrypt(content));
+    }
+
     getData(index) {
         return new Promise((resolve, reject) => {
             this.store.getByKey(this.dataStoreName, this.crypto.encryptIndex(index))
@@ -289,11 +294,11 @@ export class DB {
         });
     }
 
-    modifyHash(hash, content) {
+    modifyRawHash(hash, content) {
         return new Promise((resolve, reject) => {
             let data = {
-                id: this.crypto.encryptHash(hash),
-                data: this.crypto.encrypt(content instanceof Array ? content.join(',') : content)
+                id: hash,
+                data: content
             };
             this.store.add(this.indexStoreName, data).then(resolve).catch((e) => {
                 if (e.target.error.code === 0) { // Key duplication
@@ -302,6 +307,11 @@ export class DB {
                 }
             });
         });
+    }
+
+    modifyHash(hash, content) {
+        return this.modifyRawHash(this.crypto.encryptHash(hash),
+            this.crypto.encrypt(content instanceof Array ? content.join(',') : content));
     }
 
     getHash(hash) {

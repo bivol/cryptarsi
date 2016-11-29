@@ -1,8 +1,0 @@
-id 7
-date  03.01.2011
-origin  Bulgaria Sofia
-tags Sound handling example
-subject "Misho The Beer" soundtrack. 
-body  
-Bulgarian PM Boyko Borisov covers a corrupted beer producer. Records are in the MP3 audio format which works on Chrome and Safari, but not on Firefox.
-Cryptarsi

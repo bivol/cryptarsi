@@ -111,14 +111,14 @@ export class Tar {
     private extendBuffer(orig, length: number, addLength: number, multipleOf: number) {
         let newSize = length + addLength,
             buffer = this.cleanBuffer((parseInt((newSize / multipleOf).toString()) + 1) * multipleOf);
-        /*
+
         console.log('Extend Buffer org:', orig.length,
             'to:', (parseInt((newSize / multipleOf).toString()) + 1) * multipleOf,
             'result:', buffer.length,
             'length', length,
             'addLength', addLength
         );
-        */
+
         buffer.set(orig);
         return buffer;
 }
@@ -193,7 +193,7 @@ export class Tar {
 
         header.checksum = this.pad(checksum, 6) + '\u0000';
 
-        console.log('Header', header, header.fileSize, data.length);
+ //       console.log('Header', header, header.fileSize, data.length);
         let headerArr = this.format(header);
         //console.log('HeaderArr', headerArr, headerArr.length);
         this.buffer.set(headerArr, this.writen);
@@ -215,10 +215,10 @@ export class Tar {
         let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
         this.writen += (data.length + roundToRecord);
         console.log('rounding', name, 'data length', data.length,
-            'recordSize', this.recordSize,
-            'lefover', (data.length % this.recordSize),
-            'how much we add', roundToRecord,
-            'where we are after adding', this.writen);
+           'recordSize', this.recordSize,
+           'lefover', (data.length % this.recordSize),
+           'how much we add', roundToRecord,
+           'where we are after adding', this.writen);
 
         // Always add 2 extra records, for compatibility with GNU Tar
         if (this.buffer.length - this.writen < this.recordSize * 2) {
@@ -291,7 +291,7 @@ export class Tar {
             console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
             for (let i = 0; i < len; i++) {
                 content += String.fromCharCode(buffer[pos + i]);
-                //console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
+              //  console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
             }
             console.log('Return content', content.length/*, content*/);
             pos += len + roundToRecord;

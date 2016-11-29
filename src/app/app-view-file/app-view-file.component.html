@@ -42,8 +42,10 @@ Close Tab
         File Name: {{name}}<br>
         File Index: {{index}}<br>
 
-        <div *ngFor="let item of files">
-            <b><a href="#" (click)="viewFile(item)">{{item.name}} {{item.index}}</a></b>;
+        <div class="app-search-view-files">
+            <div *ngFor="let item of files">
+                <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>;&nbsp;
+            </div>
         </div>
 
         <div class="app-view-content">
@@ -56,6 +58,6 @@ Close Tab
         File Name: {{name}}<br>
         File Index: {{index}}<br>
 
-        <a [href]="dataUrl">Download</a>
+        <a [download]="name" [href]="dataUrl">Download {{name}}</a>
     </span>
 </span>

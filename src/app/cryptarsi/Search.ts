@@ -246,8 +246,13 @@ export class Search {
                     }
 
                     console.log('MySet is', myset);
-                    myset.forEach((n) => {
-                        console.log('retrieve', n);
+
+                    let getOneFromMySet = () => {
+                        if (myset.length < 1) {
+                            return resolve();
+                        }
+                        let n = myset.shift();
+                        console.log('retrueve', n);
                         me.db.getData(n).then((s) => {
                             console.log('retrieved', n, 'run', regArray);
                             for (let i = 0; i < regArray.length; i++) {
@@ -257,9 +262,11 @@ export class Search {
                                 if ((!t) && regArray[i].match == '+') { return; }
                             }
                             cb(n, s);
+                            getOneFromMySet();
                         }).catch(reject);
-                    });
-                    resolve();
+                    };
+                    getOneFromMySet();
+
                 }).catch(reject);
             }).catch(reject);
         });

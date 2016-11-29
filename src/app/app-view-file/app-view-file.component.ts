@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     //moduleId: module.id,
@@ -26,7 +27,7 @@ export class AppViewFileComponent implements OnInit {
 
     dataUrl;
 
-    constructor() {
+    constructor(private sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -42,7 +43,7 @@ export class AppViewFileComponent implements OnInit {
                 } else {
                     this.data = s;
                 }
-                this.dataUrl = window.URL.createObjectURL(new Blob([s], { type: this.type }));
+                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(new Blob([s], { type: this.type })));
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
@@ -58,6 +59,10 @@ export class AppViewFileComponent implements OnInit {
 
     closeTab() {
         this.onClose.emit();
+    }
+
+    downloadFile() {
+        window.open(this.dataUrl, '_new');
     }
 }
 

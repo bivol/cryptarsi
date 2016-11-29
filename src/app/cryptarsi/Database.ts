@@ -268,9 +268,9 @@ export class DB {
                 id: index,
                 data: content
             };
-            log('data...', this.dataStoreName, data);
+            console.log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
-                log('error add data', e);
+                console.log('error add data', e);
                 if (e.target.error.code === 0) { // Key duplication
                     this.store.update(this.dataStoreName, data)
                         .then(resolve).catch(reject);
@@ -318,7 +318,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             this.store.getByKey(this.indexStoreName, this.crypto.encryptHash(hash))
                 .then((v) => {
-                    log('getHash then', v);
+                  log('getHash then', v);
                     if (v && v.data) {
                         let out = this.crypto.decrypt(v.data).split(',');
                         log('getHash out', out);

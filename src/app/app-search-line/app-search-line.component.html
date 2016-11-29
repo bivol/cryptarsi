@@ -1,5 +1,6 @@
 <br>
 <div>
+<<<<<<< Updated upstream
     {{position}} ({{index}})<br>
     <div class="app-search-line-files">
         <div *ngFor="let item of files">
@@ -10,5 +11,13 @@
     <div class="app-search-line" (click)="viewFile()">
     {{content}}
     </div>
+=======
+    {{position}}:{{index}}<br>
+    <div *ngFor="let item of files">
+        <b><a href="#" (click)="viewFile(item)">{{item.name}}  {{item.type}} {{item.index}}</a></b>
+    </div>
+
+   <!-- {{content}} -->
+>>>>>>> Stashed changes
 
 </div>

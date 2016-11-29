@@ -26,7 +26,7 @@ export class AppViewFileComponent implements OnInit {
         this.db = this.tab.db;
         console.log('Retrieve data for', this.name, this.index);
         this.db.getData(this.index).then((s) => {
-                console.log('got data', s);
+                //console.log('got data', s);
                 if (s.match(/XXXX(\{.*?\})XXXX/)) {
                     this.obj = JSON.parse(s.match(/XXXX(\{.*?\})XXXX/)[1]);
                     this.data = s.replace(/\s*XXXX(\{.*?\})XXXX/, '');

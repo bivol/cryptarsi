@@ -202,6 +202,7 @@ export class AngularIndexedDB {
             if (key) {
                 objectStore.add(value, key);
             } else {
+                console.log('Adding value', value);
                 objectStore.add(value);
             }
         });

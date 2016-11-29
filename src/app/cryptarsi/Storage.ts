@@ -203,7 +203,12 @@ export class AngularIndexedDB {
                 objectStore.add(value, key);
             } else {
                 console.log('Adding value', value);
-                objectStore.add(value);
+                try {
+                    objectStore.add(value);
+                } catch (e) {
+                    console.log('Error adding', e);
+                    reject(e);
+                }
             }
         });
 

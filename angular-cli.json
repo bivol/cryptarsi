@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "electron.js",
         "favicon.ico"
       ],
       "index": "index.html",

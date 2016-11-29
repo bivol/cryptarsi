@@ -127,10 +127,10 @@ export class Search {
             let pushA: IPushA[] = [];
 
             function splitPush(words: string, inv = false): void {
-                while (words.match(/[\+\-]/)) {
+                while (words.match(/(^[\+\-])|(\s[\+\-])/)) {
                     words = words.replace(/^\s+/, '').replace(/\s+$/, '');
                     if (!words.match(/^[\+\-]/)) {
-                        words = words.replace(/^(.+?)([\+\-])/, function(m, a, p) {
+                        words = words.replace(/^(.+?)\s+([\+\-])/, function(m, a, p) {
                             pushA.push({ match: inv ? '-' : '+', string: a });
                             return p;
                         });

@@ -68,7 +68,7 @@ export class AppImportDbComponent {
     }
 
     onFileChange(e) {
-        this.files = e.srcElement.files;
+        this.files = e.target.files || e.srcElement.files;
         log('files', this.files);
     }
 

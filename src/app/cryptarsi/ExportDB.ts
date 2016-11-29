@@ -40,11 +40,9 @@ export class ExportDB {
                         resolve2();
                     });
                 }).then(() => {
-<<<<<<< Updated upstream
-                    //console.log('Indexes are in buffer with length', buffer, buffer.length);
-=======
+
                     //console.log('Indexes are in buffer with length', buffer.length);
->>>>>>> Stashed changes
+
                     resolve(new Blob([buffer], { type: 'application/tar' }));
                 }).catch(reject);
             }).catch(reject);

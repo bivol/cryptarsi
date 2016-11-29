@@ -51,7 +51,7 @@ export class ImportDB {
                     });
                 }, (f, loaded, total, count, totalcnt, l) => {
                     if (progress) {
-                    console.log('insert ok', f, pos, total);
+                   // console.log('insert ok', f, pos, total);
                         progress(f, loaded, total);
                     }
                 }).then(resolve).catch(reject);

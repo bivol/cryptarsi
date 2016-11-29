@@ -58,7 +58,16 @@
                         </button>
                     <!--</form>-->
                     <br>
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    <div *ngIf="results.length > 0">
+                        Found: {{results.length}} documents
+                    </div>
+                    <br>
+                    <pagination-controls
+                        maxSize="9"
+                        autoHide="true"
+                        (pageChange)="p = $event"
+                    >
+                    </pagination-controls>
                     <div *ngFor="let item of results | paginate: { itemsPerPage: 20, currentPage: p }">
                         <app-search-line
                             [position]="item.position"

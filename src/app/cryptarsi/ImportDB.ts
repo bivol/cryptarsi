@@ -51,14 +51,7 @@ export class ImportDB {
                     if (progress) {
                         progress(f, loaded, total);
                     }
-                }).then(() => {
-                    /*
-                    this.store.setNextIndex(lastIndex)
-                        .then(resolve)
-                        .catch(reject);
-                    */
-                    resolve();
-                }).catch(reject);
+                }).then(resolve).catch(reject);
             }).catch(reject);
         });
     }

@@ -4,6 +4,7 @@
 
 import { log } from '../log';
 import { DB } from './Database';
+import { WordHash } from './Hash';
 
 interface IAndNot {
     not: any;
@@ -192,6 +193,11 @@ export class Search {
             w.unshift(w.splice(w.indexOf(w1[0]), 1)[0]); // Put the largest AND word at the front
 
             let me = this;
+
+            console.log('words', w);
+            // Filtering
+            w = w.filter((n) => WordHash.hash(n));
+            console.log('filtered words', w);
 
             this.db.getWordHash(w[0]).then((myset: any[]) => {
                 let i = 1;

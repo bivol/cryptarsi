@@ -199,6 +199,10 @@ export class Search {
             w = w.filter((n) => WordHash.hash(n));
             console.log('filtered words', w);
 
+            if (w.length < 1) {
+                resolve(); // We have no match
+            }
+
             this.db.getWordHash(w[0]).then((myset: any[]) => {
                 let i = 1;
 

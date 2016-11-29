@@ -25,6 +25,7 @@ export class AppSearchPageComponent implements OnInit {
     srch: Search;
 
     exportWorking = false;
+    searchWorking = false;
 
     selectedTab = 0;
 
@@ -94,6 +95,7 @@ export class AppSearchPageComponent implements OnInit {
     search() {
         log('Search pressed', this.searchInput.value);
         this.results = [];
+        this.searchWorking = true;
         this.srch.searchRule(this.searchInput.value, (index, data) => {
             this.results.push({
                 position: this.results.length,
@@ -102,6 +104,10 @@ export class AppSearchPageComponent implements OnInit {
                 db: this.db,
                 query: this.searchInput.value
             });
+        }).then(() => {
+            this.searchWorking = false;
+        }).catch(() => {
+            this.searchWorking = false;
         });
     }
 

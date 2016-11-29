@@ -56,6 +56,7 @@
                         <button md-raised-button (click)="search()">
                             Search
                         </button>
+                        <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                     <!--</form>-->
                     <br>
                     <div *ngIf="results.length > 0">

@@ -14,16 +14,24 @@ export class AppViewFileComponent implements OnInit {
     @Output() onOpen = new EventEmitter();
     @Output() onClose = new EventEmitter();
 
+    type;
+
     obj;
     files = [];
     db;
     data;
+
+    page = 1;
+    pdfSrc = "pdf.pdf";
+
+    dataUrl;
 
     constructor() {
     }
 
     ngOnInit() {
         this.db = this.tab.db;
+        this.type = this.tab.type;
         console.log('Retrieve data for', this.name, this.index);
         this.db.getData(this.index).then((s) => {
                 console.log('got data', s);
@@ -34,6 +42,7 @@ export class AppViewFileComponent implements OnInit {
                 } else {
                     this.data = s;
                 }
+                this.dataUrl = window.URL.createObjectURL(new Blob([s], { type: this.type }));
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data

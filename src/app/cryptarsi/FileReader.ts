@@ -24,7 +24,12 @@ export class FileReaderAPI {
                 total += parseInt(file.size);
                 q.push(file);
                 let name = file.webkitRelativePath || file.mozFullPath || file.name;
-                let gname = name.match(/^(.*?)(\\[^\\]*|\/[^\/]*|\@.*|(\.[^\.]+)?)$/)[1]; // Without the last extension
+                let gname = name;
+                if (name.match(/([^\/\\]*[\/\\]){2}/)) {
+                    gname = name.match(/^(.*?)(\\[^\\]*|\/[^\/]*|\@.*|(\.[^\.]+)?)$/)[1]; // Without the last extension
+                } else {
+                    gname = name.match(/^(.*?)(\@.*|(\.[^\.]+)?)$/)[1]; // Without the last extension
+                }
                 if (typeof groups[gname] === 'undefined') {
                     groups[gname] = [];
                 }

@@ -23,7 +23,7 @@ export class FileReaderAPI {
             for (let file of files) {
                 total += parseInt(file.size);
                 q.push(file);
-                let gname = file.name.match(/^(.*?)(\@.*|(\.[^\.]+)?)$/)[1]; // Without the last extension
+                let gname = file.name.match(/^(.*?)(\\.*|\@.*|(\.[^\.]+)?)$/)[1]; // Without the last extension
                 if (typeof groups[gname] === 'undefined') {
                     groups[gname] = [];
                 }

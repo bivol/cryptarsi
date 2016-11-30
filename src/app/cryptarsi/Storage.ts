@@ -23,10 +23,12 @@ export class AngularIndexedDB {
             log('Dropping');
             let request = this.utils.indexedDB.deleteDatabase(this.dbWrapper.dbName);
             request.onerror = (e) => {
+                e.preventDefault(); // Firefox patch
                 log('Dropping error', e);
                 reject(e);
             };
             request.onblocked = (e) => {
+                e.preventDefault(); // Firefox patch
                 log('Dropping (b) error', e);
                 reject(e);
             };
@@ -64,10 +66,12 @@ export class AngularIndexedDB {
                 };
 
                 request.onerror = function (e) {
+                    e.preventDefault(); // Firefox patch
                     reject('IndexedDB error: ' + e.target.errorCode);
                 };
 
                 request.onabort = function(e) {
+                    e.preventDefault(); // Firefox patch
                     reject('IndexedDB error: ' + e.target.errorCode);
                 };
 
@@ -92,10 +96,10 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
-                        //resolve(e);
                         resolve(result);
                     }
                 }),
@@ -121,6 +125,7 @@ export class AngularIndexedDB {
                 transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
@@ -131,6 +136,7 @@ export class AngularIndexedDB {
                 request = objectStore.openCursor();
 
             request.onerror = function (e) {
+                e.preventDefault(); // Firefox patch
                 reject(e);
             };
 
@@ -154,6 +160,7 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
@@ -164,6 +171,7 @@ export class AngularIndexedDB {
                 request = objectStore.openCursor();
 
             request.onerror = function (e) {
+                e.preventDefault(); // Firefox patch
                 reject(e);
             };
 
@@ -191,6 +199,7 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
@@ -223,12 +232,14 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
                         resolve(value);
                     },
                     abort: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     }
                 }),
@@ -252,12 +263,14 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
                         resolve();
                     },
                     abort: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     }
                 }),
@@ -277,12 +290,14 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
                         resolve();
                     },
                     abort: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     }
                 }),
@@ -306,12 +321,14 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readWrite,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
                         resolve();
                     },
                     abort: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     }
                 }),
@@ -331,6 +348,7 @@ export class AngularIndexedDB {
             let transaction = self.dbWrapper.createTransaction({ storeName: storeName,
                     dbMode: self.utils.dbMode.readOnly,
                     error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     },
                     complete: (e: Event) => {
@@ -338,6 +356,7 @@ export class AngularIndexedDB {
                         // resolve(result);
                     },
                     abort: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
                         reject(e);
                     }
                 }),

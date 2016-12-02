@@ -1,4 +1,4 @@
-<button md-button class="md-button" aria-label="Close Tab" (click)="closeTab()">
+<button md-button class="md-button  md-primary" aria-label="Close Tab" (click)="closeTab()">
 Close Tab
 </button>
 <br>
@@ -13,9 +13,9 @@ Close Tab
             <label>Page:</label>
             <input type="number" placeholder="Page" [(ngModel)]="page">
         </div>
-        <pdf-viewer [src]="'/pdf.pdf'" 
-                    [page]="page" 
-                    [original-size]="true" 
+        <pdf-viewer [src]="'/pdf.pdf'"
+                    [page]="page"
+                    [original-size]="true"
                     style="display: block;"
         ></pdf-viewer>
     </span>
@@ -31,7 +31,7 @@ Close Tab
             <source [src]="dataUrl" [type]="type">
         </video>
     </span>
-    <span *ngSwitchCase="'audio/mpeg3' || 'audio/x-mpeg3'">
+    <span *ngSwitchCase="'audio/mpeg3' || 'audio/x-mpeg3' || 'audio/ogg'">
         File Name: {{name}}<br>
         File Index: {{index}}<br>
         <audio controls>

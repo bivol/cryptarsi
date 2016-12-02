@@ -4,7 +4,7 @@
             <md-input
                 #dbName
                 placeholder="Database Name"
-                (change)="checkDbName" 
+                (change)="checkDbName"
                 maxlength="50"
                 md-tooltip="Enter new database name"
                 tooltip-position="below"
@@ -14,22 +14,22 @@
                     {{dbName.characterCount}}/50
                 </md-hint>
             </md-input>
-            <md-input 
-                type="password" 
-                #encKey1 
-                placeholder="Encryption Key 1" 
-                maxlength="128" 
+            <md-input
+                type="password"
+                #encKey1
+                placeholder="Password"
+                maxlength="128"
                 dividerColor="accent"
                 md-tooltip="Enter the encryption key"
                 tooltip-position="below"
                 (change)="validateKeys()"
             >
             </md-input>
-            <md-input 
-                type="password" 
-                #encKey2 
-                placeholder="Encryption Key 2" 
-                maxlength="128" 
+            <md-input
+                type="password"
+                #encKey2
+                placeholder="Repeat Password"
+                maxlength="128"
                 md-tooltip="Enter the encryption key again"
                 tooltip-position="below"
                 dividerColor="accent"
@@ -37,11 +37,11 @@
             >
             </md-input>
             <label for=dirName>
-            <input 
-                #dirName 
-                id="dirName" 
-                type="file" 
-                webkitdirectory mozdirectory msdirectory odirectory directory 
+            <input
+                #dirName
+                id="dirName"
+                type="file"
+                webkitdirectory mozdirectory msdirectory odirectory directory
                 multiple
                 (change)="onDirChange($event)"
             >

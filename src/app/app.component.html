@@ -27,7 +27,7 @@
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
-    Cryptarsi APP
+    Cryptarsi - browser based encryption and search engine
     <span class="app-toolbar-filler"></span>
   </md-toolbar>
 
@@ -44,16 +44,123 @@
              <button md-button class="md-button md-raised" (click)="menuSelected='importDir'">Create new database from directory</button><br>
               <button md-button class="md-button md-raised" (click)="menuSelected='importDb'">Import database from file</button><br>
              <button md-button class="md-button md-raised" (click)="sidenav.toggle()">Select database</button>
-              <P>CRYPTARSI is a system designed to produce, search and browse encrypted data sets. The encrypted data can be shared on unsecured servers.
-	<P>Cryptarsi is an open source project available on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>.
-	<P>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
-	<P> The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
-	<P> Cryptarsi is an open source project supported by Google <a href="https://www.digitalnewsinitiative.com/" target="_blank">Digital News Initiative Fund</a>
-	<P>If you want to contribute to the development of Cryptarsi join us on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>
-	<P>Requirements: <a href="http://www.chrome.com" target="_blank">Chrome</a> browser. The Firefox version is not fully operational.
-	<P>Howto: Prepare your data. Create a folder for your story. Inside this folder create one folder for each lead. Put the files for each lead in their folder. For each folder create one plain text file (UTF-8 encoded) named exactly after the folder. Write or copy-paste the description of your lead in the text file.  Don't forget the .txt extension. Then import the story folder with the button <a href="#" (click)="menuSelected='importDir'">Create new database</a> Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. Download the <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>, click on Import Database from File, give a name to the database, select the downloaded tar file and import it. The password for the test database is simply: test.
+              <p>CRYPTARSI is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
 
-	<P>An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases of <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
+<p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
+
+<p>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
+
+<p>The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
+
+<p>If you want to contribute to the development of Cryptarsi join us on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>.
+
+<p>
+An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases of <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
+
+<p>Requirements: Chrome browser. The Firefox version is not fully operational.
+
+<h2>User Manual</h2>
+
+<ol>
+<li>Prepare your data.
+<p>
+The Cryptarsi data is structured a bit like an email: a text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.
+<p>
+First, create a folder for your story. Put there the text files for each lead in the story. It should look like this:
+<pre>
+My story
+|
+|--Lead1.txt
+|--Lead2.txt
+|--Lead3.txt
+</pre>
+Then suppose you have three documents you want to attach to your Lead1.txt. Create a floder named Lead1 (exactly as the text file but without the .txt extension. Put your files inside. It should look like this:
+<pre>
+|--Lead1
+|	|--Lead_1_supporting_doucuments.pdf
+|	|--Picture_for_lead_1.jpg
+|	|--The_Sound_Recording_for_Lead1.mp3
+</pre>
+And the whole folder looks like this:
+<pre>
+My story
+|
+|--Lead1.txt
+|--Lead1
+|	|--Lead_1_supporting_doucuments.pdf
+|	|--Picture_for_lead_1.jpg
+|	|--The_Sound_Recording_for_Lead1.mp3
+|--Lead2.txt
+|--Lead3.txt
+</pre>
+
+<p>
+You can also attach a single document from a different type then text in the root of MyStory. But the system will recognize one file of each type if you name it exactly as the .txt file. For example, if you have one mp3 sound file and one png pic file for Lead2.txt you must name them accordingly Lead2.mp3 and Lead2.png Like this:
+</p>
+<pre>
+My story
+|
+|--Lead1.txt
+|--Lead1
+|	|--Lead_1_supporting_doucuments.pdf
+|	|--Picture_for_lead_1.jpg
+|	|--The_Sound_Recording_for_Lead1.mp3
+|--Lead2.txt
+|--Lead2.mp3
+|--Lead2.png
+|--Lead3.txt
+</pre>
+<p>
+Attachments are not mandatory. you can have a story with multiple text files or just one text file.
+</p>
+<p>
+Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.
+</p>
+
+<li> Importing data from directory.
+
+<p>The story folder will be imported and indexed in Cryptarsi with the button Create new database. Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". The database will then appear in the Menu on the left side of the app. Click on it and unlock it with the password. Start some search by keywords.
+</p>
+
+<li> Searching in the Database
+<p> If you just type a sequence of words, the results will match all the text documents having the words in the same order. If you type the sequence in quotes, the exact expression will be returned. If you type + before the words all the documents having those words regardless the order will be returned. If you type - (minus sign) before a word documents having this word will be excluded from the search.
+</p>
+
+<p>To understand the syntax of the search let's say we have 3 documents. Each document has one of the following expressions:
+<p>
+A.<i>We need investigative reporting</i><br>
+B.<i>Investigative journalists started reporting</i><br>
+C.<i>Reporting was done by investigative journalists</i><br>
+</p>
+<p>
+So, if you type Investigative Reporting the system will return the string <i>We need investigative reporting</i> and <i>Investigative journalists started reporting</i>, but <i>Reporting was done by investigative journalists</i> will not be found.
+</p>
+<p>
+"Investigative reporting" with quotes will match only A. <i>Investigative journalists started reporting</i> and <i>Reporting was done by investigative journalists</i> will not be found.
+</p>
+<p>
++Investigative +Reporting will return both A,B and C, but +Investigative +Reporting -done will return only A and B.
+</p>
+
+<p>If you want to search for a particular date enter the date in european format without ponctuation: 09 10 2007 (October 9-th 2007).
+</p>
+
+<li>Exporting and importing data
+
+<p>Once you have build a database from your data you can easily export it and share it with other Cryptarsi users.
+
+<p>To do this open the database, unlock it with the password and click on Export Database. The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
+<p>
+To import a Cryptarsi database from file click on Import Database. Type a name for the database, select the tar file and click Import. If the import is successful the database will appear in the list.
+<p>
+It is a good idea to export all your databases as tar files for archiving purposes. You can copy a CrypTARsi archive on a memory stick and use it on any computer having a Chrome browser installed.
+<p>
+If you installed sensitive data on a computer you don't own and do not want to leave traces, then don't forget to make Close database and Drop the database at the end.
+<p>
+You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test database is simply: <i>test</i>.
+</ol>
+<p>
+Delyan Delchev, Atanas Tchobanov 2011-2016
           </md-card>
 
           <div *ngIf="databaseSelected">

@@ -1,13 +1,22 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <button md-button (click)="menuSelected='importDir'">Create new database</button><br>
-    <button md-button (click)="menuSelected='importDb'">Import database</button><br><br>
+    <button md-mini-fab color="warn" (click)="menuSelected='importDir'">
+    <md-icon class="md-24">add</md-icon>
+</button><button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
+<br><br>
+  <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
+    <md-icon class="md-24">input</md-icon>
+</button><button md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
+    <br>
     <hr>
+    <br>
     <div *ngIf="collection && collection.length>0">
-      <button md-button (click)="menuSelected=null">Select databases:</button><br>
+   <button md-mini-fab color="accent">
+    <md-icon class="md-24">search</md-icon>
+</button><button md-button color="accent" class="md-button" aria-label="Settings">Select database</button><br>
       <md-list dense>
         <md-list-item *ngFor="let item of collection">
-          <button
+          <md-icon class="md-24">launch</md-icon><button
             [attr.md-button]="(item.name != databaseSelected)?true:null"
             [attr.md-raised-button]="(item.name == databaseSelected)?true:null"
             (click)="selectDatabase(item.name)"
@@ -41,9 +50,7 @@
       </span>
       <span *ngSwitchDefault>
           <md-card *ngIf="!databaseSelected">
-             <button md-button class="md-button md-raised" (click)="menuSelected='importDir'">Create new database from directory</button><br>
-              <button md-button class="md-button md-raised" (click)="menuSelected='importDb'">Import database from file</button><br>
-             <button md-button class="md-button md-raised" (click)="sidenav.toggle()">Select database</button>
+
               <p>CRYPTARSI is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
 
 <p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
@@ -62,9 +69,9 @@ An early version of the system was used by the journalists from <a href="http://
 <h2>User Manual</h2>
 
 <ol>
-<li>Prepare your data.
+<li><h3>Prepare your data</h3>
 <p>
-The Cryptarsi data is structured a bit like an email: a text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.
+The Cryptarsi data is structured a bit like an email: a plain text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.
 <p>
 First, create a folder for your story. Put there the text files for each lead in the story. It should look like this:
 <pre>
@@ -102,9 +109,11 @@ My story
 |
 |--Lead1.txt
 |--Lead1
-|	|--Lead_1_supporting_doucuments.pdf
+|	|--Lead_1_supporting_documents.pdf
 |	|--Picture_for_lead_1.jpg
 |	|--The_Sound_Recording_for_Lead1.mp3
+|	|--Other_Document_for_Lead_1.doc
+|	|--etc...
 |--Lead2.txt
 |--Lead2.mp3
 |--Lead2.png
@@ -117,12 +126,20 @@ Attachments are not mandatory. you can have a story with multiple text files or 
 Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.
 </p>
 
-<li> Importing data from directory.
+<li><h3>Importing data from directory</h3>
 
-<p>The story folder will be imported and indexed in Cryptarsi with the button Create new database. Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". The database will then appear in the Menu on the left side of the app. Click on it and unlock it with the password. Start some search by keywords.
+<p>The story folder will be imported and indexed in Cryptarsi with the button Create new database. Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". The database will then appear in the Menu on the left side of the app. </p>
+<p>
+<button md-mini-fab color="warn" (click)="menuSelected='importDir'">
+    <md-icon class="md-24">add</md-icon>
+</button><button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
 </p>
-
-<li> Searching in the Database
+<li><h3>Searching in the Database</h3>
+<p> First, select a database from the list and type the password to open it for search.
+<p><button md-mini-fab color="accent">
+    <md-icon class="md-24">search</md-icon>
+</button><button md-button color="accent" class="md-button" aria-label="Settings">Select database</button>
+</p>
 <p> If you just type a sequence of words, the results will match all the text documents having the words in the same order. If you type the sequence in quotes, the exact expression will be returned. If you type + before the words all the documents having those words regardless the order will be returned. If you type - (minus sign) before a word documents having this word will be excluded from the search.
 </p>
 
@@ -145,19 +162,48 @@ So, if you type Investigative Reporting the system will return the string <i>We 
 <p>If you want to search for a particular date enter the date in european format without ponctuation: 09 10 2007 (October 9-th 2007).
 </p>
 
-<li>Exporting and importing data
+<li><h3>Exporting and importing data</h3>
 
 <p>Once you have build a database from your data you can easily export it and share it with other Cryptarsi users.
 
-<p>To do this open the database, unlock it with the password and click on Export Database. The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
+<p>To do this open the database, unlock it with the password and click on Export Database.
+<p> <button md-mini-fab color="primary">
+                    <md-icon class="md-24">backup</md-icon>
+                    </button>
+                    <button md-button class="md-button" aria-label="Settings">
+                    Export Database
+                    </button>
+</p>
+The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 <p>
 To import a Cryptarsi database from file click on Import Database. Type a name for the database, select the tar file and click Import. If the import is successful the database will appear in the list.
+</p>
+<p>
+ <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
+    <md-icon class="md-24">input</md-icon>
+</button><button md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
+</p>
 <p>
 It is a good idea to export all your databases as tar files for archiving purposes. You can copy a CrypTARsi archive on a memory stick and use it on any computer having a Chrome browser installed.
-<p>
-If you installed sensitive data on a computer you don't own and do not want to leave traces, then don't forget to make Close database and Drop the database at the end.
-<p>
+
 You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test database is simply: <i>test</i>.
+</p>
+<li><h3>Protecting your data</h3>
+<p>
+Your data is decrypted and displayed on demand for each text and attached file. To protect your data from unauthorized eyes don't forget to click on Close database.
+</p>
+ <button md-mini-fab color="accent">
+    <md-icon class="md-24">lock</md-icon>
+</button><button md-button class="md-button" aria-label="Settings">Close database</button>
+<p>
+To delete all traces of your work click on Close database, then wait a bit and click on Drop database. This will erase the data and index files from the app memory.
+<p>
+ <button md-mini-fab color="warn">
+    <md-icon class="md-24">delete</md-icon>
+</button><button md-button class="md-button" aria-label="Settings">Drop database</button>
+</p>
+
+<p>
 </ol>
 <p>
 Delyan Delchev, Atanas Tchobanov 2011-2016

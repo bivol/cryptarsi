@@ -4,9 +4,12 @@
             Database: {{database}}
         </md-card-title>
         <md-card-actions layout="row" layout-align="center">
-            <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
-            Drop Database
-            </button>
+             <button md-mini-fab color="warn" (click)="dropDb()">
+                    <md-icon class="md-24">delete</md-icon>
+                    </button>
+                    <button md-button class="md-button" color="warn" aria-label="Settings" (click)="dropDb()">
+                    Drop Database
+                    </button>
         </md-card-actions>
         <form novalidate>
             <md-input
@@ -17,7 +20,7 @@
             >
             </md-input>
             <button md-raised-button (click)="openDb()">
-                Open
+                <md-icon class="md-24">fingerprint</md-icon> Open
             </button>
         </form>
     </md-card>
@@ -30,11 +33,18 @@
                     Database: {{database}}
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="center">
-                    <button md-button class="md-button" aria-label="Settings" (click)="closeDb()">
-                    Close Database
+                    <button md-mini-fab color="accent" (click)="closeDb()">
+                    <md-icon class="md-24">lock</md-icon>
+                    </button><button md-button color="accent" class="md-button" aria-label="Settings" (click)="closeDb()">Close Database
                     </button>
-                    <button md-button class="md-button" aria-label="Settings" (click)="dropDb()">
+                    <button md-mini-fab color="warn" (click)="dropDb()">
+                    <md-icon class="md-24">delete</md-icon>
+                    </button>
+                    <button md-button class="md-button" color="warn" aria-label="Settings" (click)="dropDb()">
                     Drop Database
+                    </button>
+                    <button md-mini-fab color="primary" (click)="exportDb()">
+                    <md-icon class="md-24">backup</md-icon>
                     </button>
                     <button md-button class="md-button" aria-label="Settings" (click)="exportDb()">
                     Export Database
@@ -53,7 +63,7 @@
                         >
                         </md-input>
                         &nbsp;
-                        <button md-raised-button (click)="search()">
+                        <button md-raised-button (click)="search()"><md-icon class="md-24">search</md-icon>
                             Search
                         </button>
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>

@@ -7,13 +7,13 @@
                 (change)="checkDbName"
                 maxlength="50"
                 md-tooltip="Enter new database name"
-                tooltip-position="below"
+                tooltip-position="above"
                 (change)="validateDbName()"
             >
                 <md-hint #dbNameHint align="end">
                     {{dbName.characterCount}}/50
                 </md-hint>
-            </md-input>
+            </md-input><br>
             <md-input
                 type="password"
                 #encKey1
@@ -21,21 +21,21 @@
                 maxlength="128"
                 dividerColor="accent"
                 md-tooltip="Enter the password for this database"
-                tooltip-position="below"
+                tooltip-position="above"
                 (change)="validateKeys()"
             >
-            </md-input>
+            </md-input><br>
             <md-input
                 type="password"
                 #encKey2
                 placeholder="Repeat Password"
                 maxlength="128"
                 md-tooltip="Enter the password again"
-                tooltip-position="below"
+                tooltip-position="above"
                 dividerColor="accent"
                 (change)="validateKeys()"
             >
-            </md-input>
+            </md-input><br><br>
             <label for=dirName>
             <input
                 #dirName
@@ -45,10 +45,10 @@
                 multiple
                 (change)="onDirChange($event)"
             >
-            </label>
-            <button type=submit md-raised-button>
-                Encrypt and Import
-            </button>
+            </label><br><br>
+            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'">
+    <md-icon class="md-24">add</md-icon>
+</button><button type="submit" md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
         </form>
     </md-card>
     <md-card *ngIf="processing">

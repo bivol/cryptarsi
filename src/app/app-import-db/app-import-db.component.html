@@ -4,27 +4,29 @@
             <md-input
                 #dbName
                 placeholder="Database Name"
-                (change)="checkDbName" 
+                (change)="checkDbName"
                 maxlength="50"
                 md-tooltip="Enter new database name"
-                tooltip-position="below"
+                tooltip-position="above"
                 (change)="validateDbName()"
             >
                 <md-hint #dbNameHint align="end">
                     {{dbName.characterCount}}/50
                 </md-hint>
             </md-input>
+            <br><br>
             <label for=fileName>
-            <input 
-                #fileName 
-                id="fileName" 
-                type="file" 
+            <input
+                #fileName
+                id="fileName"
+                type="file"
                 (change)="onFileChange($event)"
             >
             </label>
-            <button type=submit md-raised-button>
-                Import
-            </button>
+            <br><br>
+            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'">
+    <md-icon class="md-24">input</md-icon>
+</button><button type="submit" md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
         </form>
     </md-card>
     <md-card *ngIf="processing">
@@ -40,5 +42,5 @@
                 [value]="progress"
                 aria-label="Progress bar"></md-progress-bar>
         </label>
-    </md-card>    
+    </md-card>
 </div>

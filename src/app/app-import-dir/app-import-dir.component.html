@@ -46,9 +46,9 @@
                 (change)="onDirChange($event)"
             >
             </label><br><br>
-            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'">
+            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
     <md-icon class="md-24">add</md-icon>
-</button><button type="submit" md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
+</button>
         </form>
     </md-card>
     <md-card *ngIf="processing">

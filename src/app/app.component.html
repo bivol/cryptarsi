@@ -1,30 +1,29 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <button md-mini-fab color="warn" (click)="menuSelected='importDir'">
+    <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
-    <br><br>
-    <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
+    <br>
+    <br>
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
       <md-icon class="md-24">input</md-icon>
     </button>
-    <button md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
     <br>
-    <hr>
     <br>
-    <div *ngIf="collection && collection.length>0">
-      <button md-mini-fab color="accent">
+    <button md-mini-fab color="accent" md-tooltip="Select a database from list" tooltip-position="after">
         <md-icon class="md-24">search</md-icon>
-      </button>
-      <button md-button color="accent" class="md-button" aria-label="Settings">Select database</button>
+    </button>
+    <div *ngIf="collection && collection.length>0">
+
+
       <br>
       <md-list dense>
         <md-list-item *ngFor="let item of collection">
-          <md-icon class="md-24">launch</md-icon><button
+          <button
             [attr.md-button]="(item.name != databaseSelected)?true:null"
             [attr.md-raised-button]="(item.name == databaseSelected)?true:null"
             (click)="selectDatabase(item.name)"
-          >{{item.name}}</button>
+          ><md-icon class="md-24" align="middle">launch</md-icon>{{item.name}}</button>
         </md-list-item>
         <div *ngIf="!collection">
           <button md-button>No databases imported</button>

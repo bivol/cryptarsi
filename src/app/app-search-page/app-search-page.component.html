@@ -1,15 +1,15 @@
 <div *ngIf="!open">
     <md-card>
         <md-card-title>
-            Database: {{database}}
+        <button md-mini-fab color="principal" disabled md-tooltip="Selected database" tooltip-position="above">
+              <md-icon class="md-24">lock</md-icon>
+        </button>
+            {{database}}
         </md-card-title>
         <md-card-actions layout="row" layout-align="center">
-             <button md-mini-fab color="warn" (click)="dropDb()">
-                    <md-icon class="md-24">delete</md-icon>
-                    </button>
-                    <button md-button class="md-button" color="warn" aria-label="Settings" (click)="dropDb()">
-                    Drop Database
-                    </button>
+             <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
+                <md-icon class="md-24">delete</md-icon>
+             </button>
         </md-card-actions>
         <form novalidate>
             <md-input
@@ -30,24 +30,20 @@
         <md-tab label="Search">
             <md-card>
                 <md-card-title>
-                    Database: {{database}}
+                    <button md-mini-fab color="principal" md-tooltip="Selected database" tooltip-position="above" disabled>
+                      <md-icon class="md-24">check</md-icon>
+                  </button>
+                  {{database}}
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="center">
-                    <button md-mini-fab color="accent" (click)="closeDb()">
+                    <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close database" tooltip-position="before">
                     <md-icon class="md-24">lock</md-icon>
-                    </button><button md-button color="accent" class="md-button" aria-label="Settings" (click)="closeDb()">Close Database
-                    </button>
-                    <button md-mini-fab color="warn" (click)="dropDb()">
+                    </button>&nbsp;
+                    <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
                     <md-icon class="md-24">delete</md-icon>
-                    </button>
-                    <button md-button class="md-button" color="warn" aria-label="Settings" (click)="dropDb()">
-                    Drop Database
-                    </button>
-                    <button md-mini-fab color="primary" (click)="exportDb()">
-                    <md-icon class="md-24">backup</md-icon>
-                    </button>
-                    <button md-button class="md-button" aria-label="Settings" (click)="exportDb()">
-                    Export Database
+                    </button>&nbsp;
+                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="after">
+                    <md-icon class="md-24">archive</md-icon>
                     </button>
                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
                 </md-card-actions>

@@ -24,9 +24,9 @@
             >
             </label>
             <br><br>
-            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'">
+            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
     <md-icon class="md-24">input</md-icon>
-</button><button type="submit" md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
+</button>
         </form>
     </md-card>
     <md-card *ngIf="processing">

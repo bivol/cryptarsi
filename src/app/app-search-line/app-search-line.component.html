@@ -1,14 +1,17 @@
 <br>
 <div>
-    {{position}} ({{index}})<br>
-
-
-    <div class="app-search-line" (click)="viewFile()">
+      <button md-mini-fab color="accent" disabled>
+        <md-icon class="md-24">text_fields</md-icon>
+      </button>
+    <span class="app-search-line" href="#top" (click)="viewFile()">
     {{content}}
-    </div>
+    </span>
     <ul class="app-search-line">
+    <button md-mini-fab color="accent" disabled>
+        <md-icon class="md-24">folder_open</md-icon>
+    </button>
         <li *ngFor="let item of files">
-            <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>
+            <b><span href="#" (click)="viewFile(item)">{{item.name}}</span></b>
         </li>
     </ul>
 </div>

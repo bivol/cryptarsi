@@ -1,3 +1,4 @@
+<a name="#top"></a>
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
     <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
@@ -6,7 +7,7 @@
     <br>
     <br>
     <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
-      <md-icon class="md-24">input</md-icon>
+      <md-icon class="md-24">file_upload</md-icon>
     </button>
     <br>
     <br>
@@ -154,7 +155,7 @@ So, if you type Investigative Reporting the system will return the string <i>We 
 <p>To do this open the database, unlock it with the password and click on Export Database.
 <p>
                     <button md-mini-fab color="primary">
-                      <md-icon class="md-24">archive</md-icon>
+                      <md-icon class="md-24">file_download</md-icon>
                     </button>
 </p>
 The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
@@ -163,7 +164,7 @@ To import a Cryptarsi database from file click on Import Database. Type a name f
 </p>
 <p>
                   <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
-                    <md-icon class="md-24">input</md-icon>
+                    <md-icon class="md-24">file_upload</md-icon>
                   </button>
 </p>
 <p>

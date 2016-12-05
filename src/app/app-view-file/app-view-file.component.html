@@ -1,4 +1,6 @@
-<button md-button class="md-button  md-primary" aria-label="Close Tab" (click)="closeTab()">
+<button md-mini-fab color="principal" md-tooltip="Close tab" tooltip-position="above" disabled (click)="closeTab()">
+                      <md-icon class="md-24">close</md-icon>
+                  </button><button md-button class="md-button  md-primary" aria-label="Close Tab" (click)="closeTab()">
 Close Tab
 </button>
 <br>
@@ -39,12 +41,12 @@ Close Tab
         </audio>
     </span>
     <span *ngSwitchCase="'text/plain'">
-        File Name: {{name}}<br>
-        File Index: {{index}}<br>
-
         <div class="app-search-view-files">
             <div *ngFor="let item of files">
-                <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>;&nbsp;
+            <button md-mini-fab color="accent" (click)="viewFile(item)" disabled>
+                  <md-icon class="md-12">attach_file</md-icon>
+              </button>
+                <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
             </div>
         </div>
 

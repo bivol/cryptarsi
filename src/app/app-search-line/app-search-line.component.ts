@@ -30,7 +30,7 @@ export class AppSearchLineComponent implements OnInit {
     filename = '';
     files = [];
 
-    maxLength = 280;
+    maxLength = 380;
 
     constructor() {
     }

@@ -20,7 +20,7 @@
             >
             </md-input>
             <button md-raised-button (click)="openDb()">
-                <md-icon class="md-24">fingerprint</md-icon> Open
+                <md-icon class="md-24">lock_open</md-icon> Open
             </button>
         </form>
     </md-card>
@@ -31,7 +31,7 @@
             <md-card>
                 <md-card-title>
                     <button md-mini-fab color="principal" md-tooltip="Selected database" tooltip-position="above" disabled>
-                      <md-icon class="md-24">check</md-icon>
+                      <md-icon class="md-24">lock_open</md-icon>
                   </button>
                   {{database}}
                 </md-card-title>
@@ -43,7 +43,7 @@
                     <md-icon class="md-24">delete</md-icon>
                     </button>&nbsp;
                     <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="after">
-                    <md-icon class="md-24">archive</md-icon>
+                    <md-icon class="md-24">file_download</md-icon>
                     </button>
                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
                 </md-card-actions>

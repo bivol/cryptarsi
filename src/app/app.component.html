@@ -1,19 +1,23 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
     <button md-mini-fab color="warn" (click)="menuSelected='importDir'">
-    <md-icon class="md-24">add</md-icon>
-</button><button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
-<br><br>
-  <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
-    <md-icon class="md-24">input</md-icon>
-</button><button md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
+      <md-icon class="md-24">add</md-icon>
+    </button>
+    <button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
+    <br><br>
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
+      <md-icon class="md-24">input</md-icon>
+    </button>
+    <button md-button color="primary" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'"(click)="menuSelected='importDb'">Import database</button>
     <br>
     <hr>
     <br>
     <div *ngIf="collection && collection.length>0">
-   <button md-mini-fab color="accent">
-    <md-icon class="md-24">search</md-icon>
-</button><button md-button color="accent" class="md-button" aria-label="Settings">Select database</button><br>
+      <button md-mini-fab color="accent">
+        <md-icon class="md-24">search</md-icon>
+      </button>
+      <button md-button color="accent" class="md-button" aria-label="Settings">Select database</button>
+      <br>
       <md-list dense>
         <md-list-item *ngFor="let item of collection">
           <md-icon class="md-24">launch</md-icon><button
@@ -50,30 +54,20 @@
       </span>
       <span *ngSwitchDefault>
           <md-card *ngIf="!databaseSelected">
-
               <p>CRYPTARSI is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
-
-<p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
-
-<p>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
-
-<p>The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
-
-<p>If you want to contribute to the development of Cryptarsi join us on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>.
-
-<p>
-An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases of <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
-
-<p>Requirements: Chrome browser. The Firefox version is not fully operational.
-
-<h2>User Manual</h2>
-
-<ol>
-<li><h3>Prepare your data</h3>
-<p>
-The Cryptarsi data is structured a bit like an email: a plain text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.
-<p>
-First, create a folder for your story. Put there the text files for each lead in the story. It should look like this:
+              <p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
+              <p>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
+              <p>The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
+              <p>If you want to contribute to the development of Cryptarsi join us on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>.
+              <p>An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases of <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
+              <p>Requirements: Chrome browser. The Firefox version is not fully operational.
+              <h2>User Manual</h2>
+              <ol>
+              <li><h3>Prepare your data</h3>
+              <p>
+              The Cryptarsi data is structured a bit like an email: a plain text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.
+              <p>
+              First, create a folder for your story. Put there the text files for each lead in the story. It should look like this:
 <pre>
 My story
 |
@@ -81,14 +75,14 @@ My story
 |--Lead2.txt
 |--Lead3.txt
 </pre>
-Then suppose you have three documents you want to attach to your Lead1.txt. Create a floder named Lead1 (exactly as the text file but without the .txt extension. Put your files inside. It should look like this:
+              Then suppose you have three documents you want to attach to your Lead1.txt. Create a floder named Lead1 (exactly as the text file but without the .txt extension. Put your files inside. It should look like this:
 <pre>
 |--Lead1
 |	|--Lead_1_supporting_doucuments.pdf
 |	|--Picture_for_lead_1.jpg
 |	|--The_Sound_Recording_for_Lead1.mp3
 </pre>
-And the whole folder looks like this:
+              And the whole folder looks like this:
 <pre>
 My story
 |
@@ -100,10 +94,7 @@ My story
 |--Lead2.txt
 |--Lead3.txt
 </pre>
-
-<p>
-You can also attach a single document from a different type then text in the root of MyStory. But the system will recognize one file of each type if you name it exactly as the .txt file. For example, if you have one mp3 sound file and one png pic file for Lead2.txt you must name them accordingly Lead2.mp3 and Lead2.png Like this:
-</p>
+              <p>You can also attach a single document from a different type then text in the root of MyStory. But the system will recognize one file of each type if you name it exactly as the .txt file. For example, if you have one mp3 sound file and one png pic file for Lead2.txt you must name them accordingly Lead2.mp3 and Lead2.png Like this:</p>
 <pre>
 My story
 |
@@ -119,20 +110,14 @@ My story
 |--Lead2.png
 |--Lead3.txt
 </pre>
-<p>
-Attachments are not mandatory. you can have a story with multiple text files or just one text file.
-</p>
-<p>
-Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.
-</p>
-
+<p>Attachments are not mandatory. you can have a story with multiple text files or just one text file.</p>
+<p>Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.</p>
 <li><h3>Importing data from directory</h3>
-
 <p>The story folder will be imported and indexed in Cryptarsi with the button Create new database. Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". The database will then appear in the Menu on the left side of the app. </p>
 <p>
-<button md-mini-fab color="warn" (click)="menuSelected='importDir'">
-    <md-icon class="md-24">add</md-icon>
-</button><button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
+  <button md-mini-fab color="warn" (click)="menuSelected='importDir'">
+      <md-icon class="md-24">add</md-icon>
+  </button><button md-button color="warn" class="md-button" aria-label="Settings" (click)="menuSelected='importDir'">Create new database</button>
 </p>
 <li><h3>Searching in the Database</h3>
 <p> First, select a database from the list and type the password to open it for search.

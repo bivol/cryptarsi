@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
@@ -12,6 +13,12 @@ import { AppSearchLineComponent } from './app-search-line/app-search-line.compon
 import { AppViewFileComponent } from './app-view-file/app-view-file.component';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { Ng2PaginationModule } from 'ng2-pagination';
+
+const appRoutes: Routes = [
+  { path: 'import-dir', component:  AppImportDirComponent },
+  { path: '', component: AppComponent },
+  { path: '**', component: AppComponent }
+];
 
 @NgModule({
   declarations: [
@@ -29,7 +36,8 @@ import { Ng2PaginationModule } from 'ng2-pagination';
     FormsModule,
     HttpModule,
     Ng2PaginationModule,
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
+//    RouterModule.forRoot(appRoutes)
   ],
   entryComponents: [
     AppDialogComponent

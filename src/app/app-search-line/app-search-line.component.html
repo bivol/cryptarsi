@@ -2,17 +2,17 @@
 <div>
   <md-card>
   <md-card-header>
-      <md-icon md-card-avatar class="md-24" disabled>view_headline</md-icon>
-      <md-card-title>{{filename}}</md-card-title>
+      <button md-button md-card-avatar (click)="viewFile()">
+        <md-icon class="md-48">zoom_in</md-icon>
+        </button>
+      <md-card-title><b>Name: {{filename}}</b></md-card-title>
       <md-card-subtitle>Record index: {{index}}, Position {{position}}</md-card-subtitle>
    </md-card-header>
     <md-card-content (click)="viewFile()">
      {{content}}
     </md-card-content>
     <md-card-actions>
-        <button md-button (click)="viewFile()">
-        <md-icon class="md-24">visibility</md-icon> VIEW
-        </button>
+
     </md-card-actions>
     <md-icon class="md-24" disabled>attachment</md-icon>
     <ul class="app-search-line">

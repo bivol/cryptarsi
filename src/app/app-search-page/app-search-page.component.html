@@ -27,7 +27,12 @@
 </div>
 <div *ngIf="open">
     <md-tab-group [(selectedIndex)]="selectedTab">
-        <md-tab label="Search">
+        <md-tab>
+        <template md-tab-label>
+            <button md-button disabled><md-icon class="md-24">search</md-icon>
+              Search {{database}}
+            </button>
+         </template>
             <md-card>
                 <md-card-title>
                     <button md-mini-fab color="principal" md-tooltip="Selected database" tooltip-position="above" disabled>
@@ -90,7 +95,12 @@
                 </md-card-content>
             </md-card>
         </md-tab>
-        <md-tab *ngFor="let tab of openTabs" [label]="tab.name">
+        <md-tab *ngFor="let tab of openTabs">
+        <template md-tab-label>
+            <button md-button disabled><md-icon class="md-24">visibility</md-icon>
+            {{tab.name}}
+            </button><md-icon class="md-24" (click)="closeTab(tab)">cancel</md-icon>
+         </template>
             <app-view-file
                 [index]="tab.index"
                 [name]="tab.name"

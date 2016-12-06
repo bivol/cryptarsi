@@ -9,21 +9,16 @@
       <md-icon class="md-24">file_upload</md-icon>
     </button>
     <br>
-    <br>
-    <button md-mini-fab color="accent" md-tooltip="Select a database from list" tooltip-position="after">
-        <md-icon class="md-24">search</md-icon>
-    </button>
+    <hr>
+    <h3>Databases</h3>
     <div *ngIf="collection && collection.length>0">
-
-
-      <br>
-      <md-list dense>
+      <md-list>
         <md-list-item *ngFor="let item of collection">
-          <button
-            [attr.md-button]="(item.name != databaseSelected)?true:null"
-            [attr.md-raised-button]="(item.name == databaseSelected)?true:null"
+        <button
+            [attr.md-fab]="(item.name != databaseSelected)?true:null"
+            [attr.md-fab]="(item.name == databaseSelected)?true:null"
             (click)="selectDatabase(item.name)"
-          ><md-icon class="md-24" align="middle">launch</md-icon>{{item.name}}</button>
+          > <md-icon md-list-avatar>folder</md-icon></button>&nbsp;{{item.name}}
         </md-list-item>
         <div *ngIf="!collection">
           <button md-button>No databases imported</button>

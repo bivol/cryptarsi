@@ -1,4 +1,3 @@
-<a name="#top"></a>
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
     <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
@@ -54,7 +53,14 @@
       </span>
       <span *ngSwitchDefault>
           <md-card *ngIf="!databaseSelected">
-              <p>CRYPTARSI is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
+          <md-card-subtitle>
+          Create, query and share encrypted data
+          </md-card-subtitle>
+          <md-card-title>
+          CRYPTARSI
+          </md-card-title>
+          <md-card-content>
+              <p> This is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
               <p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
               <p>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
               <p>The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
@@ -189,6 +195,7 @@ To delete all traces of your work click on Close database, then wait a bit and c
 </ol>
 <p>
 Delyan Delchev, Atanas Tchobanov 2011-2016
+          </md-card-content>
           </md-card>
 
           <div *ngIf="databaseSelected">

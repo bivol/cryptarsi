@@ -1,17 +1,24 @@
 <br>
 <div>
-      <button md-mini-fab color="accent" disabled>
-        <md-icon class="md-24">text_fields</md-icon>
-      </button>
-    <span class="app-search-line" href="#top" (click)="viewFile()">
-    {{content}}
-    </span>
+  <md-card>
+  <md-card-header>
+      <md-icon md-card-avatar class="md-24" disabled>view_headline</md-icon>
+      <md-card-title>{{filename}}</md-card-title>
+      <md-card-subtitle>Record index: {{index}}, Position {{position}}</md-card-subtitle>
+   </md-card-header>
+    <md-card-content (click)="viewFile()">
+     {{content}}
+    </md-card-content>
+    <md-card-actions>
+        <button md-button (click)="viewFile()">
+        <md-icon class="md-24">visibility</md-icon> VIEW
+        </button>
+    </md-card-actions>
+    <md-icon class="md-24" disabled>attachment</md-icon>
     <ul class="app-search-line">
-    <button md-mini-fab color="accent" disabled>
-        <md-icon class="md-24">folder_open</md-icon>
-    </button>
         <li *ngFor="let item of files">
-            <b><span href="#" (click)="viewFile(item)">{{item.name}}</span></b>
+            <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>
         </li>
     </ul>
+  </md-card>
 </div>

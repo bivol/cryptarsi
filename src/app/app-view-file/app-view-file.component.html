@@ -1,9 +1,12 @@
-<button md-mini-fab color="principal" md-tooltip="Close tab" tooltip-position="above" disabled (click)="closeTab()">
-                      <md-icon class="md-24">close</md-icon>
-                  </button><button md-button class="md-button  md-primary" aria-label="Close Tab" (click)="closeTab()">
-Close Tab
-</button>
-<br>
+<md-card>
+  <md-card-header>
+  <button md-mini-fab md-card-avatar color="warn" md-tooltip="Close tab" tooltip-position="above" (click)="closeTab()">
+                  <md-icon class="md-24">close</md-icon>
+    </button>
+      <md-card-title>Name: {{name}}</md-card-title>
+      <md-card-subtitle>Record index: {{index}}</md-card-subtitle>
+   </md-card-header>
+    <md-card-content>
 
 <span [ngSwitch]="type">
     <span *ngSwitchCase="'application/pdf'">
@@ -41,25 +44,25 @@ Close Tab
         </audio>
     </span>
     <span *ngSwitchCase="'text/plain'">
+        <div class="app-view-content">
+            <pre class="app-pre-break">
+            {{data}}
+            </pre>
+        </div>
         <div class="app-search-view-files">
             <div *ngFor="let item of files">
-            <button md-mini-fab color="accent" (click)="viewFile(item)" disabled>
+            <button md-mini-fab color="accent" (click)="viewFile(item)">
                   <md-icon class="md-12">attach_file</md-icon>
               </button>
                 <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
             </div>
         </div>
 
-        <div class="app-view-content">
-            <pre class="app-pre-break">
-            {{data}}
-            </pre>
-        </div>
+
     </span>
     <span *ngSwitchDefault>
-        File Name: {{name}}<br>
-        File Index: {{index}}<br>
-
-        <a [download]="name" [href]="dataUrl">Download {{name}}</a>
+        <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>
     </span>
 </span>
+</md-card-content>
+</md-card>

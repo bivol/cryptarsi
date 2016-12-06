@@ -15,8 +15,10 @@
       <md-list>
         <md-list-item *ngFor="let item of collection">
         <button
-            [attr.md-fab]="(item.name != databaseSelected)?true:null"
+            [attr.md-mini-fab]="(item.name != databaseSelected)?true:null"
+            [attr.color]="(item.name != databaseSelected)?'primary':null"
             [attr.md-fab]="(item.name == databaseSelected)?true:null"
+            [attr.color]="(item.name == databaseSelected)?'warn':null"
             (click)="selectDatabase(item.name)"
           > <md-icon md-list-avatar>folder</md-icon></button>&nbsp;{{item.name}}
         </md-list-item>

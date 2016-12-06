@@ -20,11 +20,13 @@
                     [original-size]="true"
                     style="display: block;"
         ></pdf-viewer>
+        <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>
     </span>
     <span *ngSwitchCase="'image/gif' || 'image/jpeg' || 'image/pjpeg' || 'image/png'">
         File Name: {{name}}<br>
         File Index: {{index}}<br>
         <img src="{{dataUrl}}">
+        <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>
     </span>
     <span *ngSwitchCase="'video/mpeg'">
         File Name: {{name}}<br>
@@ -32,6 +34,7 @@
         <video controls>
             <source [src]="dataUrl" [type]="type">
         </video>
+        <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>
     </span>
     <span *ngSwitchCase="'audio/mpeg3' || 'audio/x-mpeg3' || 'audio/ogg'">
         File Name: {{name}}<br>
@@ -39,6 +42,7 @@
         <audio controls>
             <source [src]="dataUrl" [type]="type">
         </audio>
+        <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>
     </span>
     <span *ngSwitchCase="'text/plain'">
         <div class="app-view-content">
@@ -48,10 +52,7 @@
         </div>
         <div class="app-search-view-files">
             <div *ngFor="let item of files">
-            <button md-mini-fab color="accent" (click)="viewFile(item)">
-                  <md-icon class="md-12">attach_file</md-icon>
-              </button>
-                <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
+            <b><span (click)="viewFile(item)"><md-icon class="md-10" (click)="viewFile(item)">attachment</md-icon>&nbsp;{{item.name}}</span></b>
             </div>
         </div>
 

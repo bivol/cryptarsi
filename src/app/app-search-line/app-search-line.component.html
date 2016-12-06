@@ -14,11 +14,9 @@
     <md-card-actions>
 
     </md-card-actions>
-    <md-icon class="md-24" disabled>attachment</md-icon>
-    <ul class="app-search-line">
-        <li *ngFor="let item of files">
-            <b><a href="#" (click)="viewFile(item)">{{item.name}}</a></b>
-        </li>
-    </ul>
+    <h3>Attachments</h3>
+    <div *ngFor="let item of files">
+            <b><span (click)="viewFile(item)"><md-icon class="md-10" (click)="viewFile(item)">attachment</md-icon>&nbsp;{{item.name}}</span></b>
+    </div>
   </md-card>
 </div>

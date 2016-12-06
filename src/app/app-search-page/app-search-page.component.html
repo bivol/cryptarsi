@@ -76,10 +76,11 @@
                     <br>
                     <pagination-controls
                         maxSize="9"
-                        autoHide="true"
+                        autoHide="false"
                         (pageChange)="p = $event"
                     >
                     </pagination-controls>
+                    <BR><BR>
                     <div *ngFor="let item of results | paginate: { itemsPerPage: 20, currentPage: p }">
                         <app-search-line
                             [position]="item.position"

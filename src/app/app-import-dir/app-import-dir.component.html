@@ -7,7 +7,7 @@
                 (change)="checkDbName"
                 maxlength="50"
                 md-tooltip="Enter new database name"
-                tooltip-position="above"
+                tooltip-position="after"
                 (change)="validateDbName()"
             >
                 <md-hint #dbNameHint align="end">
@@ -21,7 +21,7 @@
                 maxlength="128"
                 dividerColor="accent"
                 md-tooltip="Enter the password for this database"
-                tooltip-position="above"
+                tooltip-position="after"
                 (change)="validateKeys()"
             >
             </md-input><br>
@@ -31,7 +31,7 @@
                 placeholder="Repeat Password"
                 maxlength="128"
                 md-tooltip="Enter the password again"
-                tooltip-position="above"
+                tooltip-position="after"
                 dividerColor="accent"
                 (change)="validateKeys()"
             >

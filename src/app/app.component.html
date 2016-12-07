@@ -1,13 +1,15 @@
 <md-sidenav-layout class="app-sidenav-layout">
   <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
+    <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component'" md-tooltip="Help" tooltip-position="below">
+      <md-icon class="md-24">help_outline</md-icon>
+    </button>
+    <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="below">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <p>
-    <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="below">
       <md-icon class="md-24">file_upload</md-icon>
     </button>
-    </p>
+
     <hr>
     <h3>Databases</h3>
     <div *ngIf="collection && collection.length>0">

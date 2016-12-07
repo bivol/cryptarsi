@@ -4,12 +4,13 @@
         <button md-mini-fab color="principal" disabled md-tooltip="Selected database" tooltip-position="above">
               <md-icon class="md-24">lock</md-icon>
         </button>
+        <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
+               <md-icon class="md-24">delete</md-icon>
+         </button>
             {{database}}
         </md-card-title>
         <md-card-actions layout="row" layout-align="center">
-             <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
-                <md-icon class="md-24">delete</md-icon>
-             </button>
+
         </md-card-actions>
         <form novalidate>
             <md-input
@@ -35,22 +36,20 @@
          </template>
             <md-card>
                 <md-card-title>
-                    <button md-mini-fab color="principal" md-tooltip="Selected database" tooltip-position="above" disabled>
-                      <md-icon class="md-24">lock_open</md-icon>
-                  </button>
-                  {{database}}
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="center">
-                    <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close database" tooltip-position="before">
+                   <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close database" tooltip-position="before">
                     <md-icon class="md-24">lock</md-icon>
-                    </button>&nbsp;
+                    </button>
                     <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
                     <md-icon class="md-24">delete</md-icon>
-                    </button>&nbsp;
-                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="after">
+                    </button>
+                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="below">
                     <md-icon class="md-24">file_download</md-icon>
                     </button>
                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
+                  {{database}}
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="center">
+
                 </md-card-actions>
                 <md-card-content>
                     <!--<form novalidate (ngSubmit)="search()" >-->

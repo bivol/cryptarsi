@@ -3,36 +3,35 @@
     <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <br>
-    <br>
+    <p>
     <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
       <md-icon class="md-24">file_upload</md-icon>
     </button>
-    <br>
+    </p>
     <hr>
     <h3>Databases</h3>
     <div *ngIf="collection && collection.length>0">
-      <md-list>
-        <md-list-item *ngFor="let item of collection">
-        <button
+        <div *ngFor="let item of collection">
+        <p><button
             [attr.md-mini-fab]="(item.name != databaseSelected)?true:null"
             [attr.color]="(item.name != databaseSelected)?'primary':null"
             [attr.md-fab]="(item.name == databaseSelected)?true:null"
             [attr.color]="(item.name == databaseSelected)?'warn':null"
             (click)="selectDatabase(item.name)"
           > <md-icon md-list-avatar>folder</md-icon></button>&nbsp;{{item.name}}
-        </md-list-item>
+        </p></div>
+
         <div *ngIf="!collection">
           <button md-button>No databases imported</button>
         </div>
-      </md-list>
+
     </div>
     <div *ngIf="!(collection && collection.length>0)">
       <!-- Eventually request for import -->
     </div>
   </md-sidenav>
 
-  <md-toolbar color="primary">
+  <md-toolbar color="accent">
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>

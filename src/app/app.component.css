@@ -12,7 +12,7 @@
 
 .app-sidenav {
   padding: 10px;
-  min-width: 100px;
+  width: 150px;
 }
 
 .app-content md-checkbox {

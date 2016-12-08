@@ -45,6 +45,16 @@
   text-decoration: none;
 }
 
+.app-select-database:hover {
+  cursor: pointer;
+  background: #F0F0F0;
+}
+
+.app-selected-database {
+  background: #F8F8F8;
+  border: 1pt #E8E8E8 dashed;
+}
+
 .app-action {
   display: inline-block;
   position: fixed;

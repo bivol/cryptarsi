@@ -14,7 +14,12 @@
     <h3>Databases</h3>
     <div *ngIf="collection && collection.length>0">
         <div *ngFor="let item of collection">
-        <p><button
+        <p
+          class="app-select-database"
+          [ngClass]="{'app-selected-database': (item.name == databaseSelected) }" 
+          (click)="selectDatabase(item.name)"
+        >
+          <button
             [attr.md-mini-fab]="(item.name != databaseSelected)?true:null"
             [attr.color]="(item.name != databaseSelected)?'primary':null"
             [attr.md-fab]="(item.name == databaseSelected)?true:null"

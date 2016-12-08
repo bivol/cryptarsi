@@ -20,7 +20,7 @@ export class FileReaderAPI {
             let groups = {};
             let allfiles = [];
             let nindex = {};
-            let index = 1;
+            let index = 2;
             for (let file of files) {
                 total += parseInt(file.size);
                 q.push(file);
@@ -59,16 +59,15 @@ export class FileReaderAPI {
                 index++;
             }
 
-            hash[index] = {
+            hash[1] = {
                 name: 'Cryptarsi All Files',
                 type: 'text/plain',
                 size: 0,
-                index: index,
+                index: 1,
                 group: 'Cryptarsi All Files'
             };
 
-            groups[hash[index].group].gindex = allfiles;
-            index++;
+            groups[hash[1].group].gindex = allfiles;
 
             for (let i in hash) { // Set the group index
                 hash[i].gindex = groups[hash[i].group];
@@ -76,7 +75,7 @@ export class FileReaderAPI {
 
             function processNextFile() {
                 if (q.length === 0) {
-                    return cbfile({}, 'Cryptarsi All Files', hash[index - 1]).then(() => {
+                    return cbfile({}, 'Cryptarsi All Files', hash[1]).then(() => {
                         resolve();
                     }).catch(reject);
                 }

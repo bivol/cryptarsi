@@ -67,7 +67,7 @@ export class FileReaderAPI {
                 group: 'Cryptarsi All Files'
             };
 
-            groups[hash[1].group].gindex = allfiles;
+            groups[hash[1].group] = allfiles;
 
             for (let i in hash) { // Set the group index
                 hash[i].gindex = groups[hash[i].group];

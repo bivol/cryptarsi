@@ -20,8 +20,12 @@ export class FileReaderAPI {
             let groups = {};
             let allfiles = [];
             let nindex = {};
-            let index = 2;
+            let index = 3;
             for (let file of files) {
+                //console.log('File name is', file);
+                if (file.name.match(/^\./)) {
+                    continue; // We ignore filenames that begin with .
+                }
                 total += parseInt(file.size);
                 q.push(file);
                 let name = file.webkitRelativePath || file.mozFullPath || file.name;
@@ -34,18 +38,14 @@ export class FileReaderAPI {
                 if (typeof groups[gname] === 'undefined') {
                     groups[gname] = [];
                 }
-                groups[gname].push({
+                let w = {
                     index: index,
                     type: file.type,
                     size: file.size,
                     name: file.name
-                });
-                allfiles.push({
-                    index: index,
-                    type: file.type,
-                    size: file.size,
-                    name: file.name
-                });
+                };
+                groups[gname].push(w);
+                allfiles.push(w);
                 let v = {
                     name: file.name,
                     type: file.type,
@@ -66,8 +66,26 @@ export class FileReaderAPI {
                 index: 1,
                 group: 'Cryptarsi All Files'
             };
-
             groups[hash[1].group] = allfiles;
+
+            hash[2] = {
+                name: 'Cryptarsi Lonely Files',
+                type: 'text/plain',
+                size: 0,
+                index: 2,
+                group: 'Cryptarsi Lonely Files'
+            };
+            groups[hash[2].group] = [];
+
+            for (let g in groups) {
+                if (g.length === 1
+                    && groups[g][0].type !== 'text/plain'
+                    && g !== hash[2].group
+                    && g !== hash[1].group
+                ) {
+                    groups[hash[2].group].push(groups[g][0]);
+                }
+            }
 
             for (let i in hash) { // Set the group index
                 hash[i].gindex = groups[hash[i].group];
@@ -77,12 +95,19 @@ export class FileReaderAPI {
                 if (q.length === 0) {
                     console.log('Lets add the last file');
                     return cbfile({
-                        name: 'Cryptarsi All Files',
+                        name: 'Cryptarsi Lonely Files',
                         type: 'text/plain',
                         size: 0
-                    }, 'Cryptarsi All Files', hash[1]).then(() => {
-                        console.log('The index file is added');
-                        resolve();
+                    }, 'Cryptarsi Lonely Files', hash[2]).then(() => {
+                        console.log('The lonely index file is added');
+                        cbfile({
+                            name: 'Cryptarsi All Files',
+                            type: 'text/plain',
+                            size: 0
+                        }, 'Cryptarsi All Files', hash[1]).then(() => {
+                            console.log('The index file is added');
+                            resolve();
+                        }).catch(reject);
                     }).catch(reject);
                 }
                 let file = q.shift();

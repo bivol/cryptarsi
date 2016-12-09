@@ -10,13 +10,13 @@ function createStoreInDb(db, version, name) {
         log('Going to create store', db, version, name);
         db.createStore(version, (evt) => {
             function oneStore(n) {
-                log('Creating non existing objStore', n);
+               // log('Creating non existing objStore', n);
                 let obj = evt.currentTarget.result.createObjectStore(n, {
                     keyPath: 'id',
                     //autoIncrement: true
                 });
                 obj.onerror = (e) => {
-                    log('Cannot create objectStore', e);
+                  //  log('Cannot create objectStore', e);
                     reject(e);
                 };
             }
@@ -26,7 +26,7 @@ function createStoreInDb(db, version, name) {
                 oneStore(name);
             }
         }).then(() => {
-            log('No errors during creation/opening of', name);
+           // log('No errors during creation/opening of', name);
             resolve();
         }).catch(reject);
     });
@@ -58,10 +58,10 @@ class DatabaseList {
             }).catch((e) => {
                 this.createListDb()
                     .then(() => {
-                        log('Supposedly the store is ready');
+                      //  log('Supposedly the store is ready');
                         resolve({});
                     }).catch(() => {
-                        log('Some error has happened');
+                       // log('Some error has happened');
                         reject();
                     });
             });
@@ -180,7 +180,7 @@ export class DB {
 
     // Drop database
     drop() {
-        console.log('Called drop database', this.dbName);
+        //console.log('Called drop database', this.dbName);
         return new Promise((resolve, reject) => {
             this.close().then(() => {
                 this.store.drop()
@@ -269,9 +269,9 @@ export class DB {
                 id: index,
                 data: content
             };
-            console.log('data...', this.dataStoreName, data);
+            //console.log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
-                console.log('error add data', e);
+                //console.log('error add data', e);
                 if (e.target.error.code === 0) { // Key duplication
                     this.store.update(this.dataStoreName, data)
                         .then(resolve).catch(reject);

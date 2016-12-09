@@ -1,17 +1,15 @@
 <div *ngIf="!open">
     <md-card>
-        <md-card-title>
+        <md-card-title>Unlock the database {{database}}</md-card-title>
+        <md-card-subtitle>
         <button md-mini-fab color="principal" disabled md-tooltip="Selected database" tooltip-position="above">
               <md-icon class="md-24">lock</md-icon>
         </button>
-        <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="above">
+        <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="after">
                <md-icon class="md-24">delete</md-icon>
          </button>
-            {{database}}
-        </md-card-title>
-        <md-card-actions layout="row" layout-align="center">
-
-        </md-card-actions>
+        </md-card-subtitle>
+        <md-card-content>
         <form novalidate>
             <md-input
                 #encKey
@@ -24,22 +22,32 @@
                 <md-icon class="md-24">lock_open</md-icon> Open
             </button>
         </form>
+        </md-card-content>
     </md-card>
 </div>
 <div *ngIf="open">
 <md-card>
-        <md-card-title>
+        <md-card-title>Database {{database}}</md-card-title>
+        <md-card-subtitle>
         <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close database" tooltip-position="before">
                     <md-icon class="md-24">lock_open</md-icon>
                     </button>
-                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="below">
+                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export database" tooltip-position="after">
                     <md-icon class="md-24">file_download</md-icon>
                     </button>
                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
-            {{database}}
-        </md-card-title>
-
-    </md-card>
+                    <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
+                    <span *ngIf="results.length > 0">
+                        Found: {{results.length}} documents
+                    </span>
+                    <pagination-controls
+                        maxSize="9"
+                        autoHide="true"
+                        (pageChange)="p = $event"
+                    >
+                    </pagination-controls>
+        </md-card-subtitle>
+        </md-card>
     <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event)">
         <md-tab>
         <template md-tab-label>
@@ -71,19 +79,7 @@
                         <button md-raised-button (click)="search()"><md-icon class="md-24">search</md-icon>
                             Search
                         </button>
-                        <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
-                    <!--</form>-->
-                    <br>
-                    <div *ngIf="results.length > 0">
-                        Found: {{results.length}} documents
-                    </div>
-                    <br>
-                    <pagination-controls
-                        maxSize="9"
-                        autoHide="false"
-                        (pageChange)="p = $event"
-                    >
-                    </pagination-controls>
+
                     <BR><BR>
                     <div *ngFor="let item of results | paginate: { itemsPerPage: 20, currentPage: p }">
                         <app-search-line

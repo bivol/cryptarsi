@@ -179,7 +179,7 @@ export class AngularIndexedDB {
                 let cursor = (<IDBOpenDBRequest>evt.target).result;
                 if (cursor) {
                     cb(cursor.value).then(() => {
-                       // console.log('Got back from the cb')
+                        //console.log('Got back from the cb')
                         cursor['continue']();
                     }).catch((e) => {
                         reject(e);
@@ -211,13 +211,14 @@ export class AngularIndexedDB {
             if (key) {
                 objectStore.add(value, key);
             } else {
-                console.log('Adding value', value);
+              //  console.log('Adding value', value);
                 try {
                     objectStore.add(value);
                 } catch (e) {
-                    console.log('Error adding', e);
+                    //console.log('Error adding', e);
                     reject(e);
                 }
+
             }
         });
 

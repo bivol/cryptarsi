@@ -1,6 +1,9 @@
+//import {enableProdMode} from '@angular/core';
+//enableProdMode();
 import { Component } from '@angular/core';
 import { DB, DbList } from './cryptarsi/Database';
 import { log } from './log';
+
 
 @Component({
   selector: 'app-root',

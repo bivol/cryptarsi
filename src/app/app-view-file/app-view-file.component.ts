@@ -35,7 +35,7 @@ export class AppViewFileComponent implements OnInit {
         this.type = this.tab.type;
         console.log('Retrieve data for', this.name, this.index);
         this.db.getData(this.index).then((s) => {
-                console.log('got data', s);
+                //console.log('got data', s);
                 if (s.match(/XXXX(\{.*?\})XXXX/)) {
                     this.obj = JSON.parse(s.match(/XXXX(\{.*?\})XXXX/)[1]);
                     this.data = s.replace(/\s*XXXX(\{.*?\})XXXX/, '');
@@ -47,12 +47,12 @@ export class AppViewFileComponent implements OnInit {
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
-                console.log('Error retrieve data', e);
+                //console.log('Error retrieve data', e);
             });
     }
 
     viewFile(item) {
-        console.log('View is clicked', item);
+        //console.log('View is clicked', item);
         item.db = this.db;
         this.onOpen.emit(item);
     }

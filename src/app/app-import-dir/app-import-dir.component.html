@@ -1,5 +1,8 @@
 <div>
     <md-card *ngIf="!processing" class="app-input-selection" >
+      <md-card-title>Create a new Cryptarsi database</md-card-title>
+      <md-card-subtitle>Give a name, select a directory, type a strong password (twice) and hit the red button</md-card-subtitle>
+      <md-card-content>
         <form novalidate (ngSubmit)="submit()" >
             <md-input
                 #dbName
@@ -50,8 +53,13 @@
     <md-icon class="md-24">add</md-icon>
 </button>
         </form>
+        </md-card-content>
     </md-card>
+
     <md-card *ngIf="processing">
+      <md-card-title>Wait...</md-card-title>
+      <md-card-subtitle>Your data is imported, encrypted and indexed for search.</md-card-subtitle>
+      <md-card-content>
         <label>
             <div>
                 <div>{{filename}}</div>
@@ -66,5 +74,6 @@
                 [value]="progress"
                 aria-label="Progress bar"></md-progress-bar>
         </label>
+      </md-card-content>
     </md-card>
 </div>

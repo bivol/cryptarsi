@@ -93,31 +93,31 @@ export class FileReaderAPI {
 
             function processNextFile() {
                 if (q.length === 0) {
-                    console.log('Lets add the last file');
+                    //console.log('Lets add the last file');
                     return cbfile({
                         name: 'Cryptarsi Lonely Files',
                         type: 'text/plain',
                         size: 0
                     }, 'Cryptarsi Lonely Files', hash[2]).then(() => {
-                        console.log('The lonely index file is added');
+                        //console.log('The lonely index file is added');
                         cbfile({
                             name: 'Cryptarsi All Files',
                             type: 'text/plain',
                             size: 0
                         }, 'Cryptarsi All Files', hash[1]).then(() => {
-                            console.log('The index file is added');
+                            //console.log('The index file is added');
                             resolve();
                         }).catch(reject);
                     }).catch(reject);
                 }
                 let file = q.shift();
                 me.readFile(file, (file, l, t) => {
-                    // log('file - 2', file.name, loaded, total);
+                     log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
                         cbprogress(file, loaded + l, total, cnt, files.length + 1, l);
                     }
                 }).then((text) => {
-                    // log('File', file.name, 'loaded');
+                     log('File', file.name, 'loaded');
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
@@ -148,7 +148,7 @@ export class FileReaderAPI {
 
             reader.onprogress = (d) => {
                 if (d.lengthComputable) {
-                    // log('file', file.name, d.loaded, d.total);
+                     log('file', file.name, d.loaded, d.total);
                     if (cb) {
                         cb(file, d.loaded, d.total);
                     }

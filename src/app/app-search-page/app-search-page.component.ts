@@ -114,7 +114,7 @@ export class AppSearchPageComponent implements OnInit {
      cryptarsifiles() {
         log('Files list pressed', this.searchInput.value);
         this.results = [];
-        this.searchWorking = true;
+        this.searchWorking = false;
         this.srch.searchRule('cryptarsi all files', (index, data) => {
             this.results.push({
                 position: this.results.length,
@@ -146,15 +146,15 @@ export class AppSearchPageComponent implements OnInit {
             this.openTabs.push(item);
             pos = this.openTabs.length;
         }
-        console.log('Going to position', pos);
+        //console.log('Going to position', pos);
         setTimeout(() => {
             this.selectedTab = pos;
-            console.log('Selected tab is', pos);
+            //console.log('Selected tab is', pos);
         }, 250);
     }
 
     closeTab(item) {
-        console.log('This tab is closed', item);
+        //console.log('This tab is closed', item);
         if (this.openTabs.filter(n => n.name === item.name).length > 0) {
             this.openTabs.splice(this.openTabs.map(n => n.name === item.name).indexOf(true), 1);
             this.selectedTab = 0;
@@ -162,15 +162,15 @@ export class AppSearchPageComponent implements OnInit {
     }
 
     exportDb() {
-        console.log('Export database');
+        //console.log('Export database');
         let exp = new ExportDB(this.db);
         this.exportWorking = true;
         exp.exportTar().then((buffer) => {
-            console.log('The database is exported, make it downloadable');
+            //console.log('The database is exported, make it downloadable');
             window.open(window.URL.createObjectURL(buffer));
             this.exportWorking = false;
         }).catch((e) => {
-            console.log('Error exporting Tar', e);
+            //console.log('Error exporting Tar', e);
             this._snackbar.open('Cannot export the database');
             this.exportWorking = false;
         });

@@ -50,7 +50,7 @@ export class AppSearchLineComponent implements OnInit {
 
     viewFile(item?) {
         if (item) {
-            console.log('View is clicked', item, this.db);
+            //console.log('View is clicked', item, this.db);
             item.db = this.db;
             this.onOpen.emit(item);
         } else {

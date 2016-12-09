@@ -112,13 +112,13 @@ export class Tar {
         let newSize = length + addLength,
             buffer = this.cleanBuffer((parseInt((newSize / multipleOf).toString()) + 1) * multipleOf);
 
-        console.log('Extend Buffer org:', orig.length,
+        /*console.log('Extend Buffer org:', orig.length,
             'to:', (parseInt((newSize / multipleOf).toString()) + 1) * multipleOf,
             'result:', buffer.length,
             'length', length,
             'addLength', addLength
         );
-
+        */
         buffer.set(orig);
         return buffer;
 }
@@ -193,7 +193,7 @@ export class Tar {
 
         header.checksum = this.pad(checksum, 6) + '\u0000';
 
- //       console.log('Header', header, header.fileSize, data.length);
+        //console.log('Header', header, header.fileSize, data.length);
         let headerArr = this.format(header);
         //console.log('HeaderArr', headerArr, headerArr.length);
         this.buffer.set(headerArr, this.writen);
@@ -208,18 +208,18 @@ export class Tar {
             );
         }
 
-        console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
+        //console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
         this.buffer.set(data, this.writen);
         // TODO: probably the line bellow is having a bug and sometimes adding two extra blocks
         // this.written += input.length + (recordSize - (input.length % recordSize || recordSize));
         let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
         this.writen += (data.length + roundToRecord);
-        console.log('rounding', name, 'data length', data.length,
+        /* console.log('rounding', name, 'data length', data.length,
            'recordSize', this.recordSize,
            'lefover', (data.length % this.recordSize),
            'how much we add', roundToRecord,
            'where we are after adding', this.writen);
-
+        */
         // Always add 2 extra records, for compatibility with GNU Tar
         if (this.buffer.length - this.writen < this.recordSize * 2) {
             this.buffer = this.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
@@ -267,19 +267,19 @@ export class Tar {
         }
 
         // One file has 512 bytes of header + variable length data
-        console.log('I have data in buffer', buffer, buffer.length);
+        //console.log('I have data in buffer', buffer, buffer.length);
         let pos = 0;
         while (pos < buffer.length - 512) {
-            console.log('POS', pos, buffer.length);
+            //console.log('POS', pos, buffer.length);
             let data = this.readHeader(buffer, pos);
             if (buffer[pos] === 0
                 && data.fileName === ''
                 && data.fileSize === ''
             ) {
-                console.log('Trimming block is reached. Reading is complete!');
+                //console.log('Trimming block is reached. Reading is complete!');
                 break;
             }
-            console.log('Return data', data);
+            //console.log('Return data', data);
             pos += 512;
             let content = '';
             let len = parseInt(data.fileSize, 8);
@@ -288,18 +288,18 @@ export class Tar {
                 break;
             }
             let roundToRecord = this.recordSize - (len % this.recordSize || this.recordSize);
-            console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
+            //console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
             for (let i = 0; i < len; i++) {
                 content += String.fromCharCode(buffer[pos + i]);
               //  console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
             }
-            console.log('Return content', content.length/*, content*/);
+            //console.log('Return content', content.length/*, content*/);
             pos += len + roundToRecord;
-            console.log('new pos is', pos, buffer.length);
+            //console.log('new pos is', pos, buffer.length);
             cb(data, content, pos, buffer.length).then(() => {}).catch((e) => {
-                console.log('Error');
+                //console.log('Error');
             });
         }
-        console.log('reading is completed');
+        //console.log('reading is completed');
     }
 }

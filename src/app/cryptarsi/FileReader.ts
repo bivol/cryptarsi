@@ -75,7 +75,13 @@ export class FileReaderAPI {
 
             function processNextFile() {
                 if (q.length === 0) {
-                    return cbfile({}, 'Cryptarsi All Files', hash[1]).then(() => {
+                    console.log('Lets add the last file');
+                    return cbfile({
+                        name: 'Cryptarsi All Files',
+                        type: 'text/plain',
+                        size: 0
+                    }, 'Cryptarsi All Files', hash[1]).then(() => {
+                        console.log('The index file is added');
                         resolve();
                     }).catch(reject);
                 }

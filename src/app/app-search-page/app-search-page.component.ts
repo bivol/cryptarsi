@@ -112,15 +112,15 @@ export class AppSearchPageComponent implements OnInit {
     }
 
     selectTab(e) {
-        console.log('eee', e, e && e.index);
+        //console.log('eee', e, e && e.index);
         if (e && e.hasOwnProperty('index')) {
-            console.log('Selected tab changes to', e.index);
+            //console.log('Selected tab changes to', e.index);
             this.selectedTab = e.index;
         }
     }
 
     openNewTab(item) {
-        console.log('New tab has to be open', item);
+        //console.log('New tab has to be open', item);
         // Add it only if it does not exist
         let pos = this.openTabs.map(n => n.name === item.name).indexOf(true) + 1;
         if (pos === 0) {

@@ -1,4 +1,5 @@
 import { log } from '../log';
+import { isIndexable } from './IsIndexable';
 
 export class FileReaderAPI {
     constructor() {
@@ -18,6 +19,7 @@ export class FileReaderAPI {
             let q = [];
             let hash = {};
             let groups = {};
+            let lonelyGroups = {};
             let allfiles = [];
             let nindex = {};
             let index = 3;
@@ -37,6 +39,10 @@ export class FileReaderAPI {
                 }
                 if (typeof groups[gname] === 'undefined') {
                     groups[gname] = [];
+                    lonelyGroups[gname] = 1;
+                }
+                if (isIndexable(file.type)) {
+                    delete lonelyGroups[gname]; // Remove it from the list if it is indexable
                 }
                 let w = {
                     index: index,
@@ -77,14 +83,8 @@ export class FileReaderAPI {
             };
             groups[hash[2].group] = [];
 
-            for (let g in groups) {
-                if (g.length === 1
-                    && groups[g][0].type !== 'text/plain'
-                    && g !== hash[2].group
-                    && g !== hash[1].group
-                ) {
-                    groups[hash[2].group].push(groups[g][0]);
-                }
+            for (let g in lonelyGroups) {
+                groups[hash[2].group].push(groups[g][0]);
             }
 
             for (let i in hash) { // Set the group index

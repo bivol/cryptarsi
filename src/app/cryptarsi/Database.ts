@@ -3,6 +3,7 @@ import { AngularIndexedDB } from './Storage';
 import { WaitOK } from './WaitOK';
 import { WordHash } from './Hash';
 import { log } from '../log';
+import { isIndexable } from './IsIndexable';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
@@ -201,7 +202,7 @@ export class DB {
     addFile(file, content, obj, progress = (c) => {}) {
         return new Promise((resolve, reject) => {
             let me = this;
-            if (file.type === 'text/xml' || file.type === 'text/plain') {
+            if (isIndexable(file.type)) {
                 let hashes = {};
                 WordHash.cbPerHash(content, (hash) => {
                     hashes[hash] = obj.index;

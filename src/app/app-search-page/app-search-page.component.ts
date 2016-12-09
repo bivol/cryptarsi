@@ -111,13 +111,27 @@ export class AppSearchPageComponent implements OnInit {
         });
     }
 
+    selectTab(e) {
+        console.log('eee', e, e && e.index);
+        if (e && e.hasOwnProperty('index')) {
+            console.log('Selected tab changes to', e.index);
+            this.selectedTab = e.index;
+        }
+    }
+
     openNewTab(item) {
         console.log('New tab has to be open', item);
         // Add it only if it does not exist
-        if (this.openTabs.filter(n => n.name === item.name).length === 0) {
+        let pos = this.openTabs.map(n => n.name === item.name).indexOf(true) + 1;
+        if (pos === 0) {
             this.openTabs.push(item);
-            this.selectedTab = this.openTabs.length;
+            pos = this.openTabs.length;
         }
+        console.log('Going to position', pos);
+        setTimeout(() => {
+            this.selectedTab = pos;
+            console.log('Selected tab is', pos);
+        }, 250);
     }
 
     closeTab(item) {

@@ -83,7 +83,7 @@ export class FileReaderAPI {
                 me.readFile(file, (file, l, t) => {
                     // log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
-                        cbprogress(file, loaded + l, total, cnt, files.length, l);
+                        cbprogress(file, loaded + l, total, cnt, files.length + 1, l);
                     }
                 }).then((text) => {
                     // log('File', file.name, 'loaded');

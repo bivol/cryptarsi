@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TarTools } from '../cryptarsi/Tar';
 
 @Component({
     //moduleId: module.id,
@@ -36,6 +37,9 @@ export class AppViewFileComponent implements OnInit {
         console.log('Retrieve data for', this.name, this.index);
         this.db.getData(this.index).then((s) => {
                 //console.log('got data', s);
+                //console.log('retrieved index ', this.index, this.type);
+                //let ds = (t) => { let s = ''; for (let i = 0; i < t.length; i++) { s += t.charCodeAt(i) + ' '; }; return s; };
+                //console.log('DS IS', ds(s));
                 if (s.match(/XXXX(\{.*?\})XXXX/)) {
                     this.obj = JSON.parse(s.match(/XXXX(\{.*?\})XXXX/)[1]);
                     this.data = s.replace(/\s*XXXX(\{.*?\})XXXX/, '');
@@ -43,7 +47,9 @@ export class AppViewFileComponent implements OnInit {
                 } else {
                     this.data = s;
                 }
-                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(new Blob([s], { type: this.type })));
+                let Uint8 = TarTools.stringToUint8(s);
+                //console.log('My Uint8 is', Uint8);
+                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(new Blob([Uint8], { type: this.type })));
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data

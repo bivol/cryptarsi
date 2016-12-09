@@ -20,6 +20,24 @@ interface IHeaderField {
     padding?;
 };
 
+export class TarTools {
+    static cleanBuffer(len) {
+        let buffer = new Uint8Array(len);
+        for (let i = len - 1; i >= 0; i--) {
+            buffer[i] = 0;
+        }
+        return buffer;
+    }
+    static stringToUint8(input, out?, offset = 0) {
+        out = out || TarTools.cleanBuffer(input.length);
+        let o = offset + input.length - 1;
+        for (let i = input.length - 1 ; i >= 0; i--) {
+            out[o--] = input.charCodeAt(i);
+        }
+        return out;
+    }
+}
+
 export class Tar {
 
     recordSize = 512;
@@ -121,7 +139,8 @@ export class Tar {
 
         buffer.set(orig);
         return buffer;
-}
+    }
+
     private pad(num, bytes, base = 8) {
         num = num.toString(base);
         return '000000000000'.substr(num.length + 12 - bytes) + num;

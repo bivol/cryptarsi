@@ -281,6 +281,13 @@ export class DB {
     }
 
     modifyData(index, content) {
+        /*
+        console.log('DUMP INDEX', index, 'CONTENT', content);
+        let ds = (t) => { let s = ''; for (let i = 0; i < t.length; i++) { s += t.charCodeAt(i) + ' '; }; return s; };
+        console.log('CHARS ', ds(content));
+        let e = this.crypto.decrypt(this.crypto.encrypt(content));
+        console.log('TROUGH ENCRYPTOR ', ds(e));
+        */
         return this.modifyRawData(this.crypto.encryptIndex(index),
             this.crypto.encrypt(content));
     }

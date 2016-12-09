@@ -141,6 +141,14 @@ export class FileReaderAPI {
             let reader = new FileReader;
             reader.onload = (e) => {
                 let text = reader.result;
+                /*
+                console.log('downloaded', file.name, file.type);
+                let s = '';
+                for (let i = 0; i < text.length; i++) {
+                    s += <string>text.charCodeAt(i) + ' ';
+                }
+                console.log('content', s);
+                */
                 resolve(text);
             };
             reader.onerror = reject;

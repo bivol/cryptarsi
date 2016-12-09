@@ -53,12 +53,12 @@ export class AppViewFileComponent implements OnInit {
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
-                console.log('Error retrieve data', e);
+                //console.log('Error retrieve data', e);
             });
     }
 
     viewFile(item) {
-        console.log('View is clicked', item);
+        //console.log('View is clicked', item);
         item.db = this.db;
         this.onOpen.emit(item);
     }

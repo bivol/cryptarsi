@@ -1,5 +1,8 @@
 <div>
     <md-card *ngIf="!processing" class="app-input-selection" >
+    <md-card-title>Load a database from CrypTARsi file</md-card-title>
+    <md-card-subtitle>Give a name, select the file and hit the button</md-card-subtitle>
+    <md-card-content>
         <form novalidate (ngSubmit)="submit()" >
             <md-input
                 #dbName
@@ -28,8 +31,12 @@
     <md-icon class="md-24">file_upload</md-icon>
 </button>
         </form>
+        </md-card-content>
     </md-card>
     <md-card *ngIf="processing">
+    <md-card-title>Wait...</md-card-title>
+    <md-card-subtitle>The file is loaded</md-card-subtitle>
+    <md-card-content>
         <label>
             <div>
                 <div>Total Progress: {{progress}}%</div>
@@ -42,5 +49,6 @@
                 [value]="progress"
                 aria-label="Progress bar"></md-progress-bar>
         </label>
+    </md-card-content>
     </md-card>
 </div>

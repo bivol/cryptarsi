@@ -170,7 +170,7 @@ export class Search {
      *  This function implements the search
      * @param {string} srch
      * @returns {string[]}
-     * 
+     *
      * @memberOf Search
      */
     searchRule(srch: string, cb = (n, s) => {}) {
@@ -194,10 +194,10 @@ export class Search {
 
             let me = this;
 
-            console.log('words', w);
+            //console.log('words', w);
             // Filtering
             w = w.filter((n) => WordHash.hash(n));
-            console.log('filtered words', w);
+            //console.log('filtered words', w);
 
             if (w.length < 1) {
                 resolve(); // We have no match
@@ -206,7 +206,7 @@ export class Search {
             this.db.getWordHash(w[0]).then((myset: any[]) => {
                 let i = 1;
 
-                console.log('MySet is now', myset, 'w', w, 'i', i);
+                //console.log('MySet is now', myset, 'w', w, 'i', i);
 
                 let chain = new Promise( (res, rej) => {
                     function nextStep() {
@@ -245,19 +245,20 @@ export class Search {
                         });
                     }
 
-                    console.log('MySet is', myset);
+                    //console.log('MySet is', myset);
 
                     let getOneFromMySet = () => {
                         if (myset.length < 1) {
                             return resolve();
                         }
                         let n = myset.shift();
-                        console.log('retrueve', n);
+                        //console.log('retrueve', n);
+
                         me.db.getData(n).then((s) => {
-                            console.log('retrieved', n, 'run', regArray);
+                            //console.log('retrieved', n, 'run', regArray);
                             for (let i = 0; i < regArray.length; i++) {
                                 let t = regArray[i].regex.test(s);
-                                console.log('match is', t, regArray[i].match);
+                                //console.log('match is', t, regArray[i].match);
                                 if (t && regArray[i].match == '-') { return; }
                                 if ((!t) && regArray[i].match == '+') { return; }
                             }

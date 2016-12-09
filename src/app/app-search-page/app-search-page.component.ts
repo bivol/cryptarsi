@@ -111,6 +111,25 @@ export class AppSearchPageComponent implements OnInit {
         });
     }
 
+     cryptarsifiles() {
+        log('Files list pressed', this.searchInput.value);
+        this.results = [];
+        this.searchWorking = true;
+        this.srch.searchRule('cryptarsi all files', (index, data) => {
+            this.results.push({
+                position: this.results.length,
+                index: index,
+                text: data,
+                db: this.db,
+                query: this.searchInput.value
+            });
+        }).then(() => {
+            this.searchWorking = false;
+        }).catch(() => {
+            this.searchWorking = false;
+        });
+    }
+
     selectTab(e) {
         //console.log('eee', e, e && e.index);
         if (e && e.hasOwnProperty('index')) {

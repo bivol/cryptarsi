@@ -84,7 +84,7 @@ export class FileReaderAPI {
             groups[hash[2].group] = [];
 
             for (let g in lonelyGroups) {
-                groups[hash[2].group].push(groups[g][0]);
+                groups[hash[2].group].concat(groups[g]);
             }
 
             for (let i in hash) { // Set the group index

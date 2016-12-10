@@ -5,7 +5,7 @@
         <button md-mini-fab color="principal" disabled md-tooltip="Selected database" tooltip-position="above">
               <md-icon class="md-24">lock</md-icon>
         </button>
-        <button md-mini-fab color="warn" md-tooltip="Delete database (not working yet)" tooltip-position="after">
+        <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete database" tooltip-position="after">
                <md-icon class="md-24">delete</md-icon>
          </button>
         </md-card-subtitle>

@@ -7,8 +7,8 @@ import { ImportDB } from '../cryptarsi/ImportDB';
 @Component({
     //moduleId: module.id,
     selector: 'app-import-db',
-    templateUrl: 'app-import-db.component.html',
-    styleUrls: ['app-import-db.component.css']
+    templateUrl: './app-import-db.component.html',
+    styleUrls: ['./app-import-db.component.css']
 })
 export class AppImportDbComponent {
     @Output() onImport = new EventEmitter();

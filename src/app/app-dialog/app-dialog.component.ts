@@ -6,8 +6,8 @@ let text = 'test';
 @Component({
     //moduleId: module.id,
     selector: 'app-dialog',
-    templateUrl: 'app-dialog.component.html',
-    styleUrls: ['app-dialog.component.css']
+    templateUrl: './app-dialog.component.html',
+    styleUrls: ['./app-dialog.component.css']
 })
 export class AppDialogComponent {
     question: string = text;

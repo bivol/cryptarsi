@@ -7,8 +7,8 @@ import { log } from '../log';
 @Component({
     // moduleId: module.id,
     selector: 'app-import-dir',
-    templateUrl: 'app-import-dir.component.html',
-    styleUrls: ['app-import-dir.component.css']
+    templateUrl: './app-import-dir.component.html',
+    styleUrls: ['./app-import-dir.component.css']
 })
 export class AppImportDirComponent {
     componentName: 'AppImportDirComponent';

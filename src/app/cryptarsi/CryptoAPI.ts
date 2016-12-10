@@ -1,4 +1,4 @@
-/// <reference path="../../typings/index.d.ts"/>
+/// <sreference path="../../typings/index.d.ts"/>
 import { log } from '../log';
 import * as CryptoJS from 'crypto-js';
 

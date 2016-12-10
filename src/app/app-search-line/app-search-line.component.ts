@@ -12,8 +12,8 @@ interface FileObj {
 @Component({
     //moduleId: module.id,
     selector: 'app-search-line',
-    templateUrl: 'app-search-line.component.html',
-    styleUrls: ['app-search-line.component.css']
+    templateUrl: './app-search-line.component.html',
+    styleUrls: ['./app-search-line.component.css']
 })
 
 export class AppSearchLineComponent implements OnInit {
@@ -25,7 +25,7 @@ export class AppSearchLineComponent implements OnInit {
 
     @Output() onOpen = new EventEmitter();
 
-    obj: FileObj = <FileObj>{};
+    obj = {};
     content = '';
     filename = '';
     files = [];
@@ -42,8 +42,8 @@ export class AppSearchLineComponent implements OnInit {
             if (this.content.length > this.maxLength) {
                 this.content = this.content.substr(0, this.maxLength) + '...';
             }
-            this.filename = this.obj.name;
-            this.files = this.obj.gindex;
+            this.filename = (<FileObj>this.obj).name;
+            this.files = (<FileObj>this.obj).gindex;
             //console.log('search-line', this.obj);
         }
     }

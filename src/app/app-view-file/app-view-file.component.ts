@@ -5,8 +5,8 @@ import { TarTools } from '../cryptarsi/Tar';
 @Component({
     //moduleId: module.id,
     selector: 'app-view-file',
-    templateUrl: 'app-view-file.component.html',
-    styleUrls: ['app-view-file.component.css']
+    templateUrl: './app-view-file.component.html',
+    styleUrls: ['./app-view-file.component.css']
 })
 export class AppViewFileComponent implements OnInit {
     @Input() index;

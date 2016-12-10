@@ -9,8 +9,8 @@ import { log } from '../log';
 @Component({
     //moduleId: module.id,
     selector: 'app-search-page',
-    templateUrl: 'app-search-page.component.html',
-    styleUrls: ['app-search-page.component.css'],
+    templateUrl: './app-search-page.component.html',
+    styleUrls: ['./app-search-page.component.css'],
 })
 
 export class AppSearchPageComponent implements OnInit {

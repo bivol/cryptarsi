@@ -14,7 +14,3 @@
   height: 100%;
   overflow: scroll;
 }
-
-.ng2-pagination.current {
-background:red;
-}

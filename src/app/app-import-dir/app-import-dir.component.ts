@@ -116,7 +116,7 @@ export class AppImportDirComponent {
             }).then(() => {
                 this.progress = 100;
                 this.processing = false;
-                this._snackbar.open('The database is created and imported', 'OK');
+                this._snackbar.open('The data set is created and imported', 'OK');
                 this.onImport.emit();
             });
         }).catch(() => {});

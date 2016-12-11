@@ -11,6 +11,7 @@
                 maxlength="50"
                 md-tooltip="Enter new database name"
                 tooltip-position="above"
+                class="app-input"
                 (change)="validateDbName()"
             >
                 <md-hint #dbNameHint align="end">
@@ -22,6 +23,7 @@
             <input
                 #fileName
                 id="fileName"
+                class="app-input"
                 type="file"
                 (change)="onFileChange($event)"
             >

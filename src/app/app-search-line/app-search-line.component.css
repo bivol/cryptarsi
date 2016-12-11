@@ -10,3 +10,7 @@
 .app-search-line-files {
    display: inline-flex;
 }
+.app-content md-card {
+  margin: 10px;
+  font-size: 24px;
+}

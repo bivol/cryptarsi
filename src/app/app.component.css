@@ -1,9 +1,10 @@
 .app-content {
-  padding: 20px;
+  padding: 10px;
 }
 
 .app-content md-card {
-  margin: 20px;
+  margin: 10px;
+  font-size: 24px;
 }
 
 .app-sidenav-layout {

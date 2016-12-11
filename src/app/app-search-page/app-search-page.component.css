@@ -1,5 +1,6 @@
 .app-input {
-    width: 80%;
+    width: 60%;
+    font-size:16px;
 }
 
 .app-spinner {
@@ -12,4 +13,8 @@
   width: 100%;
   height: 100%;
   overflow: scroll;
+}
+
+.ng2-pagination.current {
+background:red;
 }

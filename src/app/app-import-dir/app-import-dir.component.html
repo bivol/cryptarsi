@@ -12,6 +12,7 @@
                 md-tooltip="Enter new database name"
                 tooltip-position="after"
                 (change)="validateDbName()"
+                class="app-input"
             >
                 <md-hint #dbNameHint align="end">
                     {{dbName.characterCount}}/50
@@ -26,6 +27,7 @@
                 md-tooltip="Enter the password for this database"
                 tooltip-position="after"
                 (change)="validateKeys()"
+                class="app-input"
             >
             </md-input><br>
             <md-input
@@ -37,6 +39,7 @@
                 tooltip-position="after"
                 dividerColor="accent"
                 (change)="validateKeys()"
+                class="app-input"
             >
             </md-input><br><br>
             <label for=dirName>
@@ -47,6 +50,7 @@
                 webkitdirectory mozdirectory msdirectory odirectory directory
                 multiple
                 (change)="onDirChange($event)"
+                class="app-input"
             >
             </label><br><br>
             <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">

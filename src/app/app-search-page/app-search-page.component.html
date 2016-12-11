@@ -14,6 +14,7 @@
             <md-input
                 #encKey
                 type="password"
+                class="app-input"
                 placeholder="Password"
                 (keyup.enter)="openDb()"
             >
@@ -37,15 +38,9 @@
                     </button>
                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
                     <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
-                    <span *ngIf="results.length > 0">
+                    <span *ngIf="results.length > 0" class="md-body-2">
                         Found: {{results.length}} documents
                     </span>
-                    <pagination-controls
-                        maxSize="9"
-                        autoHide="true"
-                        (pageChange)="p = $event"
-                    >
-                    </pagination-controls>
         </md-card-subtitle>
         </md-card>
     <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event)">
@@ -60,16 +55,22 @@
                 <md-card-title>
                  <button md-mini-fab color="accent" (click)="cryptarsifiles()" md-tooltip="Files list" tooltip-position="after"><md-icon class="md-24">list</md-icon>
                     </button>
+                    <pagination-controls
+                        maxSize="9"
+                        autoHide="true"
+                        (pageChange)="p = $event"
+                    >
+                    </pagination-controls>
                 </md-card-title>
                 <md-card-actions layout="row" layout-align="center">
 
                 </md-card-actions>
-                <md-card-content>
+                <md-card-content class="md-body-1">
                     <!--<form novalidate (ngSubmit)="search()" >-->
                         <md-input
                             #searchInput
                             type="text"
-                            placeholder="Type your query here"
+                            placeholder="Type your query here Ex: +John +Doe or 'John Doe'"
                             maxlength="128"
                             class="app-input"
                             (keyup.enter)="search()"

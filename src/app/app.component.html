@@ -1,12 +1,12 @@
 <md-sidenav-layout class="app-sidenav-layout">
-  <md-sidenav #sidenav mode="side" class="app-sidenav">
-    <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component'" md-tooltip="Help" tooltip-position="below">
+  <md-sidenav #sidenav mode="push" class="app-sidenav">
+    <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component';sidenav.toggle()" md-tooltip="Help" tooltip-position="below">
       <md-icon class="md-24">help_outline</md-icon>
     </button>
-    <button md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="below">
+    <button md-mini-fab color="warn" (click)="menuSelected='importDir';sidenav.toggle()" md-tooltip="Create new database" tooltip-position="below">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <button md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="below">
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb';sidenav.toggle()" md-tooltip="Import database" tooltip-position="below">
       <md-icon class="md-24">file_upload</md-icon>
     </button>
 
@@ -17,7 +17,7 @@
         <p
           class="app-select-database"
           [ngClass]="{'app-selected-database': (item.name == databaseSelected) }"
-          (click)="selectDatabase(item.name)"
+          (click)="selectDatabase(item.name);sidenav.toggle()"
         >
           <button
             [attr.md-mini-fab]="(item.name != databaseSelected)?true:null"
@@ -42,7 +42,7 @@
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
-    Cryptarsi - browser based encryption and search engine
+    CRYPTARSI
     <span class="app-toolbar-filler"></span>
   </md-toolbar>
 
@@ -60,9 +60,9 @@
           Create, query and share encrypted data
           </md-card-subtitle>
           <md-card-title>
-          CRYPTARSI
+          CRYPTARSI  - a browser based files encryption and search engine
           </md-card-title>
-          <md-card-content>
+          <md-card-content class="md-body-1">
               <p> This is a system designed to produce, use and share encrypted data right from your Chrome browser. It is available as a stand alone Electon app too (Windows, MacOS and Linux).
               <p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
               <p>The system may be useful in different fields, requiring data protection: investigative journalism, human rights activism in dictatorial countries, corporate security, etc.
@@ -83,12 +83,12 @@
             <md-card-title>
             Fast start
             </md-card-title>
-            <md-card-content>
-            <p>The most simple usage of Cryptarsi is to encrypt files and to consult them or share them with other users. Click on the button
+            <md-card-content class="md-body-1">
+            <p>The most simple usage of Cryptarsi is to encrypt files and to consult them or share them with other users. From the top of the sidebar click on the
             <button md-mini-fab color="warn">
                 <md-icon class="md-24">add</md-icon>
               </button>
-            select a name for your data set, type a strong password, click on "Add files", select a directory from your disk with some files inside and click again on the red button to encrypt them. Voilà, you have a new encrypted database and the name will appear in the left menu.
+            button. Select a name for your data set, type a strong password, click on "Add files", select a directory from your disk with some files inside and click again on the red button to import them encrypted. Voilà, you have a new encrypted database and the name will appear in the left menu.
             </p>
             <p>To use your newly created data set click on the name, type the password and type on the list button
             <button md-mini-fab color="accent">
@@ -102,11 +102,18 @@
             </p>
 <p>The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 <p>
-To import a Cryptarsi database from file click on Import Database. Type a name for the database, select the tar file and click Import.
+To import a Cryptarsi database from file click on Import Database.
                   <button md-mini-fab color="primary">
                     <md-icon class="md-24">file_upload</md-icon>
                   </button>
-                  Now, download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> and import it. The password for the test database is simply: <i>test</i>. Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
+                  Type a name for the database, select the tar file and click the Import button.
+                  <button md-mini-fab color="primary">
+                    <md-icon class="md-24">file_upload</md-icon>
+                  </button>
+          <p>
+          To give it a try without creating a new database just download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> with a demo database and import it. Select the newly imported database from the list. The password for the demo database is simply: <i>test</i>.
+          </p>
+          <p>Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
 </p>
                   </md-card-content>
                   </md-card>
@@ -117,7 +124,7 @@ To import a Cryptarsi database from file click on Import Database. Type a name f
                   <md-card-title>
                   Using the search features
                   </md-card-title>
-            <md-card-content>
+            <md-card-content class="md-body-1">
 <p>Cryptarsi has a powerful search engine and you can work with hundreds and even tousends of text files. Cryptarsi will automatically index any text in UTF-8 format found in files with .txt extension. Each text file can have multiple attachments - pdf, images, audio and even video files.  Follow this guide to prepare your data for meaningful searches.
               <ol>
               <li><h3>Data structure</h3>
@@ -249,6 +256,13 @@ To delete all traces of your work click on Close database, then wait a bit and c
 </p>
             <li><h3>Security</h3>
             <p>After the Cryptarsi page is loaded in the browser you don't need the internet connection any more. You can even disconnect from internet to avoid sniffing your password. But keep in mind two things: don't reload the page and don't hit the back button while you are disconnected, because the app will break.
+            </p>
+            <p>
+            Do not leave open the database you are working on while you are away from your computer. Click on the
+            <button md-mini-fab color="accent">
+                <md-icon class="md-24">lock_open</md-icon>
+            </button>
+              button to lock the database anytime you want to avoid eyesdropping.
             </p>
             <p>Your password and data will never travel through the net while you are working with Cryptarsi. But for even better security you can use the Cryptarsi stand alone app. Put it on a memory stick and use it on an air gapped computer to avoid any touch with the large and dangerous internet space. Cryptarsi is vulnerable if somebody can sniff on your password. It is safe to send the tar files through unsecured connections, because they are already encrypted. But never send a password for a cryptarsi tar file by unprotected email or any not secured chat. We strongly recommend to use PGP or the app Signal by Open Whisper system.
             </p>

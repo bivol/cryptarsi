@@ -24,9 +24,9 @@ export class AppViewFileComponent implements OnInit {
     data;
 
     page = 1;
-    pdfSrc = "";
+    pdfSrc = '';
 
-    dataUrl;
+    dataUrl = null;
 
     constructor(private sanitizer: DomSanitizer) {
     }

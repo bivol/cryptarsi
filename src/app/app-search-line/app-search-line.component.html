@@ -3,7 +3,7 @@
   <md-card>
     <md-card-title>{{filename}}</md-card-title>
     <md-card-content class="md-body-1" (click)="viewFile()">
-     <pre class="app-pre-break">{{content}}</pre> <button><md-icon class="md-24" (click)="viewFile()">add_circle_outline</md-icon></button>...
+     <pre class="app-pre-break">{{content}}</pre> <md-icon class="md-24" (click)="viewFile()">add_circle_outline</md-icon>...
     </md-card-content>
     <h3>Attachments</h3>
     <div *ngFor="let item of files">

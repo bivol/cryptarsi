@@ -15,9 +15,10 @@
             <label>Page:</label>
             <input type="number" placeholder="Page" [(ngModel)]="page">
         </div>
-        <pdf-viewer [src]="'dataUrl'"
+        <pdf-viewer [src]="dataUrl"
                     [page]="page"
                     [original-size]="true"
+                    [render-text]="true"
                     style="display: block;"
         ></pdf-viewer><BR>
         <a [download]="name" [href]="dataUrl"><md-icon class="md-24">file_download</md-icon> Download {{name}}</a>

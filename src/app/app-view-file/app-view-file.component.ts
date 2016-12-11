@@ -24,7 +24,7 @@ export class AppViewFileComponent implements OnInit {
     data;
 
     page = 1;
-    pdfSrc = "pdf.pdf";
+    pdfSrc = "";
 
     dataUrl;
 

@@ -1,15 +1,15 @@
 <div>
     <md-card *ngIf="!processing" class="app-input-selection" >
-    <md-card-title>Load a database from CrypTARsi file</md-card-title>
+    <md-card-title>Load a data set from CrypTARsi file</md-card-title>
     <md-card-subtitle>Give a name, select the file and hit the button</md-card-subtitle>
     <md-card-content>
         <form novalidate (ngSubmit)="submit()" >
             <md-input
                 #dbName
-                placeholder="Database Name"
+                placeholder="Data set name"
                 (change)="checkDbName"
                 maxlength="50"
-                md-tooltip="Enter new database name"
+                md-tooltip="Enter new data set name"
                 tooltip-position="above"
                 class="app-input"
                 (change)="validateDbName()"
@@ -29,7 +29,7 @@
             >
             </label>
             <br><br>
-            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import database" tooltip-position="after">
+            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import data" tooltip-position="after">
     <md-icon class="md-24">file_upload</md-icon>
 </button>
         </form>

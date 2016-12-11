@@ -3,15 +3,15 @@
     <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component';sidenav.toggle()" md-tooltip="Help" tooltip-position="below">
       <md-icon class="md-24">help_outline</md-icon>
     </button>
-    <button md-mini-fab color="warn" (click)="menuSelected='importDir';sidenav.toggle()" md-tooltip="Create new database" tooltip-position="below">
+    <button md-mini-fab color="warn" (click)="menuSelected='importDir';sidenav.toggle()" md-tooltip="Create new data set" tooltip-position="below">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <button md-mini-fab color="primary" (click)="menuSelected='importDb';sidenav.toggle()" md-tooltip="Import database" tooltip-position="below">
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb';sidenav.toggle()" md-tooltip="Import data" tooltip-position="below">
       <md-icon class="md-24">file_upload</md-icon>
     </button>
 
     <hr>
-    <h3>Databases</h3>
+    <h3>Data sets</h3>
     <div *ngIf="collection && collection.length>0">
         <div *ngFor="let item of collection">
         <p
@@ -29,7 +29,7 @@
         </p></div>
 
         <div *ngIf="!collection">
-          <button md-button>No databases imported</button>
+          <button md-button>No data sets imported</button>
         </div>
 
     </div>
@@ -88,30 +88,30 @@
             <button md-mini-fab color="warn">
                 <md-icon class="md-24">add</md-icon>
               </button>
-            button. Select a name for your data set, type a strong password, click on "Add files", select a directory from your disk with some files inside and click again on the red button to import them encrypted. Voilà, you have a new encrypted database and the name will appear in the left menu.
+            button. Select a name for your data set, type a strong password, click on "Add files", select a directory from your disk with some files inside and click again on the red button to import them encrypted. Voilà, you have a new encrypted data set and the name will appear in the left menu.
             </p>
             <p>To use your newly created data set click on the name, type the password and type on the list button
             <button md-mini-fab color="accent">
                 <md-icon class="md-24">list</md-icon>
               </button>
             to display the list of all the files. Click on a file name to open it in a new tab where you can view or download the file.</p>
-            <p>The encrypted data you just created is easy to export and share with other Cryptarsi users. To do this open the database, unlock it with the password and click on the Export Database button
+            <p>The encrypted data you just created is easy to export and share with other Cryptarsi users. To do this open the data set, unlock it with the password and click on the Export Data button
                     <button md-mini-fab color="primary">
                       <md-icon class="md-24">file_download</md-icon>
                     </button>
             </p>
 <p>The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 <p>
-To import a Cryptarsi database from file click on Import Database.
+To import a Cryptarsi data set from file click on Import Data.
                   <button md-mini-fab color="primary">
                     <md-icon class="md-24">file_upload</md-icon>
                   </button>
-                  Type a name for the database, select the tar file and click the Import button.
+                  Type a name for the data set, select the tar file and click the Import button.
                   <button md-mini-fab color="primary">
                     <md-icon class="md-24">file_upload</md-icon>
                   </button>
           <p>
-          To give it a try without creating a new database just download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> with a demo database and import it. Select the newly imported database from the list. The password for the demo database is simply: <i>test</i>.
+          To give it a try without creating a new data set just download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> with a demo data set and import it. Select the newly imported data set from the list. The password for the demo data set is simply: <i>test</i>.
           </p>
           <p>Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
 </p>
@@ -177,14 +177,14 @@ My story
 <p>Attachments are not mandatory. you can have a story with multiple text files or just one text file.</p>
 <p>Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.</p>
 <li><h3>Importing data from directory</h3>
-<p>The story folder will be imported and indexed in Cryptarsi with the button Create new database. Give a name to the database, write a strong password, select the folder with the story and click on "Encrypt and Import". The database will then appear in the Menu on the left side of the app. </p>
+<p>The story folder will be imported and indexed in Cryptarsi with the button Create new data set. Give a name to the data set, write a strong password, select the folder with the story and click on "Encrypt and Import". The data set will then appear in the Menu on the left side of the app. </p>
 <p>
               <button md-mini-fab color="warn" (click)="menuSelected='importDir'">
                 <md-icon class="md-24">add</md-icon>
               </button>
 </p>
-<li><h3>Searching in the Database</h3>
-<p> First, select a database from the list and type the password to open it for search.
+<li><h3>Searching in the data set</h3>
+<p> First, select a data set from the list and type the password to open it for search.
 <p>
               <button md-mini-fab color="accent" (click)="sidenav.toggle()">
                 <md-icon class="md-24">search</md-icon>
@@ -214,9 +214,9 @@ So, if you type Investigative Reporting the system will return the string <i>We 
 
 <li><h3>Exporting and importing data</h3>
 
-<p>Once you have build a database from your data you can easily export it and share it with other Cryptarsi users.
+<p>Once you have build a data set from your data you can easily export it and share it with other Cryptarsi users.
 
-<p>To do this open the database, unlock it with the password and click on Export Database.
+<p>To do this open the data set, unlock it with the password and click on Export Data.
 <p>
                     <button md-mini-fab color="primary">
                       <md-icon class="md-24">file_download</md-icon>
@@ -224,7 +224,7 @@ So, if you type Investigative Reporting the system will return the string <i>We 
 </p>
 The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 <p>
-To import a Cryptarsi database from file click on Import Database. Type a name for the database, select the tar file and click Import. If the import is successful the database will appear in the list.
+To import a Cryptarsi data set from file click on Import Data. Type a name for the data set, select the tar file and click Import. If the import is successful the data set will appear in the list.
 </p>
 <p>
                   <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
@@ -232,23 +232,23 @@ To import a Cryptarsi database from file click on Import Database. Type a name f
                   </button>
 </p>
 <p>
-It is a good idea to export all your databases as tar files for archiving purposes. You can copy a CrypTARsi archive on a memory stick and use it on any computer having a Chrome browser installed.
+It is a good idea to export all your data sets as tar files for archiving purposes. You can copy a CrypTARsi archive on a memory stick and use it on any computer having a Chrome browser installed.
 </p>
 <p>
-If the imported database has hundreds of documents the import may be slow. Take a cake and wait a minute or two! The documents need time to be indexed properly. The import is successful when the database name appears in the list and you can log in.
+If the imported data set has hundreds of documents the import may be slow. Take a cake and wait a minute or two! The documents need time to be indexed properly. The import is successful when the data set name appears in the list and you can log in.
 </p>
 <p>
-You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test database is simply: <i>test</i>.
+You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test data set is simply: <i>test</i>.
 </p>
 <li><h3>Protecting your data</h3>
 <p>
-Your data is decrypted and displayed on demand for each text and attached file. To protect your data from unauthorized eyes don't forget to click on Close database.
+Your data is decrypted and displayed on demand for each text and attached file. To protect your data from unauthorized eyes don't forget to click on Close data set.
 </p>
                 <button md-mini-fab color="accent">
                   <md-icon class="md-24">lock</md-icon>
                 </button>
 <p>
-To delete all traces of your work click on Close database, then wait a bit and click on Drop database. This will erase the data and index files from the app memory.
+To delete all traces of your work click on Close data set, then wait a bit and click on Drop data set. This will erase the data and index files from the app memory.
 <p>
                 <button md-mini-fab color="warn">
                   <md-icon class="md-24">delete</md-icon>
@@ -258,11 +258,11 @@ To delete all traces of your work click on Close database, then wait a bit and c
             <p>After the Cryptarsi page is loaded in the browser you don't need the internet connection any more. You can even disconnect from internet to avoid sniffing your password. But keep in mind two things: don't reload the page and don't hit the back button while you are disconnected, because the app will break.
             </p>
             <p>
-            Do not leave open the database you are working on while you are away from your computer. Click on the
+            Do not leave open the data set you are working on while you are away from your computer. Click on the
             <button md-mini-fab color="accent">
                 <md-icon class="md-24">lock_open</md-icon>
             </button>
-              button to lock the database anytime you want to avoid eyesdropping.
+              button to lock the data set anytime you want to avoid eyesdropping.
             </p>
             <p>Your password and data will never travel through the net while you are working with Cryptarsi. But for even better security you can use the Cryptarsi stand alone app. Put it on a memory stick and use it on an air gapped computer to avoid any touch with the large and dangerous internet space. Cryptarsi is vulnerable if somebody can sniff on your password. It is safe to send the tar files through unsecured connections, because they are already encrypted. But never send a password for a cryptarsi tar file by unprotected email or any not secured chat. We strongly recommend to use PGP or the app Signal by Open Whisper system.
             </p>

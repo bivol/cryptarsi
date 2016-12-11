@@ -1,15 +1,15 @@
 <div>
     <md-card *ngIf="!processing" class="app-input-selection" >
-      <md-card-title>Create a new Cryptarsi database</md-card-title>
+      <md-card-title>Create a new Cryptarsi data set</md-card-title>
       <md-card-subtitle>Give a name, select a directory, type a strong password (twice) and hit the red button</md-card-subtitle>
       <md-card-content>
         <form novalidate (ngSubmit)="submit()" >
             <md-input
                 #dbName
-                placeholder="Database Name"
+                placeholder="Data set name"
                 (change)="checkDbName"
                 maxlength="50"
-                md-tooltip="Enter new database name"
+                md-tooltip="Enter new data set name"
                 tooltip-position="after"
                 (change)="validateDbName()"
                 class="app-input"
@@ -24,7 +24,7 @@
                 placeholder="Password"
                 maxlength="128"
                 dividerColor="accent"
-                md-tooltip="Enter the password for this database"
+                md-tooltip="Enter the password for this data set"
                 tooltip-position="after"
                 (change)="validateKeys()"
                 class="app-input"
@@ -53,7 +53,7 @@
                 class="app-input"
             >
             </label><br><br>
-            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new database" tooltip-position="after">
+            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new data set" tooltip-position="after">
     <md-icon class="md-24">add</md-icon>
 </button>
         </form>

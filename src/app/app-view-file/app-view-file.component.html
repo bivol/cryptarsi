@@ -7,20 +7,21 @@
 
 <span [ngSwitch]="type">
     <span *ngSwitchCase="'application/pdf'">
-       <!--  <div>
-            <label>PDF src</label>
-            <input type="text" placeholder="PDF src" [(ngModel)]="pdfSrc">
-        </div>
         <div>
-            <label>Page:</label>
-            <input type="number" placeholder="Page" [(ngModel)]="page">
+            <button md-mini-fab (click)="prevPage()">Prev</button>
+            <input
+                type="number" placeholder="Page"
+                [(ngModel)]="page"
+                min="1" max="1000" maxlength="4"
+            >
+            <button (click)="nextPage()" md-mini-fab>Next</button>
         </div>
-       <pdf-viewer [src]="dataUrl"
+       <pdf-viewer [src]="clearUrl"
                     [page]="page"
                     [original-size]="true"
-                    [render-text]="true"
-                    style="display: block;"
-        ></pdf-viewer><BR> -->
+                    [render-text]="false"
+                    style="display: block; z-index: 1"
+        ></pdf-viewer><BR>
         <a [href]="dataUrl" target="_blank" class="app-link">
         <md-icon class="md-48" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">

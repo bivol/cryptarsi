@@ -24,8 +24,8 @@ export class AppViewFileComponent implements OnInit {
     data;
 
     page = 1;
-    pdfSrc = '';
 
+    clearUrl = null;
     dataUrl = null;
 
     constructor(private sanitizer: DomSanitizer) {
@@ -49,7 +49,9 @@ export class AppViewFileComponent implements OnInit {
                 }
                 let Uint8 = TarTools.stringToUint8(s);
                 //console.log('My Uint8 is', Uint8);
-                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(new Blob([Uint8], { type: this.type })));
+                this.clearUrl = window.URL.createObjectURL(new Blob([Uint8], { type: this.type }));
+                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(this.clearUrl);
+                console.log('dataUrl is', this.dataUrl, this.clearUrl);
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
@@ -69,6 +71,14 @@ export class AppViewFileComponent implements OnInit {
 
     downloadFile() {
         window.open(this.dataUrl, '_new');
+    }
+
+    prevPage() {
+        this.page = Math.max(--this.page, 1);
+    }
+
+    nextPage() {
+        this.page = Math.min(++this.page, 999);
     }
 }
 

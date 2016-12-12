@@ -38,7 +38,7 @@ export class ImportDB {
                                         .catch(reject);
                                 }
                                 if (header.fileName.match(/^d\//)) {
-                                    console.log('d');
+                                    //console.log('d');
                                     let name = header.fileName.match(/^d\/(.+)/)[1];
                                     this.store.modifyRawData(this.nameToIndex(name), content)
                                         .then(() => {

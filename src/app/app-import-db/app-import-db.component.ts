@@ -18,6 +18,7 @@ export class AppImportDbComponent {
     progress: number = 0;
     processing = false;
     files: any = null;
+    status = 'Downloading file';
 
     constructor(private _snackbar: MdSnackBar) {
     }
@@ -76,17 +77,21 @@ export class AppImportDbComponent {
         this.checkForm().then(() => {
             this.processing = true;
             let imp = new ImportDB(this.dbName.value);
-            imp.importFile(this.files, (f, loaded, total) => {
+            this.status = 'Downloading file';
+            imp.importFile(this.files, (f, loaded, total, status) => {
                 this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
+                this.status = status;
             }).then(() => {
                 this.progress = 0;
                 this.processing = false;
+                this.status = 'Database is imported';
                 this._snackbar.open('Data set is imported', 'OK');
                 this.onImport.emit();
             }).catch((e) => {
                 //console.log('Error importing', e);
                 this.progress = 0;
                 this.processing = false;
+                this.status = 'Error';
                 this._snackbar.open('Cannot import the Data set', 'OK');
             });
         }).catch(() => {});

@@ -1,5 +1,5 @@
 // Implementation of tar archive
-// Based partially on tar-js by Jameson Little
+// Based partially on tar-js by Jameson Little but extended with support for reading as well
 
 interface IHeaderField {
     fileName?;
@@ -35,6 +35,21 @@ export class TarTools {
             out[o--] = input.charCodeAt(i);
         }
         return out;
+    }
+
+    static extendBuffer(orig, length: number, addLength: number, multipleOf: number) {
+        let newSize = length + addLength,
+            buffer = TarTools.cleanBuffer((parseInt((newSize / multipleOf).toString()) + 1) * multipleOf);
+
+        /*console.log('Extend Buffer org:', orig.length,
+            'to:', (parseInt((newSize / multipleOf).toString()) + 1) * multipleOf,
+            'result:', buffer.length,
+            'length', length,
+            'addLength', addLength
+        );
+        */
+        buffer.set(orig);
+        return buffer;
     }
 }
 
@@ -115,30 +130,7 @@ export class Tar {
     writen = 0;
 
     constructor() {
-        this.buffer = this.cleanBuffer(this.blockSize);
-    }
-
-    private cleanBuffer(len) {
-        let buffer = new Uint8Array(len);
-        for (let i = len - 1; i >= 0; i--) {
-            buffer[i] = 0;
-        }
-        return buffer;
-    }
-
-    private extendBuffer(orig, length: number, addLength: number, multipleOf: number) {
-        let newSize = length + addLength,
-            buffer = this.cleanBuffer((parseInt((newSize / multipleOf).toString()) + 1) * multipleOf);
-
-        /*console.log('Extend Buffer org:', orig.length,
-            'to:', (parseInt((newSize / multipleOf).toString()) + 1) * multipleOf,
-            'result:', buffer.length,
-            'length', length,
-            'addLength', addLength
-        );
-        */
-        buffer.set(orig);
-        return buffer;
+        this.buffer = TarTools.cleanBuffer(this.blockSize);
     }
 
     private pad(num, bytes, base = 8) {
@@ -146,22 +138,13 @@ export class Tar {
         return '000000000000'.substr(num.length + 12 - bytes) + num;
     }
 
-    private stringToUint8(input, out?, offset = 0) {
-        out = out || this.cleanBuffer(input.length);
-        let o = offset + input.length - 1;
-        for (let i = input.length - 1 ; i >= 0; i--) {
-            out[o--] = input.charCodeAt(i);
-        }
-        return out;
-    }
-
     private format(data, cb?) {
-        let buffer = this.cleanBuffer(512),
+        let buffer = TarTools.cleanBuffer(512),
             offset = 0;
 
         this.headerFormat.forEach((value) => {
             let str = data[value.field] || '';
-            this.stringToUint8(str, buffer, offset);
+            TarTools.stringToUint8(str, buffer, offset);
             offset += value.length; // space it out with nulls
         });
 
@@ -184,7 +167,7 @@ export class Tar {
         }
         let data = content;
         if (typeof data === 'string') {
-            data = this.stringToUint8(content);
+            data = TarTools.stringToUint8(content);
         }
 
         let header: IHeaderField = {
@@ -220,7 +203,7 @@ export class Tar {
 
         if (this.writen + data.length > this.buffer.length) {
             // Extend the buffer
-            this.buffer = this.extendBuffer(this.buffer,
+            this.buffer = TarTools.extendBuffer(this.buffer,
                 this.writen,
                 data.length,
                 this.blockSize
@@ -229,8 +212,6 @@ export class Tar {
 
         //console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
         this.buffer.set(data, this.writen);
-        // TODO: probably the line bellow is having a bug and sometimes adding two extra blocks
-        // this.written += input.length + (recordSize - (input.length % recordSize || recordSize));
         let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
         this.writen += (data.length + roundToRecord);
         /* console.log('rounding', name, 'data length', data.length,
@@ -241,7 +222,7 @@ export class Tar {
         */
         // Always add 2 extra records, for compatibility with GNU Tar
         if (this.buffer.length - this.writen < this.recordSize * 2) {
-            this.buffer = this.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
+            this.buffer = TarTools.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
         }
 
         return this.buffer;
@@ -249,7 +230,7 @@ export class Tar {
 
     clear() {
         this.writen = 0;
-        this.buffer = this.cleanBuffer(this.blockSize);
+        this.buffer = TarTools.cleanBuffer(this.blockSize);
     }
 
     private readHeader(buffer, pos): IHeaderField {
@@ -274,51 +255,62 @@ export class Tar {
         return new Promise((resolve, reject) => {
             return resolve();
         });
-    }) {
-        let buffer;
-        if (iBuffer instanceof Uint8Array) {
-            buffer = Uint8Array;
-        } else {
-            buffer = new Uint8Array(iBuffer.length);
-            for (let i = iBuffer.length - 1; i >= 0; i--) {
-                buffer[i] = iBuffer.charCodeAt(i);
+    }): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let buffer;
+            if (iBuffer instanceof Uint8Array) {
+                buffer = Uint8Array;
+            } else {
+                buffer = new Uint8Array(iBuffer.length);
+                for (let i = iBuffer.length - 1; i >= 0; i--) {
+                    buffer[i] = iBuffer.charCodeAt(i);
+                }
             }
-        }
 
-        // One file has 512 bytes of header + variable length data
-        //console.log('I have data in buffer', buffer, buffer.length);
-        let pos = 0;
-        while (pos < buffer.length - 512) {
-            //console.log('POS', pos, buffer.length);
-            let data = this.readHeader(buffer, pos);
-            if (buffer[pos] === 0
-                && data.fileName === ''
-                && data.fileSize === ''
-            ) {
-                //console.log('Trimming block is reached. Reading is complete!');
-                break;
-            }
-            //console.log('Return data', data);
-            pos += 512;
-            let content = '';
-            let len = parseInt(data.fileSize, 8);
-            if (isNaN(len)) {
-                console.error('Wrong length');
-                break;
-            }
-            let roundToRecord = this.recordSize - (len % this.recordSize || this.recordSize);
-            //console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
-            for (let i = 0; i < len; i++) {
-                content += String.fromCharCode(buffer[pos + i]);
-              //  console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
-            }
-            //console.log('Return content', content.length/*, content*/);
-            pos += len + roundToRecord;
-            //console.log('new pos is', pos, buffer.length);
-            cb(data, content, pos, buffer.length).then(() => {}).catch((e) => {
-                //console.log('Error');
-            });
-        }
-        //console.log('reading is completed');
+            // One file has 512 bytes of header + variable length data
+            //console.log('I have data in buffer', buffer, buffer.length);
+            let pos = 0;
+
+            let procTarChunk = () => {
+                if (pos >= buffer.length - 512) {
+                    return resolve();
+                }
+                let data = this.readHeader(buffer, pos);
+                if (buffer[pos] === 0
+                    && data.fileName === ''
+                    && data.fileSize === ''
+                ) {
+                    //console.log('Trimming block is reached. Reading is complete!');
+                    return resolve();
+                }
+                //console.log('Return data', data);
+                pos += 512;
+                let content = '';
+                let len = parseInt(data.fileSize, 8);
+                if (isNaN(len)) {
+                    console.error('Wrong length');
+                    return reject(new Error('Wrong length'));
+                }
+                let roundToRecord = this.recordSize - (len % this.recordSize || this.recordSize);
+                //console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
+                for (let i = 0; i < len; i++) {
+                    content += String.fromCharCode(buffer[pos + i]);
+                //  console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
+                }
+                //console.log('Return content', content.length/*, content*/);
+                pos += len + roundToRecord;
+                //console.log('new pos is', pos, buffer.length);
+                cb(data, content, pos, buffer.length).then(() => {
+                    procTarChunk();
+                }).catch((e) => {
+                    //console.log('Something is wrong', e);
+                    reject(e);
+                });
+            };
+
+            procTarChunk();
+
+            //console.log('reading is completed');
+        });
     }
 }

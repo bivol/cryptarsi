@@ -59,6 +59,10 @@ export class AppViewFileComponent implements OnInit {
             });
     }
 
+    buildUrl() {
+        return this.sanitizer.bypassSecurityTrustUrl(this.clearUrl);
+    }
+
     viewFile(item) {
         //console.log('View is clicked', item);
         item.db = this.db;

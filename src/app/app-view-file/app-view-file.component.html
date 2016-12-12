@@ -26,9 +26,9 @@
         </div>
         <BR>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'image/gif'">
         <div *ngIf="dataUrl">
@@ -36,9 +36,9 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'image/jpeg'">
         <a [href]="dataUrl" target="_blank" class="app-link">
@@ -46,9 +46,9 @@
             <img [src]='dataUrl' [width]='400' md-tooltip="Click for full size" tooltip-position="after">
         </div>
         <br>
-        <md-icon class="md-48" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'image/pjpeg'">
         <div *ngIf="dataUrl">
@@ -56,9 +56,9 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'image/png'">
         <div *ngIf="dataUrl">
@@ -66,9 +66,9 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'video/mpeg'">
         <div *ngIf="clearUrl">
@@ -78,21 +78,21 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
-     <span *ngSwitchCase="'video/mov'">
+     <span *ngSwitchCase="'video/quicktime'">
         <div *ngIf="clearUrl">
             <video controls>
-                <source [src]='clearUrl' [type]='type'>
+                <source [src]='dataURL' [type]='type'>
             </video>
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'audio/mp3'">
         <div *ngIf="clearUrl">
@@ -102,9 +102,9 @@
         </div>
         <br>
        <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'audio/x-mpeg3'">
         <div *ngIf="clearUrl">
@@ -114,9 +114,9 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'audio/ogg'">
         <div *ngIf="clearUrl">
@@ -126,9 +126,9 @@
         </div>
         <br>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
     <span *ngSwitchCase="'text/plain'">
         <div class="app-view-content">
@@ -145,9 +145,9 @@
     </span>
     <span *ngSwitchDefault>
         <a [href]="dataUrl" target="_blank" class="app-link">
-        <md-icon class="md-48" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
+        <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
         <a [download]="name" [href]="dataUrl" class="app-link">
-        <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
 </span>
 </md-card-content>

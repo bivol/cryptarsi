@@ -1,5 +1,7 @@
 let indexableList = [
-    'text/plain'
+    'text/plain',
+    'text/xml',
+    'text/html'
 ];
 
 export function isIndexable(type) {

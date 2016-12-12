@@ -82,7 +82,7 @@
         <a [download]="name" [href]="clearUrl | safe" class="app-link">
         <md-icon color="accent" class="md-48" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
-     <span *ngSwitchCase="'video/mov'">
+     <span *ngSwitchCase="'video/quicktime'">
         <div *ngIf="clearUrl">
             <video controls>
                 <source [src]='clearUrl | safe' [type]='type'>

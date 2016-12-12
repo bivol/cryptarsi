@@ -156,7 +156,7 @@ export class Search {
             splitPush(w);
 
             pushA.forEach(function(n) {
-                n.string = n.string.replace(/^\s+/, '').replace(/\s+$/, '').replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, '.*');
+                n.string = n.string.replace(/^\s+/, '').replace(/\s+$/, '').replace(/[\s\!-\/\:-\@\[-\]\'\{-~]+/g, '[.\\s]*');
                 n.regex = new RegExp(n.string, 'i');
             });
 
@@ -259,8 +259,8 @@ export class Search {
                             for (let i = 0; i < regArray.length; i++) {
                                 let t = regArray[i].regex.test(s);
                                 //console.log('match is', t, regArray[i].match);
-                                if (t && regArray[i].match == '-') { return; }
-                                if ((!t) && regArray[i].match == '+') { return; }
+                                if (t && regArray[i].match == '-') { return getOneFromMySet(); }
+                                if ((!t) && regArray[i].match == '+') { return getOneFromMySet(); }
                             }
                             cb(n, s);
                             getOneFromMySet();

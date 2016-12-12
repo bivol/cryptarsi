@@ -13,6 +13,7 @@ import { AppSearchLineComponent } from './app-search-line/app-search-line.compon
 import { AppViewFileComponent } from './app-view-file/app-view-file.component';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { AppSanitizerPipe } from './app-sanitizer-pipe/app-sanitizer-pipe';
 
 const appRoutes: Routes = [
   { path: 'import-dir', component:  AppImportDirComponent },
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     AppSearchLineComponent,
     AppViewFileComponent,
     AppDialogComponent,
+    AppSanitizerPipe,
     PdfViewerComponent
   ],
   imports: [

@@ -26,9 +26,8 @@ export class AppViewFileComponent implements OnInit {
     page = 1;
 
     clearUrl = null;
-    dataUrl = null;
 
-    constructor(private sanitizer: DomSanitizer) {
+    constructor(public sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -50,17 +49,11 @@ export class AppViewFileComponent implements OnInit {
                 let Uint8 = TarTools.stringToUint8(s);
                 //console.log('My Uint8 is', Uint8);
                 this.clearUrl = window.URL.createObjectURL(new Blob([Uint8], { type: this.type }));
-                this.dataUrl = this.sanitizer.bypassSecurityTrustUrl(this.clearUrl);
-                console.log('dataUrl is', this.dataUrl, this.clearUrl);
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
                 //console.log('Error retrieve data', e);
             });
-    }
-
-    buildUrl() {
-        return this.sanitizer.bypassSecurityTrustUrl(this.clearUrl);
     }
 
     viewFile(item) {
@@ -74,7 +67,7 @@ export class AppViewFileComponent implements OnInit {
     }
 
     downloadFile() {
-        window.open(this.dataUrl, '_new');
+        window.open(this.clearUrl, '_new');
     }
 
     prevPage() {

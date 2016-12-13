@@ -5,7 +5,7 @@ import { log } from '../log';
 
 export class ImportDir {
     store: DB = null;
-    constructor(private dbName, private encKey) {
+    constructor(private dbName, private encKey, private description = '') {
         this.store = new DB(dbName, encKey);
     }
 
@@ -40,7 +40,7 @@ export class ImportDir {
                         gL = l;
                         progress(f, (loaded - l) * 3 + l, total * 3, count, totalcnt);
                     }
-                }).then(() => {
+                }, this.description).then(() => {
                     this.store.setNextIndex(lastIndex)
                         .then(resolve)
                         .catch(reject);

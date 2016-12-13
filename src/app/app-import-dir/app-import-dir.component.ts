@@ -19,6 +19,7 @@ export class AppImportDirComponent {
     @ViewChild('encKey1') encKey1: MdInput;
     @ViewChild('encKey2') encKey2: MdInput;
     @ViewChild('dirName') dirName;
+    @ViewChild('description') description: MdInput;
 
     files: any = null;
 
@@ -105,7 +106,7 @@ export class AppImportDirComponent {
     submit() {
         this.checkForm().then(() => {
             this.processing = true;
-            let r = new ImportDir(this.dbName.value, this.encKey1.value);
+            let r = new ImportDir(this.dbName.value, this.encKey1.value, this.description.value);
             r.importFiles(this.files,
                 (f, loaded, total, count, totalcnt) => {
                 log('Downloading', f.name, loaded, total, count, totalcnt);

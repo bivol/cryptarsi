@@ -19,6 +19,15 @@
                 </md-hint>
             </md-input><br>
             <md-input
+                #description
+                placeholder="Description of the content"
+                maxlength="500"
+                md-tooltip="This description will be stored with the imported data"
+                tooltip-position="after"
+                class="app-input"
+            >
+            </md-input><br>
+            <md-input
                 type="password"
                 #encKey1
                 placeholder="Password"

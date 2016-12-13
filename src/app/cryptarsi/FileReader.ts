@@ -10,7 +10,7 @@ export class FileReaderAPI {
             resolve();
         });
     }, cbprogress = (f, loaded, total, count?, totalcount?, clength?) => {
-    }) {
+    }, description = '') {
         let me = this;
         return new Promise((resolve, reject) => {
             let total = 0;
@@ -98,13 +98,13 @@ export class FileReaderAPI {
                         name: 'Cryptarsi Lonely Files',
                         type: 'text/plain',
                         size: 0
-                    }, 'Cryptarsi Lonely Files', hash[2]).then(() => {
+                    }, 'Cryptarsi Lonely Files\n' + description, hash[2]).then(() => {
                         //console.log('The lonely index file is added');
                         cbfile({
                             name: 'Cryptarsi All Files',
                             type: 'text/plain',
                             size: 0
-                        }, 'Cryptarsi All Files', hash[1]).then(() => {
+                        }, 'Cryptarsi All Files\n' + description, hash[1]).then(() => {
                             //console.log('The index file is added');
                             resolve();
                         }).catch(reject);

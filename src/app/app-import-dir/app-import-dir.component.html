@@ -18,15 +18,17 @@
                     {{dbName.characterCount}}/50
                 </md-hint>
             </md-input><br>
-            <md-input
+            <md-textarea
                 #description
-                placeholder="Description of the content"
-                maxlength="500"
-                md-tooltip="This description will be stored with the imported data"
+                rows="10"
+                cols="50"
+                placeholder="Data set description"
+                md-tooltip="Enter new data set description"
                 tooltip-position="after"
-                class="app-input"
-            >
-            </md-input><br>
+                class="app-input">Enter new data set description</md-textarea>
+                <br>
+              <br>
+            <br>
             <md-input
                 type="password"
                 #encKey1
@@ -55,6 +57,7 @@
                 <md-radio-button #dirSelection value="dir" checked="true">Directory</md-radio-button>
                 <md-radio-button value="file">Files</md-radio-button>
             </md-radio-group>
+            <br>
             <br>
             <div *ngIf="dirSelection.checked">
                 <label for=dirName>

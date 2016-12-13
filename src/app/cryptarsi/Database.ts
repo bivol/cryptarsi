@@ -3,7 +3,7 @@ import { AngularIndexedDB } from './Storage';
 import { WaitOK } from './WaitOK';
 import { WordHash } from './Hash';
 import { log } from '../log';
-import { isIndexable } from './IsIndexable';
+import { isIndexable, getHashList } from './IsIndexable';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
@@ -203,22 +203,16 @@ export class DB {
         return new Promise((resolve, reject) => {
             let me = this;
             if (isIndexable(file.type)) {
-                let hashes = {};
-                WordHash.cbPerHash(content, (hash) => {
-                    hashes[hash] = obj.index;
-                });
+                console.log('Going to index', file.name, file.type, file);
+                let hashQ = getHashList(file, content);
 
                 let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + content; // Metadata in every text file shall include the groups
 
                 me.modifyData(obj.index, data)
                     .then(() => {
                         log('Successfuly imported, still need index', file, obj);
-                        let hashQ = [];
                         progress(0.5);
-
                         let d = new Date();
-
-                        for (let hash in hashes) { hashQ.push(hash); }
                         let hashQlen = hashQ.length;
 
                         function procHash() {

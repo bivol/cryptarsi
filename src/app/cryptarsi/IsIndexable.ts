@@ -8,7 +8,7 @@ let indexableList = [
 
 export function isIndexable(type) {
     return indexableList.indexOf(type) >= 0 ? true : false;
-}
+};
 
 export function getHashList(file, content) {
     if (!isIndexable(file.type)) {
@@ -21,4 +21,4 @@ export function getHashList(file, content) {
         hashMap[hash] = 1;
     });
     return Object.keys(hashMap);
-}
+};

@@ -71,7 +71,7 @@ export class FileReaderAPI {
                 groups[gname].push(w);
                 allfiles.push(w);
                 w.file = file;
-                hash[index] = w;
+                hash[index] = Object.assign({}, w); // Copy the properties to avoid cyclic links
                 nindex[file.name] = index;
                 index++;
             }

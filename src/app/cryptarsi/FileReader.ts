@@ -10,7 +10,7 @@ export class FileReaderAPI {
             resolve();
         });
     }, cbprogress = (f, loaded, total, count?, totalcount?, clength?) => {
-    }, description = '') {
+    }, description) {
         let me = this;
         return new Promise((resolve, reject) => {
             let total = 0;

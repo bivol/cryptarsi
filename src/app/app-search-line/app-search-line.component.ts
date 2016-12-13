@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { allFileName, lonelyFileName } from '../cryptarsi/FileReader';
 
 interface FileObj {
     name?;
@@ -55,8 +56,16 @@ export class AppSearchLineComponent implements OnInit {
             this.onOpen.emit(item);
         } else {
             let item2 = this.files.filter((n) => n.name == this.filename).shift();
-            item2.db = this.db;
-            this.onOpen.emit(item2);
+            if ((!item2) && (this.filename == allFileName.name)) {
+                item2 = allFileName;
+            }
+            if ((!item2) && (this.filename == lonelyFileName.name)) {
+                item2 = lonelyFileName;
+            }
+            if (item2) {
+                item2.db = this.db;
+                this.onOpen.emit(item2);
+            }
         }
     }
 }

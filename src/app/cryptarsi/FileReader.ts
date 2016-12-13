@@ -1,6 +1,22 @@
 import { log } from '../log';
 import { isIndexable } from './IsIndexable';
 
+export const allFileName = {
+    name: 'Cryptarsi All Files',
+    type: 'text/plain',
+    size: 0,
+    index: 1,
+    group: 'Cryptarsi All Files'
+};
+
+export const lonelyFileName = {
+    name: 'Cryptarsi Lonely Files',
+    type: 'text/plain',
+    size: 0,
+    index: 2,
+    group: 'Cryptarsi Lonely Files'
+};
+
 export class FileReaderAPI {
     constructor() {
     }
@@ -48,44 +64,30 @@ export class FileReaderAPI {
                     index: index,
                     type: file.type,
                     size: file.size,
-                    name: file.name
+                    name: file.name,
+                    file: null,
+                    group: gname
                 };
                 groups[gname].push(w);
                 allfiles.push(w);
-                let v = {
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    index: index,
-                    file: file,
-                    group: gname
-                };
-                hash[index] = v;
+                w.file = file;
+                hash[index] = w;
                 nindex[file.name] = index;
                 index++;
             }
 
-            hash[1] = {
-                name: 'Cryptarsi All Files',
-                type: 'text/plain',
-                size: 0,
-                index: 1,
-                group: 'Cryptarsi All Files'
-            };
-            groups[hash[1].group] = allfiles;
+            hash[allFileName.index] = allFileName;
+            groups[hash[allFileName.index].group] = allfiles;
 
-            hash[2] = {
-                name: 'Cryptarsi Lonely Files',
-                type: 'text/plain',
-                size: 0,
-                index: 2,
-                group: 'Cryptarsi Lonely Files'
-            };
-            groups[hash[2].group] = [];
+            hash[lonelyFileName.index] = lonelyFileName;
+            groups[hash[lonelyFileName.index].group] = [];
 
             for (let g in lonelyGroups) {
-                groups[hash[2].group] = groups[hash[2].group].concat(groups[g]);
+                groups[hash[lonelyFileName.index].group] = groups[hash[lonelyFileName.index].group].concat(groups[g]);
             }
+
+            groups[hash[allFileName.index].group] = groups[hash[allFileName.index].group].concat([allFileName, lonelyFileName]);
+            groups[hash[lonelyFileName.index].group] = groups[hash[lonelyFileName.index].group].concat([allFileName, lonelyFileName]); // Add self reference
 
             for (let i in hash) { // Set the group index
                 hash[i].gindex = groups[hash[i].group];
@@ -94,17 +96,9 @@ export class FileReaderAPI {
             function processNextFile() {
                 if (q.length === 0) {
                     //console.log('Lets add the last file');
-                    return cbfile({
-                        name: 'Cryptarsi Lonely Files',
-                        type: 'text/plain',
-                        size: 0
-                    }, 'Cryptarsi Lonely Files\n' + description, hash[2]).then(() => {
+                    return cbfile(lonelyFileName, lonelyFileName.name + '\n' + description, hash[lonelyFileName.index]).then(() => {
                         //console.log('The lonely index file is added');
-                        cbfile({
-                            name: 'Cryptarsi All Files',
-                            type: 'text/plain',
-                            size: 0
-                        }, 'Cryptarsi All Files\n' + description, hash[1]).then(() => {
+                        cbfile(allFileName, allFileName.name + '\n' + description, hash[allFileName.index]).then(() => {
                             //console.log('The index file is added');
                             resolve();
                         }).catch(reject);
@@ -141,14 +135,6 @@ export class FileReaderAPI {
             let reader = new FileReader;
             reader.onload = (e) => {
                 let text = reader.result;
-                /*
-                console.log('downloaded', file.name, file.type);
-                let s = '';
-                for (let i = 0; i < text.length; i++) {
-                    s += <string>text.charCodeAt(i) + ' ';
-                }
-                console.log('content', s);
-                */
                 resolve(text);
             };
             reader.onerror = reject;

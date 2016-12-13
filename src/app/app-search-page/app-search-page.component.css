@@ -14,3 +14,7 @@
   height: 100%;
   overflow: scroll;
 }
+
+.app-search-cursor:hover  {
+  cursor: pointer;
+}

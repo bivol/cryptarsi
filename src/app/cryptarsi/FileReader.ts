@@ -76,18 +76,18 @@ export class FileReaderAPI {
                 index++;
             }
 
-            hash[allFileName.index] = allFileName;
+            hash[allFileName.index] = Object.assign({}, allFileName);
             groups[hash[allFileName.index].group] = allfiles;
 
-            hash[lonelyFileName.index] = lonelyFileName;
+            hash[lonelyFileName.index] = Object.assign({}, lonelyFileName);
             groups[hash[lonelyFileName.index].group] = [];
 
             for (let g in lonelyGroups) {
                 groups[hash[lonelyFileName.index].group] = groups[hash[lonelyFileName.index].group].concat(groups[g]);
             }
 
-            groups[hash[allFileName.index].group] = groups[hash[allFileName.index].group].concat([allFileName, lonelyFileName]);
-            groups[hash[lonelyFileName.index].group] = groups[hash[lonelyFileName.index].group].concat([allFileName, lonelyFileName]); // Add self reference
+            groups[hash[allFileName.index].group] = groups[hash[allFileName.index].group].concat([Object.assign({}, allFileName), Object.assign({}, lonelyFileName)]);
+            groups[hash[lonelyFileName.index].group] = groups[hash[lonelyFileName.index].group].concat([Object.assign({}, allFileName), Object.assign({}, lonelyFileName)]); // Add self reference
 
             for (let i in hash) { // Set the group index
                 hash[i].gindex = groups[hash[i].group];
@@ -96,9 +96,9 @@ export class FileReaderAPI {
             function processNextFile() {
                 if (q.length === 0) {
                     //console.log('Lets add the last file');
-                    return cbfile(lonelyFileName, lonelyFileName.name + '\n' + description, hash[lonelyFileName.index]).then(() => {
+                    return cbfile(Object.assign({}, lonelyFileName), lonelyFileName.name + '\n' + description, hash[lonelyFileName.index]).then(() => {
                         //console.log('The lonely index file is added');
-                        cbfile(allFileName, allFileName.name + '\n' + description, hash[allFileName.index]).then(() => {
+                        cbfile(Object.assign({}, allFileName), allFileName.name + '\n' + description, hash[allFileName.index]).then(() => {
                             //console.log('The index file is added');
                             resolve();
                         }).catch(reject);

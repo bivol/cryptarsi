@@ -9,8 +9,6 @@
                 placeholder="Data set name"
                 (change)="checkDbName"
                 maxlength="50"
-                md-tooltip="Enter new data set name"
-                tooltip-position="after"
                 (change)="validateDbName()"
                 class="app-input"
             >
@@ -23,8 +21,6 @@
                 rows="10"
                 cols="50"
                 placeholder="Data set description"
-                md-tooltip="Enter new data set description"
-                tooltip-position="after"
                 class="app-input">Enter new data set description</md-textarea>
                 <br>
               <br>
@@ -35,8 +31,6 @@
                 placeholder="Password"
                 maxlength="128"
                 dividerColor="accent"
-                md-tooltip="Enter the password for this data set"
-                tooltip-position="after"
                 (change)="validateKeys()"
                 class="app-input"
             >
@@ -46,16 +40,14 @@
                 #encKey2
                 placeholder="Repeat Password"
                 maxlength="128"
-                md-tooltip="Enter the password again"
-                tooltip-position="after"
                 dividerColor="accent"
                 (change)="validateKeys()"
                 class="app-input"
             >
             </md-input><br><br>
             <md-radio-group>
-                <md-radio-button #dirSelection value="dir" checked="true">Directory</md-radio-button>
-                <md-radio-button value="file">Files</md-radio-button>
+                <md-radio-button #dirSelection value="dir">Directory</md-radio-button>
+                <md-radio-button value="file" checked="true">Files</md-radio-button>
             </md-radio-group>
             <br>
             <br>

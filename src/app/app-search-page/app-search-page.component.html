@@ -1,15 +1,11 @@
 <a name="top">
 <div *ngIf="!open">
     <md-card>
-        <md-card-title>Unlock the data set {{database}}</md-card-title>
-        <md-card-subtitle>
-        <button md-mini-fab color="principal" disabled md-tooltip="Selected data set" tooltip-position="below">
-              <md-icon class="md-24">lock</md-icon>
-        </button>
+        <md-card-title>Unlock {{database}}
         <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete the data set" tooltip-position="after">
                <md-icon class="md-24">delete</md-icon>
          </button>
-        </md-card-subtitle>
+        </md-card-title>
         <md-card-content>
         <form novalidate>
             <md-input
@@ -29,49 +25,17 @@
 </div>
 <div *ngIf="open">
 <md-card>
-        <md-card-title>Data set {{database}}</md-card-title>
-        <md-card-subtitle>
-        <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close data set" tooltip-position="below">
+        <md-card-title>Data set {{database}}
+                    <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close data set" tooltip-position="below">
                     <md-icon class="md-24">lock_open</md-icon>
                     </button>
                     <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export data" tooltip-position="after">
                     <md-icon class="md-24">file_download</md-icon>
                     </button>
-                    <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
-                    <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
-                    <span *ngIf="results.length > 0" class="md-body-2">
-                        Found: {{results.length}} documents
-                    </span>
-        </md-card-subtitle>
-        </md-card>
-    <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event)">
-        <md-tab>
-        <template md-tab-label>
-            <button md-button disabled>
-                <div class="app-search-cursor">
-                    <md-icon class="md-24">search</md-icon>
-                    Search {{database}}
-                </div>
-            </button>
-         </template>
-         <div class="app-search-tab-content">
-            <md-card>
-                <md-card-title>
-                 <button md-mini-fab color="accent" (click)="cryptarsifiles()" md-tooltip="Files list" tooltip-position="after"><md-icon class="md-24">list</md-icon>
-                    </button>
-                    <pagination-controls
-                        maxSize="9"
-                        autoHide="true"
-                        (pageChange)="p = $event"
-                    >
-                    </pagination-controls>
-                </md-card-title>
-                <md-card-actions layout="row" layout-align="center">
-
-                </md-card-actions>
-                <md-card-content class="md-body-1">
-                    <!--<form novalidate (ngSubmit)="search()" >-->
-                        <md-input
+                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
+        </md-card-title>
+        <md-card-content>
+                     <md-input
                             #searchInput
                             type="text"
                             placeholder="Type your query here Ex: +John +Doe or 'John Doe'"
@@ -81,11 +45,36 @@
                         >
                         </md-input>
                         &nbsp;
-                        <button md-raised-button (click)="search()"><md-icon class="md-24">search</md-icon>
-                            Search
+                        <button md-raised-button (click)="search()">
+                        <md-icon class="md-24">search</md-icon> Search
+                        <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                         </button>
-
-                    <BR><BR>
+                        <button md-raised-button (click)="cryptarsifiles()">
+                        <md-icon class="md-24">list</md-icon> List
+                        </button>
+                    <span *ngIf="results.length > 0" class="md-body-2">
+                    <br>
+                        Found: {{results.length}} documents
+                    </span>
+                    <pagination-controls
+                        maxSize="9"
+                        autoHide="true"
+                        (pageChange)="p = $event"
+                    >
+                    </pagination-controls>
+        </md-card-content>
+        </md-card>
+    <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event);">
+        <md-tab (selectChange)="cryptarsifiles();">
+        <template md-tab-label>
+            <button md-button disabled>
+                    <md-icon class="md-24">list</md-icon>
+                    Results
+            </button>
+         </template>
+         <div class="app-search-tab-content">
+            <md-card>
+                <md-card-content class="md-body-1">
                     <div *ngFor="let item of results | paginate: { itemsPerPage: 20, currentPage: p }">
                         <app-search-line
                             [position]="item.position"

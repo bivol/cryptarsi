@@ -24,6 +24,7 @@ export class AppViewFileComponent implements OnInit {
     data;
 
     page = 1;
+    zoom = 0.5;
 
     clearUrl = null;
 
@@ -77,5 +78,14 @@ export class AppViewFileComponent implements OnInit {
     nextPage() {
         this.page = Math.min(++this.page, 999);
     }
+
+    zoomIn() {
+        this.zoom = Math.max((this.zoom+0.1), 1);
+    }
+
+    zoomOut() {
+        this.zoom = Math.max((this.zoom-0.1), 0.1);
+    }
+
 }
 

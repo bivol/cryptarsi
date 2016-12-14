@@ -1,8 +1,6 @@
 <md-card>
-  <md-card-header>
-      <md-card-title>Filename: {{name}}</md-card-title>
-      <md-card-subtitle></md-card-subtitle>
-   </md-card-header>
+    <md-card-title>{{name}}</md-card-title>
+    <md-card-subtitle></md-card-subtitle>
     <md-card-content>
 
 <span [ngSwitch]="type">
@@ -16,10 +14,22 @@
             >
             <md-icon class="md-36" md-tooltip="Next page" tooltip-position="after" (click)="nextPage()">fast_forward</md-icon>
         </div>
-        <div *ngIf="clearUrl">
+
+        <div align="center">
+            <md-icon class="md-36" md-tooltip="Zoom out" tooltip-position="above" (click)="zoomOut()">fast_rewind</md-icon>
+            <input
+                type="number" placeholder="Zoom"
+                [(ngModel)]="zoom"
+                min="0.1" max="1" maxlength="0.1"
+            >
+            <md-icon class="md-36" md-tooltip="Zoom in" tooltip-position="after" (click)="zoomIn()">fast_forward</md-icon>
+        </div>
+
+        <div *ngIf="clearUrl" align="center" width="500">
             <pdf-viewer [src]="clearUrl"
                         [page]="page"
                         [original-size]="true"
+                        [zoom]="0.7"
                         [render-text]="false"
                         style="display: block; z-index: 1"
             ></pdf-viewer>
@@ -209,10 +219,16 @@
         </div>
     </span>
     <span *ngSwitchCase="'text/html'">
-        <div class="app-view-content">
-            <pre class="app-pre-break">
-            {{data}}
-            </pre>
+        <div *ngIf="clearUrl" align="center">
+            <iframe [src]="clearUrl | safe" width="800" height="1000">
+            </iframe>
+        </div>
+        <br>
+        <div align="center">
+        <a [href]="clearUrl | safe" target="_blank" class="app-link">
+        <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+        <a [download]="name" [href]="clearUrl | safe" class="app-link">
+        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
         <div class="app-search-view-files">
             <div *ngFor="let item of files">

@@ -3,7 +3,7 @@ Investigative journalists; human right activists and many other professionals ne
 
 Cryptarsi is designed to work straight from the browser. If you read this on Chrome browser, then you can start using Cryptarsi right now. Otherwise install Chrome or Chromium and open this url again. Cryptarsi is loading from internet, but your data and passwords stay on your computer and never travel through internet. You can even disconnect your computer from internet now and continue using Cryptarsi.
 
-With Cryptarsi you can easily encrypt a single file or a large collection of data: text, PDF, audio and video files and view them without leaving your browser. Text files are indexed and searchable. If you take some time to describe your data or if you have a big cache of text data with Cryptarsi it's very easy to search and locate the relevant documents and files.
+With Cryptarsi you can easily encrypt a single file or a large collection of data: text, PDF, audio and video files and view them without leaving your browser. Text files are indexed and searchable. If you take some time to describe your data or if you have a big cache of text data, Cryptarsi is able to search and locate the relevant documents and files.
 
 Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by Google Digital News Initiative Fund.
 
@@ -27,11 +27,11 @@ Voilà, you have a new encrypted data set and his name will appear in the left m
 
 To see the content of the newly created data set click on the name, type the password and type on the list button next to the search button.  list  to display the list of all the files. Click on a file name to open it in a new tab where you can view or download the file.
 
-The encrypted data you just created is easy to export and share with other Cryptarsi users. To do this open the data set, unlock it with the password and click on the Export Data button  file_download
+The encrypted data you just created is easy to export and share with other Cryptarsi users. To do this open the data set, unlock it with the password and click on the Export Data button.
 
 The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 
-To import a Cryptarsi data set from file click on Import Data.  file_upload  Type a name for the data set, select the tar file and click the Import button.  file_upload
+To import a Cryptarsi data set from file click on Import Data.  file_upload  Type a name for the data set, select the tar file and click the Import button.
 
 To give it a try without creating a new data set just download this file with a demo data set and import it. Select the newly imported data set from the list. The password for the demo data set is simply: test.
 

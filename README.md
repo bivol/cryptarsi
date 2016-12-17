@@ -37,6 +37,8 @@ To give it a try without creating a new data set just download this file with a 
 
 Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
 
+Read the Cryptarsi.org website to learn how to use Cryptarsi searching features on structured data. 
+
 Beta 3 roadmap:
 1. Load a tar archive from URL;
 2. Circumvent the 25MB limit;

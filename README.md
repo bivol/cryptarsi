@@ -31,13 +31,13 @@ The encrypted data you just created is easy to export and share with other Crypt
 
 The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
 
-To import a Cryptarsi data set from file click on Import Data.  file_upload  Type a name for the data set, select the tar file and click the Import button.
+To import a Cryptarsi data set from file click on Import Data. Type a name for the data set, select the tar file and click the Import button.
 
 To give it a try without creating a new data set just download this file with a demo data set and import it. Select the newly imported data set from the list. The password for the demo data set is simply: test.
 
 Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
 
-Read the Cryptarsi.org website to learn how to use Cryptarsi searching features on structured data. 
+Read the http://cryptarsi.org website to learn how to use Cryptarsi searching features on structured data. 
 
 Beta 3 roadmap:
 1. Load a tar archive from URL;

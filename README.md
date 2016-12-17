@@ -20,6 +20,7 @@ Requirements: Chrome or Chromium browsers. The Firefox version is not fully oper
 Limitations: Because of a bug in CryptoJS a single file should not be bigger then 25 megabytes.
 
 Fast start
+
 The most simple usage of Cryptarsi is to encrypt files and to consult them or share them with other users. From the top of the sidebar click on the  add  button. Select a name for your data set, give it a description, type a strong password, click on "Add files", select individual files or a directory full of files from your disk and click again on the red button to import them.
 
 Voilà, you have a new encrypted data set and his name will appear in the left menu.

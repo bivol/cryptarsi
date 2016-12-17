@@ -1,4 +1,5 @@
 CRYPTARSI - a browser based files encryption and search engine
+
 Investigative journalists; human right activists and many other professionals need to protect data and to share protected data easily. Cryptarsi is a system designed to meet those needs without installing a specific software.
 
 Cryptarsi is designed to work straight from the browser. If you read this on Chrome browser, then you can start using Cryptarsi right now. Otherwise install Chrome or Chromium and open this url again. Cryptarsi is loading from internet, but your data and passwords stay on your computer and never travel through internet. You can even disconnect your computer from internet now and continue using Cryptarsi.
@@ -40,15 +41,25 @@ Go to the Search field and type "cryptarsi". As you can see you can do much more
 Read the http://cryptarsi.org website to learn how to use Cryptarsi searching features on structured data. 
 
 Beta 3 roadmap:
+
 1. Load a tar archive from URL;
+
 2. Circumvent the 25MB limit;
+
 3. Optional key generation button;
+
 4. Fix the Electron version to read from directories
 
 Beta 5 roadmap:
+
 1. Torrent server for the CrypTARsi files (electron version only) and torrent client (all versions);
+
 2. Improved obfuscation of the index;
+
 3. Imrpoved and faster encryption (electron native CryptoJS);
+
 4. Incremental import and deletion;
+
 5. Recover the tags system from V1;
+
 6. Option to query the databases from a http server instead from indexedDB.

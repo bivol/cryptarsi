@@ -44,7 +44,7 @@
                             (keyup.enter)="search()"
                         >
                         </md-input>
-                        &nbsp;
+                        &nbsp;<br>
                         <button md-raised-button (click)="search()">
                         <md-icon class="md-24">search</md-icon> Search
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
@@ -65,7 +65,7 @@
         </md-card-content>
         </md-card>
     <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event);">
-        <md-tab (selectChange)="cryptarsifiles();">
+        <md-tab>
         <template md-tab-label>
             <button md-button disabled>
                     <md-icon class="md-24">list</md-icon>

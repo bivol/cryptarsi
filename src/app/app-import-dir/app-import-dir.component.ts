@@ -2,6 +2,7 @@ import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { DbList } from '../cryptarsi/Database';
+import { Jen } from './Jen';
 import { log } from '../log';
 
 @Component({
@@ -101,6 +102,11 @@ export class AppImportDirComponent {
     onDirChange(e) {
         this.files = e.target.files || e.srcElement.files;
         log('files', this.files);
+    }
+
+    onStrongPassword() {
+        //let j = Jen();
+        //console.log('Strong password', j.password(10, 20, /[A-Z0-9]/i));
     }
 
     submit() {

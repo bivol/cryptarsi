@@ -44,7 +44,8 @@ export class AppSearchLineComponent implements OnInit {
                 this.content = this.content.substr(0, this.maxLength) + '...';
             }
             this.filename = (<FileObj>this.obj).name;
-            this.files = (<FileObj>this.obj).gindex instanceof Array ? (<FileObj>this.obj).gindex.slice(0, 7) : [];
+            this.files = (<FileObj>this.obj).gindex;
+            //this.files = (<FileObj>this.obj).gindex instanceof Array ? (<FileObj>this.obj).gindex.slice(0, 5) : [];
             //console.log('search-line', this.obj);
         }
     }

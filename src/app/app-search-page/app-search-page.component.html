@@ -50,7 +50,7 @@
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                         </button>
                         <button md-raised-button (click)="cryptarsifiles()">
-                        <md-icon class="md-24">list</md-icon> List
+                        <md-icon class="md-24">list</md-icon> Show files
                         </button>
                     <span *ngIf="results.length > 0" class="md-body-2">
                     <br>
@@ -64,7 +64,9 @@
                     </pagination-controls>
         </md-card-content>
         </md-card>
+
     <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event);">
+
         <md-tab>
         <template md-tab-label>
             <button md-button disabled>
@@ -85,6 +87,7 @@
                             (onOpen)="openNewTab($event)"
                         >
                         </app-search-line>
+
                     </div>
                 </md-card-content>
             </md-card>

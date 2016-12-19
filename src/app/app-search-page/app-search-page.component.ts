@@ -20,7 +20,6 @@ export class AppSearchPageComponent implements OnInit {
     @ViewChild('searchInput') searchInput;
 
     open = false;
-
     db: DB = null;
     srch: Search;
 
@@ -32,6 +31,7 @@ export class AppSearchPageComponent implements OnInit {
     results = [];
 
     openTabs = [];
+
 
     constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
     }
@@ -49,6 +49,23 @@ export class AppSearchPageComponent implements OnInit {
                 if (v.match(/^[0-9 ]+$/)) {
                     this.open = true;
                     this.srch = new Search(this.db);
+                    // Dirty hack to display the files list first
+                    this.results = [];
+                    this.searchWorking = false;
+                    this.srch.searchRule('cryptarsi all files', (index, data) => {
+                    this.results.push({
+                      position: this.results.length,
+                      index: index,
+                      text: data,
+                      db: this.db,
+                      query: this.searchInput.value
+                    });
+                    }).then(() => {
+                    this.searchWorking = false;
+                    }).catch(() => {
+                    this.searchWorking = false;
+                    });
+                    // Dirty hack ends
                 } else {
                     this._snackbar.open('Your encryption key is probably wrong', 'OK');
                 }

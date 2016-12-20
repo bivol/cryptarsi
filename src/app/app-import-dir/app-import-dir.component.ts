@@ -106,7 +106,7 @@ export class AppImportDirComponent {
 
     onStrongPassword() {
         //let j = Jen();
-        //console.log('Strong password', j.password(10, 20, /[A-Z0-9]/i));
+        //visvisconsole.log('Strong password', j.password(10, 20, /[A-Z0-9]/i));
     }
 
     submit() {

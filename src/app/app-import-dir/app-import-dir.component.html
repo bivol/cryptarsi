@@ -25,7 +25,11 @@
                 <br>
               <br>
             <br>
-            <button md-button color="warn" (click)="onStrongPassword()" md-tooltip="Generate new password" tooltip-position="after">
+            <button type="button" md-button color="warn" (click)="onStrongPassword()" md-tooltip="Generate new password" tooltip-position="after">
+                Generate Password
+            </button>
+            &nbsp;
+            <div #clearTextPassword></div>
             <br>
             <md-input
                 type="password"
@@ -82,8 +86,8 @@
             </div>
             <br><br>
             <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new data set" tooltip-position="after">
-    <md-icon class="md-24">add</md-icon>
-</button>
+                <md-icon class="md-24">add</md-icon>
+            </button>
         </form>
         </md-card-content>
     </md-card>

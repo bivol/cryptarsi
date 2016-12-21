@@ -7,7 +7,7 @@
     </md-card-content>
     <h3>Attachments</h3>
     <div *ngFor="let item of files">
-            <b class="app-search-line"><span (click)="viewFile(item)"><md-icon class="md-10" (click)="viewFile(item)">attachment</md-icon>&nbsp;{{item.name}}</span></b>
+            <b class="app-search-line"><span (click)="viewFile(item)"><md-icon class="md-10" (click)="viewFile(item)">{{item.icon}}</md-icon>&nbsp;{{item.name}}</span></b>
     </div>
   <md-card-footer>
    <a href="#top"><md-icon class="md-24">arrow_upward</md-icon></a>

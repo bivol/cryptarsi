@@ -39,6 +39,7 @@ export class FileReaderAPI {
             let allfiles = [];
             let nindex = {};
             let index = 3;
+            let icona = 'attachment';
             for (let file of files) {
                 //console.log('File name is', file);
                 if (file.name.match(/^\./)) {
@@ -60,11 +61,19 @@ export class FileReaderAPI {
                 if (isIndexable(file.type)) {
                     delete lonelyGroups[gname]; // Remove it from the list if it is indexable
                 }
+                icona = 'attachment';
+                if(file.type === 'audio/mp3') icona = 'volume_down';
+                if(file.type === 'audio/ogg') icona = 'volume_down';
+                if(file.type === 'image/jpeg') icona = 'image';
+                if(file.type === 'image/png') icona = 'image';
+                if(file.type === 'image/gif') icona = 'image';
+                if(file.type === 'application/pdf') icona = 'image';
                 let w = {
                     index: index,
                     type: file.type,
                     size: file.size,
                     name: file.name,
+                    icon: icona,
                     file: null,
                     group: gname
                 };

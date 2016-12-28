@@ -319,7 +319,28 @@ export class DB {
         return new Promise((resolve, reject) => {
             this.store.getByKey(this.dataStoreName, this.crypto.encryptIndex(index))
                 .then((v) => {
-                    resolve(this.crypto.decrypt((v && v.data) ? v.data : ''));
+                    let data = this.crypto.decrypt((v && v.data) ? v.data : '');
+                    if (data && data.match(/^YYYYY[0-9]+YYYYY/)) {
+                        let size = data.match(/^YYYYY([0-9]+)YYYYY/)[1];
+                        data = data.replace(/^YYYYY[0-9]+YYYYY/, '');
+                        let i = 1;
+                        let proc = () => {
+                            if (i > size) {
+                                return resolve(data);
+                            }
+                            this.store.getByKey(this.dataStoreName, this.crypto.encryptIndex(index + '.' + i))
+                                .then((v1) => {
+                                    let d = this.crypto.decrypt((v1 && v1.data) ? v1.data : '');
+                                    data += d;
+                                    i++;
+                                    proc();
+                                })
+                                .catch(reject);
+                        };
+                        proc();
+                    } else {
+                        resolve(data);
+                    }
                 })
                 .catch(reject);
         });

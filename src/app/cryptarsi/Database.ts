@@ -145,6 +145,7 @@ export class DB {
     private indexStoreName = 'index';
     private dataStoreName = 'data';
     private dataVersion = 1;
+    private chunkSize = 10000000;
 
     constructor(private dbName, private encKey, private version = 8) {
         this.crypto = new Crypto(encKey);
@@ -284,8 +285,34 @@ export class DB {
         let e = this.crypto.decrypt(this.crypto.encrypt(content));
         console.log('TROUGH ENCRYPTOR ', ds(e));
         */
-        return this.modifyRawData(this.crypto.encryptIndex(index),
-            this.crypto.encrypt(content));
+
+        if (content.length > this.chunkSize) {
+            return new Promise((resolve, reject) => {
+                let i = 0;
+                let proc = () => {
+                    if (i * this.chunkSize + this.chunkSize >= content.length) {
+                        return this.modifyRawData(
+                            this.crypto.encryptIndex(index.toString() + '.' + i.toString()),
+                            this.crypto.encrypt(content.substr(i * this.chunkSize, this.chunkSize))
+                        ).then(resolve).catch(reject);
+                    };
+                    this.modifyRawData(
+                        this.crypto.encryptIndex(index.toString() + (Math.sign(i) ? '.' + i.toString() : '')),
+                        this.crypto.encrypt(
+                            (Math.sign(i) === 0 ? 'YYYYY' + parseInt((content.length / this.chunkSize).toString(), 10).toString() + 'YYYYY' : '')
+                                + content.substr(i * this.chunkSize, this.chunkSize)
+                        )
+                    ).then(() => {
+                        i++;
+                        proc();
+                    }).catch(reject);
+                };
+                proc();
+            });
+        } else {
+            return this.modifyRawData(this.crypto.encryptIndex(index),
+                this.crypto.encrypt(content));
+        }
     }
 
     getData(index) {

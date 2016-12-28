@@ -110,7 +110,7 @@ export class AngularIndexedDB {
             request = objectStore.get(key);
             request.onsuccess = function (event) {
                 result = event.target.result;
-            }
+            };
         });
 
         return promise;

@@ -4,6 +4,7 @@ import { WaitOK } from './WaitOK';
 import { WordHash } from './Hash';
 import { log } from '../log';
 import { isIndexable, getHashList } from './IsIndexable';
+import { Config } from './Config';
 
 function createStoreInDb(db, version, name) {
     return new Promise((resolve, reject) => {
@@ -35,9 +36,9 @@ function createStoreInDb(db, version, name) {
 class DatabaseList {
     private listDb;
 
-    private listStoreName = 'list';
-    private listDbName = 'dbList';
-    private listVersion = 8;
+    private listStoreName = Config.listStoreName;
+    private listDbName = Config.listDbName;
+    private listVersion = Config.listVersion;
 
     constructor() {
         this.listDb = new AngularIndexedDB(this.listDbName, this.listVersion);
@@ -142,12 +143,12 @@ export class DB {
     private crypto;
     private store: AngularIndexedDB;
 
-    private indexStoreName = 'index';
-    private dataStoreName = 'data';
-    private dataVersion = 1;
-    private chunkSize = 10000000;
+    private indexStoreName = Config.indexStoreName;
+    private dataStoreName = Config.dataStoreName;
+    private dataVersion = Config.dataVersion;
+    private chunkSize = Config.fileChunkSize;
 
-    constructor(private dbName, private encKey, private version = 8) {
+    constructor(private dbName, private encKey, private version = Config.listVersion) {
         this.crypto = new Crypto(encKey);
         this.store = new AngularIndexedDB(dbName, version);
     }
@@ -277,6 +278,21 @@ export class DB {
         });
     }
 
+    modifyLargeDataChunk(index, content, len) {
+        if (index.toString().match(/\./)) { // This means we have secondary chunk
+            return this.modifyRawData(
+                this.crypto.encryptIndex(index.toString()),
+                this.crypto.encrypt(content));
+        }
+        this.modifyRawData(
+            this.crypto.encryptIndex(index.toString()),
+            this.crypto.encrypt(
+                'YYYYY' + parseInt((len / this.chunkSize).toString(), 10).toString() + 'YYYYY'
+                    + content
+            )
+        );
+    }
+
     modifyData(index, content) {
         /*
         console.log('DUMP INDEX', index, 'CONTENT', content);
@@ -291,17 +307,16 @@ export class DB {
                 let i = 0;
                 let proc = () => {
                     if (i * this.chunkSize + this.chunkSize >= content.length) {
-                        return this.modifyRawData(
-                            this.crypto.encryptIndex(index.toString() + '.' + i.toString()),
-                            this.crypto.encrypt(content.substr(i * this.chunkSize, this.chunkSize))
+                        return this.modifyLargeDataChunk(
+                            index.toString() + '.' + i.toString(),
+                            content.substr(i * this.chunkSize, this.chunkSize),
+                            content.length
                         ).then(resolve).catch(reject);
                     };
-                    this.modifyRawData(
-                        this.crypto.encryptIndex(index.toString() + (Math.sign(i) ? '.' + i.toString() : '')),
-                        this.crypto.encrypt(
-                            (Math.sign(i) === 0 ? 'YYYYY' + parseInt((content.length / this.chunkSize).toString(), 10).toString() + 'YYYYY' : '')
-                                + content.substr(i * this.chunkSize, this.chunkSize)
-                        )
+                    this.modifyLargeDataChunk(
+                        index.toString() + (Math.sign(i) ? '.' + i.toString() : ''),
+                        content.substr(i * this.chunkSize, this.chunkSize),
+                        content.length
                     ).then(() => {
                         i++;
                         proc();

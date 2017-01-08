@@ -1,20 +1,21 @@
 import { log } from '../log';
 import { isIndexable } from './IsIndexable';
+import { Config } from './Config';
 
 export const allFileName = {
-    name: 'Cryptarsi All Files',
+    name: Config.dbAllFileName,
     type: 'text/plain',
     size: 0,
-    index: 1,
-    group: 'Cryptarsi All Files'
+    index: Config.dbAllFileIndex,
+    group: Config.dbAllFileGroup
 };
 
 export const lonelyFileName = {
-    name: 'Cryptarsi Lonely Files',
+    name: Config.dbLonelyFileName,
     type: 'text/plain',
     size: 0,
-    index: 2,
-    group: 'Cryptarsi Lonely Files'
+    index: Config.dbLonelyFileIndex,
+    group: Config.dbLonelyFileGroup
 };
 
 export class FileReaderAPI {

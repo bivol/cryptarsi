@@ -1,11 +1,12 @@
 /// <sreference path="../../typings/index.d.ts"/>
 import { log } from '../log';
 import * as CryptoJS from 'crypto-js';
+import { Config } from './Config';
 
 export class Crypto {
 
-    private hashSuffix = '.hash';
-    private indexSuffix = '.idx';
+    private hashSuffix = Config.cryptoHashSuffix;
+    private indexSuffix = Config.cryptoIndexSuffix;
 
     constructor(private password: string) {
     }
@@ -21,7 +22,7 @@ export class Crypto {
 
     buildKey(password: string): any {
         return CryptoJS.PBKDF2(password, password, {
-            keySize: 256 / 32
+            keySize: Config.cryptoAesKeySize
         });
     }
 

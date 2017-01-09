@@ -284,7 +284,7 @@ export class DB {
                 this.crypto.encryptIndex(index.toString()),
                 this.crypto.encrypt(content));
         }
-        this.modifyRawData(
+        return this.modifyRawData(
             this.crypto.encryptIndex(index.toString()),
             this.crypto.encrypt(
                 'YYYYY' + parseInt((len / this.chunkSize).toString(), 10).toString() + 'YYYYY'
@@ -306,6 +306,11 @@ export class DB {
             return new Promise((resolve, reject) => {
                 let i = 0;
                 let proc = () => {
+                    console.log('Add in chunks',
+                        index.toString() + (Math.sign(i) ? '.' + i.toString() : ''),
+                        i,
+                        content.length
+                    );
                     if (i * this.chunkSize + this.chunkSize >= content.length) {
                         return this.modifyLargeDataChunk(
                             index.toString() + '.' + i.toString(),

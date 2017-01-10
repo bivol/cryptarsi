@@ -6,6 +6,7 @@ interface FileObj {
     gindex?;
     index?;
     type?;
+    icon?;
     size?;
     group?;
 }

@@ -1,18 +1,19 @@
 <md-sidenav-layout class="app-sidenav-layout">
-  <md-sidenav #sidenav mode="push" class="app-sidenav">
-    <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component';sidenav.toggle()" md-tooltip="Help" tooltip-position="below" tooltip-delay="0">
+  <md-sidenav #sidenav mode="over" class="app-sidenav">
+    <button md-mini-fab color="accent" (click)="selectDatabase(null);menuSelected='component';sidenav.toggle()" tooltip-position="below" tooltip-delay="0">
       <md-icon class="md-24">help_outline</md-icon>
     </button>
     <button md-mini-fab color="warn" (click)="menuSelected='importDir';sidenav.toggle()" md-tooltip="Create new data set" tooltip-position="below">
       <md-icon class="md-24">add</md-icon>
     </button>
-    <button md-mini-fab color="primary" (click)="menuSelected='importDb';sidenav.toggle()" md-tooltip="Import data" tooltip-position="below">
+    <button md-mini-fab color="primary" (click)="menuSelected='importDb';sidenav.toggle()" md-tooltip="Import data" tooltip-position="after">
       <md-icon class="md-24">file_upload</md-icon>
     </button>
     <hr>
     <h3>Data sets</h3>
     <div *ngIf="collection && collection.length>0">
-        <div *ngFor="let item of collection">
+        <md-list>
+        <md-list-item *ngFor="let item of collection">
         <p
           class="app-select-database"
           [ngClass]="{'app-selected-database': (item.name == databaseSelected) }"
@@ -25,7 +26,9 @@
             [attr.color]="(item.name == databaseSelected)?'warn':null"
             (click)="selectDatabase(item.name)"
           > <md-icon md-list-avatar>folder</md-icon></button>&nbsp;{{item.name}}
-        </p></div>
+        </p>
+        </md-list-item>
+        </md-list>
 
         <div *ngIf="!collection">
           <button md-button>No data sets imported</button>
@@ -41,7 +44,7 @@
     <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
-    CRYPTARSI 2.0&beta;2
+    CRYPTARSI 2.0&beta;3
     <span class="app-toolbar-filler"></span>
   </md-toolbar>
 

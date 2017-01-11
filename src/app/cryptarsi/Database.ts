@@ -205,10 +205,10 @@ export class DB {
         return new Promise((resolve, reject) => {
             let me = this;
             if (isIndexable(file.type)) {
-                console.log('Going to index', file.name, file.type, file);
+              //  console.log('Going to index', file.name, file.type, file);
                 let hashQ = getHashList(file, content);
-                console.log('HashQ is', hashQ);
-                console.log('Obj is', obj);
+             //   console.log('HashQ is', hashQ);
+              //  console.log('Obj is', obj);
 
                 let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + content; // Metadata in every text file shall include the groups
 

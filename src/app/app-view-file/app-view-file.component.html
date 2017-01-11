@@ -15,11 +15,11 @@
             <md-icon class="md-36" md-tooltip="Next page" tooltip-position="after" (click)="nextPage()">fast_forward</md-icon>
         </div>
 
-        <div *ngIf="clearUrl" align="center" width="500">
+        <div *ngIf="clearUrl" align="center">
             <pdf-viewer [src]="clearUrl"
                         [page]="page"
                         [original-size]="true"
-                        [zoom]="1"
+                        [zoom]="1.5"
                         [render-text]="false"
                         style="display: block; z-index: 1"
             ></pdf-viewer>
@@ -202,10 +202,17 @@
             </pre>
         </div>
         <div class="app-search-view-files">
-            <div *ngFor="let item of files">
-            <md-icon class="md-10" (click)="viewFile(item)">{{item.icon}}</md-icon>
-                <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
-            </div>
+            <md-list class="md-dense" flex>
+            <md-toolbar layout="row" class="md-hue-3">
+             <div class="md-toolbar-tools">
+                <span><md-icon>folder_open</md-icon> Files</span>
+              </div>
+            </md-toolbar>
+            <md-list-item *ngFor="let item of files" class="md-1-line" (click)="viewFile(item)">
+              <md-icon>{{item.icon}}</md-icon>
+              <p>{{item.name}}</p>
+            </md-list-item>
+            </md-list>
         </div>
     </span>
     <span *ngSwitchCase="'text/html'">
@@ -234,10 +241,17 @@
             </pre>
         </div>
         <div class="app-search-view-files">
-            <div *ngFor="let item of files">
-            <md-icon class="md-10" (click)="viewFile(item)">{{item.icon}}</md-icon>
-                <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
-            </div>
+            <md-list class="md-dense" flex>
+            <md-toolbar layout="row" class="md-hue-3">
+             <div class="md-toolbar-tools">
+                <span><md-icon>folder_open</md-icon> Files</span>
+              </div>
+            </md-toolbar>
+            <md-list-item *ngFor="let item of files" class="md-1-line" (click)="viewFile(item)">
+              <md-icon>{{item.icon}}</md-icon>
+              <p>{{item.name}}</p>
+            </md-list-item>
+            </md-list>
         </div>
     </span>
     <span *ngSwitchDefault>

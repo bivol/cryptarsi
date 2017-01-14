@@ -5,6 +5,7 @@ import { Config } from './Config';
 export const allFileName = {
     name: Config.dbAllFileName,
     type: 'text/plain',
+    icon: Config.dbAllFileIcon,
     size: 0,
     index: Config.dbAllFileIndex,
     group: Config.dbAllFileGroup
@@ -13,6 +14,7 @@ export const allFileName = {
 export const lonelyFileName = {
     name: Config.dbLonelyFileName,
     type: 'text/plain',
+    icon: Config.dbLonelyFileIcon,
     size: 0,
     index: Config.dbLonelyFileIndex,
     group: Config.dbLonelyFileGroup
@@ -40,7 +42,7 @@ export class FileReaderAPI {
             let allfiles = [];
             let nindex = {};
             let index = 3;
-            let icona = 'attachment';
+            let icona = 'format_align_left';
             for (let file of files) {
                 //console.log('File name is', file);
                 if (file.name.match(/^\./)) {
@@ -62,13 +64,18 @@ export class FileReaderAPI {
                 if (isIndexable(file.type)) {
                     delete lonelyGroups[gname]; // Remove it from the list if it is indexable
                 }
-                icona = 'attachment';
+                icona = 'format_align_left';
                 if(file.type === 'audio/mp3') icona = 'volume_down';
                 if(file.type === 'audio/ogg') icona = 'volume_down';
+                if(file.type === 'audio/wav') icona = 'volume_down';
                 if(file.type === 'image/jpeg') icona = 'image';
                 if(file.type === 'image/png') icona = 'image';
                 if(file.type === 'image/gif') icona = 'image';
-                if(file.type === 'application/pdf') icona = 'image';
+                if(file.type === 'video/mp4') icona = 'videocam';
+                if(file.type === 'video/avi') icona = 'videocam';
+                if(file.type === 'video/mpeg') icona = 'videocam';
+                if(file.type === 'video/webm') icona = 'videocam';
+                if(file.type === 'application/pdf') icona = 'format_align_left';
                 let w = {
                     index: index,
                     type: file.type,

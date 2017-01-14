@@ -1,16 +1,21 @@
 <br>
-<div>
   <md-card>
-    <md-card-title>{{filename}}</md-card-title>
-    <md-card-content class="md-body-1 app-search-line" (click)="viewFile()">
-     <pre class="app-pre-break">{{content}}</pre> <md-icon class="md-24" (click)="viewFile()">add_circle_outline</md-icon>...
+    <md-card-title class="md-hue-3"><div class="md-toolbar-tools">{{filename}}</div></md-card-title>
+    <md-card-content class="md-body-1">
+     <pre class="app-pre-break">{{content}}</pre>
     </md-card-content>
-    <h3>Attachments</h3>
-    <div *ngFor="let item of files">
-            <b class="app-search-line"><span (click)="viewFile(item)"><md-icon class="md-10" (click)="viewFile(item)">{{item.icon}}</md-icon>&nbsp;{{item.name}}</span></b>
-    </div>
+    <md-list class="md-dense" flex >
+    <md-toolbar layout="row" class="md-hue-3">
+      <div class="md-toolbar-tools">
+        <span (click)="viewFile()">More...</span>
+      </div>
+    </md-toolbar>
+      <md-list-item *ngFor="let item of fileslist" class="md-1-line" (click)="viewFile(item)">
+        <md-icon>{{item.icon}}</md-icon>
+        <p>{{item.name}}</p>
+      </md-list-item>
+    </md-list>
   <md-card-footer>
    <a href="#top"><md-icon class="md-24">arrow_upward</md-icon></a>
  </md-card-footer>
   </md-card>
-</div>

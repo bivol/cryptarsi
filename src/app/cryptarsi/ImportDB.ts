@@ -19,16 +19,17 @@ export class ImportDB {
         return new Promise((resolve, reject) => {
             let r = new FileReaderAPI();
             this.store.open().then(() => {
-                //console.log('Starting the import');
+                console.log('Starting the import');
 
                 r.readAll(files, (f, text, obj) => {
-                    //console.log('Downloaded', f.name, f.type, obj);
+                    console.log('Downloaded', f.name, f.type, obj);
                     return new Promise((res, rej) => {
                         let tar = new Tar();
                         tar.readTar(text, (header, content, pos, total) => {
                             return new Promise((resolve, reject) => {
-                                //console.log('tar callback', header, content.length, pos, total);
+                                console.log('tar callback', header, content.length, pos, total);
                                 if (header.fileName.match(/^i\//)) {
+                                  console.log('fileName');
                                     let name = header.fileName.match(/^i\/(.+)/)[1];
                                     this.store.modifyRawHash(this.nameToIndex(name), content)
                                         .then(() => {
@@ -38,7 +39,7 @@ export class ImportDB {
                                         .catch(reject);
                                 }
                                 if (header.fileName.match(/^d\//)) {
-                                    //console.log('d');
+                                    console.log(header.fileName);
                                     let name = header.fileName.match(/^d\/(.+)/)[1];
                                     this.store.modifyRawData(this.nameToIndex(name), content)
                                         .then(() => {

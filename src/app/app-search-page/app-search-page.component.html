@@ -53,9 +53,10 @@
                         <md-icon class="md-24">list</md-icon> Show files
                         </button>
                     <span *ngIf="results.length > 0" class="md-body-2">
-                    <br><br>
+                    <br>
                         Found: {{results.length}} documents
                     </span>
+                    <br>
                     <pagination-controls
                         maxSize="9"
                         autoHide="true"

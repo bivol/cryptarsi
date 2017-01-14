@@ -1,5 +1,5 @@
 export class Config {
-    static fileChunkSize = 10000000;
+    static fileChunkSize = 2000000;
     static listStoreName = 'list';
     static listDbName = 'dbList';
     static listVersion = 8;

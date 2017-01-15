@@ -12,15 +12,15 @@ export class WordHash {
                 let reg = 0;
                 let w = m[0];
                 for (let pos = 7; pos >= 0; pos--) {
-                    reg += w.charCodeAt(pos % w.length);
-                    reg += w.charCodeAt((8 + pos) % w.length) + 16;
+                    reg += w.charCodeAt(pos % w.length) % 32;
+                    reg += w.charCodeAt((8 + pos) % w.length) % 32 + 16;
                     //console.log('reg', reg);
                     a[pos] += reg;
-                    a[pos] = a[pos] % 27;
+                    a[pos] = a[pos] % 51;
                 }
             }
         }
-        return a.map(c => String.fromCharCode(65 + c)).join('');
+        return a.map(c => String.fromCharCode(c + (c > 25 ? 72 : 65))).join('');
     }
 
     static cbPerHash(text: string, cb: any) {

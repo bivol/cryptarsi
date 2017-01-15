@@ -26,17 +26,17 @@ export class ExportDB {
             let tar = new Tar();
             let buffer;
 
-            this.db.getAllCbIndexes((data) => {
+           /* this.db.getAllCbIndexes((data) => {
               //  console.log('one index cursor is', data);
                 return new Promise((resolve2, reject2) => {
                     buffer = tar.addFile('i/' + this.stringToHex(atob(data.id)), data.data);
                     resolve2();
                 });
-            }).then(() => {
+            }).then(() => { */
                 this.db.getAllCbData((data) => {
                     //console.log('one data cursor is', data);
                     return new Promise((resolve2, reject2) => {
-                        buffer = tar.addFile('d/' + this.stringToHex(atob(data.id)), data.data);
+                        buffer = tar.addFile(/* 'd/' + */ this.stringToHex(atob(data.id)), data.data);
                         resolve2();
                     });
                 }).then(() => {
@@ -45,8 +45,7 @@ export class ExportDB {
 
                     resolve(new Blob([buffer], { type: 'application/tar' }));
                 }).catch(reject);
-            }).catch(reject);
+           // }).catch(reject);
         });
     }
-
 }

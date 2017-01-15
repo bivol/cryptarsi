@@ -28,6 +28,7 @@ export class ImportDB {
                         tar.readTar(text, (header, content, pos, total) => {
                             return new Promise((resolve, reject) => {
                                 //console.log('tar callback', header, content.length, pos, total);
+                                /*
                                 if (header.fileName.match(/^i\//)) {
                                     let name = header.fileName.match(/^i\/(.+)/)[1];
                                     this.store.modifyRawHash(this.nameToIndex(name), content)
@@ -40,13 +41,15 @@ export class ImportDB {
                                 if (header.fileName.match(/^d\//)) {
                                     //console.log('d');
                                     let name = header.fileName.match(/^d\/(.+)/)[1];
+                                    */
+                                    let name = header.fileName;
                                     this.store.modifyRawData(this.nameToIndex(name), content)
                                         .then(() => {
                                             progress(f, pos, total, 'Populate the database');
                                             resolve();
                                         })
                                         .catch(reject);
-                                }
+                                // }
                             });
                         }).then(() => {
                             progress(f, 100, 100, 'Import completed');

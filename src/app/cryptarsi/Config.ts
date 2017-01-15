@@ -3,7 +3,7 @@ export class Config {
     static listStoreName = 'list';
     static listDbName = 'dbList';
     static listVersion = 8;
-    static indexStoreName = 'index';
+    static indexStoreName = 'data'; // was index
     static dataStoreName = 'data';
     static dataVersion = 1;
     static cryptoHashSuffix = '.hash';

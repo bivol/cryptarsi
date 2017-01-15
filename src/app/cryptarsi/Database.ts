@@ -158,7 +158,7 @@ export class DB {
         return new Promise((resolve, reject) => {
             createStoreInDb(this.store,
                 this.dataVersion,
-                [this.indexStoreName, this.dataStoreName]
+                [/* this.indexStoreName, */ this.dataStoreName]
             ).then(() => {
                 log('Stores created');
                 resolve();

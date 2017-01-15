@@ -267,9 +267,9 @@ export class DB {
                 id: index,
                 data: content
             };
-            //console.log('data...', this.dataStoreName, data);
+            console.log('data...', this.dataStoreName, data);
             this.store.add(this.dataStoreName, data).then(resolve).catch((e) => {
-                //console.log('error add data', e);
+                console.log('error add data', e);
                 if (e.target.error.code === 0) { // Key duplication
                     this.store.update(this.dataStoreName, data)
                         .then(resolve).catch(reject);

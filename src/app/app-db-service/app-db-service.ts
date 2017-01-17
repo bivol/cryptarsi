@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DB, DbList } from '../cryptarsi/Database';
+import { log } from '../log';
 
-console.log('AppDbService instanciated');
+log('AppDbService instanciated');
 
 interface DbElement {
     encKey: string;

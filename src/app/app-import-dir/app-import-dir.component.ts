@@ -2,9 +2,9 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
-import { DbList } from '../cryptarsi/Database';
 import { Jen } from '../cryptarsi/Jen';
 import { log } from '../log';
+import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({
     // moduleId: module.id,
@@ -32,7 +32,7 @@ export class AppImportDirComponent {
     filename: string = '';
     processing = false;
 
-    constructor(private _snackbar: MdSnackBar) {
+    constructor(private _snackbar: MdSnackBar, private db: AppDbService) {
     }
 
     validateDbName(): boolean {
@@ -73,7 +73,7 @@ export class AppImportDirComponent {
     checkDb() {
         return new Promise((resolve, reject) => {
             log('Checking db');
-            DbList.isPresent(this.dbName.value).then(() => {
+            this.db.isPresent(this.dbName.value).then(() => {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';

@@ -1,9 +1,9 @@
 //import {enableProdMode} from '@angular/core';
 //enableProdMode();
 import { Component } from '@angular/core';
-import { DB, DbList } from './cryptarsi/Database';
 import { log } from './log';
-import { FileWriterAPI } from './cryptarsi/FileWriter';
+//import { FileWriterAPI } from './cryptarsi/FileWriter';
+import { AppDbService } from './app-db-service/app-db-service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class AppComponent {
   databaseSelected: string = null;
   menuSelected = null;
 
-  constructor() {
+  constructor(private db: AppDbService) {
     this.refreshDbList();
 /*    let file = new FileWriterAPI('gosho.txt');
     setInterval(() => {
@@ -36,7 +36,7 @@ export class AppComponent {
   }
 
   refreshDbList() {
-    DbList.list().then((dbList: any) => {
+    this.db.list().then((dbList: any) => {
       log('Database list is', dbList);
       this.collection = dbList;
     });

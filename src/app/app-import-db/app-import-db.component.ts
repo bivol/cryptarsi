@@ -1,8 +1,8 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { log } from '../log';
-import { DbList } from '../cryptarsi/Database';
 import { ImportDB } from '../cryptarsi/ImportDB';
+import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({
     //moduleId: module.id,
@@ -20,7 +20,7 @@ export class AppImportDbComponent {
     files: any = null;
     status = 'Downloading file';
 
-    constructor(private _snackbar: MdSnackBar) {
+    constructor(private _snackbar: MdSnackBar, private db: AppDbService) {
     }
 
     validateDbName(): boolean {
@@ -45,7 +45,7 @@ export class AppImportDbComponent {
     checkDb() {
         return new Promise((resolve, reject) => {
             log('Checking db', this.dbName.value);
-            DbList.isPresent(this.dbName.value).then(() => {
+            this.db.isPresent(this.dbName.value).then(() => {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';

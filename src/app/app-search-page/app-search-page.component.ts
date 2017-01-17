@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
-import { DB } from '../cryptarsi/Database';
+//import { DB } from '../cryptarsi/Database';
 import { Search } from '../cryptarsi/Search';
 import { ExportDB } from '../cryptarsi/ExportDB';
 import { log } from '../log';
+import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({
     //moduleId: module.id,
@@ -20,7 +21,7 @@ export class AppSearchPageComponent implements OnInit {
     @ViewChild('searchInput') searchInput;
 
     open = false;
-    db: DB = null;
+    db = null;
     srch: Search;
 
     exportWorking = false;
@@ -33,7 +34,10 @@ export class AppSearchPageComponent implements OnInit {
     openTabs = [];
 
 
-    constructor(private _dialog: MdDialog, private _snackbar: MdSnackBar) {
+    constructor(private _dialog: MdDialog,
+                private _snackbar: MdSnackBar,
+                private DB: AppDbService
+               ) {
     }
 
     ngOnInit() {
@@ -42,9 +46,9 @@ export class AppSearchPageComponent implements OnInit {
 
     openDb() {
         log('Opening database', this.database, this.encKey.value);
-        this.db = new DB(this.database, this.encKey.value);
-        this.db.open().then(() => {
-            this.db.getData(0).then((v: string) => {
+        this.DB.open(this.database, this.encKey.value).then((db) => {
+            this.db = db;
+            db.getData(0).then((v: string) => {
                 log('Decrypted index 0 is', v);
                 if (v.match(/^[0-9 ]+$/)) {
                     this.open = true;
@@ -95,9 +99,7 @@ export class AppSearchPageComponent implements OnInit {
         dialog.open('Are you sure you want to drop the database?', (v) => {
             log('Dialog Call back', v);
             if (v === 'yes') {
-                let myDb = this.db ? this.db : new DB(this.database, 'xxxxxxx');
-                log('yes, db is', myDb);
-                myDb.drop().then(() => {
+                this.DB.drop(this.database).then(() => {
                     log('Successfully dropped');
                     this.onDrop.emit();
                     this._snackbar.open('The database is removed!', 'OK');

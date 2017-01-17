@@ -3,6 +3,7 @@
 import { Component } from '@angular/core';
 import { DB, DbList } from './cryptarsi/Database';
 import { log } from './log';
+import { FileWriterAPI } from './cryptarsi/FileWriter';
 
 
 @Component({
@@ -18,6 +19,15 @@ export class AppComponent {
 
   constructor() {
     this.refreshDbList();
+/*    let file = new FileWriterAPI('gosho.txt');
+    setInterval(() => {
+      console.log('Write to file');
+      file.writeToFile(new Blob(['aaaa\n'], { type: 'text/plain'}))
+        .then(() => console.log('successful write'))
+        .catch((e) => console.log('Error, write', e));
+      console.log('File url is', file.url());
+    }, 5000);
+    */
   }
 
   selectDatabase(name: string) {

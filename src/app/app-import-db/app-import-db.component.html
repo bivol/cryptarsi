@@ -1,0 +1,56 @@
+<div>
+    <md-card *ngIf="!processing" class="app-input-selection" >
+    <md-card-title>Load a data set from CrypTARsi file</md-card-title>
+    <md-card-subtitle>Give a name, select the file and hit the button</md-card-subtitle>
+    <md-card-content>
+        <form novalidate (ngSubmit)="submit()" >
+            <md-input
+                #dbName
+                placeholder="Data set name"
+                (change)="checkDbName"
+                maxlength="50"
+                md-tooltip="Enter new data set name"
+                tooltip-position="above"
+                class="app-input"
+                (change)="validateDbName()"
+            >
+                <md-hint #dbNameHint align="end">
+                    {{dbName.characterCount}}/50
+                </md-hint>
+            </md-input>
+            <br><br>
+            <label for=fileName>
+            <input
+                #fileName
+                id="fileName"
+                class="app-input"
+                type="file"
+                (change)="onFileChange($event)"
+            >
+            </label>
+            <br><br>
+            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import data" tooltip-position="after">
+    <md-icon class="md-24">file_upload</md-icon>
+</button>
+        </form>
+        </md-card-content>
+    </md-card>
+    <md-card *ngIf="processing">
+    <md-card-title>Wait...</md-card-title>
+    <md-card-subtitle>{{status}}</md-card-subtitle>
+    <md-card-content>
+        <label>
+            <div>
+                <div>Total Progress: {{progress}}%</div>
+            </div>
+            <br>
+            <md-progress-bar
+                class="app-progress"
+                color="accent"
+                mode="determinate"
+                [value]="progress"
+                aria-label="Progress bar"></md-progress-bar>
+        </label>
+    </md-card-content>
+    </md-card>
+</div>

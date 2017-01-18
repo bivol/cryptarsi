@@ -1,0 +1,116 @@
+<a name="top">
+<div *ngIf="!open">
+    <md-card>
+        <md-card-title>Unlock {{database}}
+        <button md-mini-fab color="warn" (click)="dropDb()" md-tooltip="Delete the data set" tooltip-position="after">
+               <md-icon class="md-24">delete</md-icon>
+         </button>
+        </md-card-title>
+        <md-card-content>
+        <form novalidate>
+            <md-input
+                #encKey
+                type="password"
+                class="app-input"
+                placeholder="Password"
+                (keyup.enter)="openDb()"
+            >
+            </md-input>
+            <button md-raised-button (click)="openDb()">
+                <md-icon class="md-24">lock_open</md-icon> Open
+            </button>
+        </form>
+        </md-card-content>
+    </md-card>
+</div>
+<div *ngIf="open">
+<md-card>
+        <md-card-title>Data set {{database}}
+                    <button md-mini-fab color="accent" (click)="closeDb()" md-tooltip="Close data set" tooltip-position="below">
+                    <md-icon class="md-24">lock_open</md-icon>
+                    </button>
+                    <button md-mini-fab color="primary" (click)="exportDb()" md-tooltip="Export data" tooltip-position="after">
+                    <md-icon class="md-24">file_download</md-icon>
+                    </button>
+                     <md-spinner *ngIf="exportWorking" class="app-spinner"></md-spinner>
+        </md-card-title>
+        <md-card-content>
+                     <md-input
+                            #searchInput
+                            type="text"
+                            placeholder="Type your query here Ex: +John +Doe or 'John Doe'"
+                            maxlength="128"
+                            class="app-input"
+                            (keyup.enter)="search()"
+                        >
+                        </md-input>
+                        &nbsp;<br>
+                        <button md-raised-button (click)="search()">
+                        <md-icon class="md-24">search</md-icon> Search
+                        <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
+                        </button>
+                        <button md-raised-button (click)="cryptarsifiles()">
+                        <md-icon class="md-24">list</md-icon> Show files
+                        </button>
+                    <span *ngIf="results.length > 0" class="md-body-2">
+                    <br>
+                        Found: {{results.length}} documents
+                    </span>
+                    <br>
+                    <pagination-controls
+                        maxSize="9"
+                        autoHide="true"
+                        (pageChange)="p = $event"
+                    >
+                    </pagination-controls>
+        </md-card-content>
+        </md-card>
+
+    <md-tab-group [selectedIndex]="selectedTab" (focusChange)="selectTab($event);">
+
+        <md-tab>
+        <template md-tab-label>
+            <button md-button disabled>
+                    <md-icon class="md-24">list</md-icon>
+                    Results
+            </button>
+         </template>
+         <div class="app-search-tab-content">
+            <md-card>
+                <md-card-content class="md-body-1">
+                    <div *ngFor="let item of results | paginate: { itemsPerPage: 20, currentPage: p }">
+                        <app-search-line
+                            [position]="item.position"
+                            [index]="item.index"
+                            [text]="item.text"
+                            [query]="item.query"
+                            [db]="item.db"
+                            (onOpen)="openNewTab($event)"
+                        >
+                        </app-search-line>
+
+                    </div>
+                </md-card-content>
+            </md-card>
+         </div>
+        </md-tab>
+        <md-tab *ngFor="let tab of openTabs">
+        <template md-tab-label>
+            <div class="app-search-cursor">
+                <md-icon class="md-24" (click)="closeTab(tab)">cancel</md-icon>
+                {{tab.name}}
+            </div>
+         </template>
+         <div class="app-search-tab-content">
+            <app-view-file
+                [index]="tab.index"
+                [name]="tab.name"
+                [tab]="tab"
+                (onOpen)="openNewTab($event)"
+                (onClose)="closeTab(tab)"
+            >
+            </app-view-file>
+         </div>
+        </md-tab>
+    </md-tab-group>
+</div>

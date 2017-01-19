@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
-//import { DB } from '../cryptarsi/Database';
 import { Search } from '../cryptarsi/Search';
 import { ExportDB } from '../cryptarsi/ExportDB';
 import { log } from '../log';

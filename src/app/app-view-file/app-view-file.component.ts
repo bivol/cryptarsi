@@ -12,7 +12,6 @@ export class AppViewFileComponent implements OnInit {
     @Input() index;
     @Input() name;
     @Input() tab;
-    //@Input() db; // Don't need it, the data is in this.tab.db
     @Output() onOpen = new EventEmitter();
     @Output() onClose = new EventEmitter();
 
@@ -80,11 +79,11 @@ export class AppViewFileComponent implements OnInit {
     }
 
     zoomIn() {
-        this.zoom = Math.max((this.zoom+0.1), 1);
+        this.zoom = Math.max((this.zoom + 0.1), 1);
     }
 
     zoomOut() {
-        this.zoom = Math.max((this.zoom-0.1), 0.1);
+        this.zoom = Math.max((this.zoom - 0.1), 0.1);
     }
 
 }

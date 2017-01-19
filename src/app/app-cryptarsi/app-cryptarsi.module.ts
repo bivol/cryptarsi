@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppCryptarsiComponent } from './app-cryptarsi.component';
 import { AppImportDirComponent } from '../app-import-dir/app-import-dir.component';
@@ -18,7 +17,6 @@ import { MaterialModule } from '@angular/material';
 @NgModule({
     imports: [
         BrowserModule,
-//        CommonModule,
         FormsModule,
         MaterialModule.forRoot(),
         Ng2PaginationModule,

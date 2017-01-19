@@ -4,7 +4,6 @@
 
 .app-content md-card {
     margin: 10px;
-    font-size: 24px;
 }
 
 .app-sidenav-layout {
@@ -13,7 +12,7 @@
 
 .app-sidenav {
     padding: 10px;
-    width: 150px;
+    width: 250px;
 }
 
 .app-content md-checkbox {

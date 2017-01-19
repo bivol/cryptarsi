@@ -1,0 +1,110 @@
+.app-content {
+    padding: 10px;
+}
+
+.app-content md-card {
+    margin: 10px;
+    font-size: 24px;
+}
+
+.app-sidenav-layout {
+    height: 100%;
+}
+
+.app-sidenav {
+    padding: 10px;
+    width: 150px;
+}
+
+.app-content md-checkbox {
+    margin: 10px;
+}
+
+.app-toolbar-filler {
+    flex: 1 1 auto;
+}
+
+.app-toolbar-menu {
+    padding: 0 14px 0 14px;
+    color: white;
+}
+
+.app-icon-button {
+    box-shadow: none;
+    user-select: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    filter: none;
+    font-weight: normal;
+    height: auto;
+    line-height: inherit;
+    margin: 0;
+    min-width: 0;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+}
+
+.app-select-database:hover {
+    cursor: pointer;
+    background: #F0F0F0;
+}
+
+.app-selected-database {
+    background: #F8F8F8;
+    border: 1pt #E8E8E8 dashed;
+}
+
+.app-action {
+    display: inline-block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.app-spinner {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+}
+
+.app-input-icon {
+    font-size: 16px;
+}
+
+.app-list {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    width: 350px;
+    margin: 20px;
+}
+
+.app-progress {
+    margin: 20px;
+}
+
+.buttondemoBasicUsage section {
+    background: #f7f7f7;
+    border-radius: 3px;
+    text-align: center;
+    margin: 1em;
+    position: relative !important;
+    padding-bottom: 10px;
+}
+
+.buttondemoBasicUsage md-content {
+    margin-right: 7px;
+}
+
+.buttondemoBasicUsage section .md-button {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.buttondemoBasicUsage .label {
+    position: absolute;
+    bottom: 5px;
+    left: 7px;
+    font-size: 14px;
+    opacity: 0.54;
+}

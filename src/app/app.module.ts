@@ -31,8 +31,7 @@ const appRoutes: Routes = [
 //    AppDialogComponent
 //  ],
 //  providers: [AppDbService],
-  bootstrap: [AppComponent],
-  exports: [MaterialModule]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

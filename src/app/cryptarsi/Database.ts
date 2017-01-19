@@ -2,7 +2,7 @@ import { Crypto } from './CryptoAPI';
 import { AngularIndexedDB } from './Storage';
 import { WaitOK } from './WaitOK';
 import { WordHash } from './Hash';
-import { log } from '../log';
+import { log } from './log';
 import { isIndexable, getHashList } from './IsIndexable';
 import { Config } from './Config';
 

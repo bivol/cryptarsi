@@ -1,7 +1,7 @@
 import { FileReaderAPI } from './FileReader';
 import { DB } from './Database';
 import { WordHash } from './Hash';
-import { log } from '../log';
+import { log } from './log';
 
 export class ImportDir {
     store: DB = null;

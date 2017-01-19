@@ -1,6 +1,6 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { ImportDB } from '../cryptarsi/ImportDB';
 import { AppDbService } from '../app-db-service/app-db-service';
 

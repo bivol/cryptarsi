@@ -3,7 +3,7 @@ import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Jen } from '../cryptarsi/Jen';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({

@@ -3,7 +3,7 @@ import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
 import { Search } from '../cryptarsi/Search';
 import { ExportDB } from '../cryptarsi/ExportDB';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({

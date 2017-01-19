@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DB, DbList } from '../cryptarsi/Database';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 
 log('AppDbService instanciated');
 

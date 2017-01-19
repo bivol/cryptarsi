@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 //import { FileWriterAPI } from './cryptarsi/FileWriter';
 import { AppDbService } from '../app-db-service/app-db-service';
 

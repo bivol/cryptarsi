@@ -1,5 +1,5 @@
 /// <sreference path="../../typings/index.d.ts"/>
-import { log } from '../log';
+import { log } from './log';
 import * as CryptoJS from 'crypto-js';
 import { Config } from './Config';
 

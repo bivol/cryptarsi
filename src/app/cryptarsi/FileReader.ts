@@ -1,4 +1,4 @@
-import { log } from '../log';
+import { log } from './log';
 import { isIndexable } from './IsIndexable';
 import { Config } from './Config';
 

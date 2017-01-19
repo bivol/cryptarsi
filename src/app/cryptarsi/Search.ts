@@ -2,7 +2,7 @@
  * Created by delian on 8/19/16.
  */
 
-import { log } from '../log';
+import { log } from './log';
 import { DB } from './Database';
 import { WordHash } from './Hash';
 

@@ -44,13 +44,14 @@
                             (keyup.enter)="search()"
                         >
                         </md-input>
-                        &nbsp;<br>
+                        &nbsp;
                         <button md-raised-button (click)="search()">
                         <md-icon class="md-24">search</md-icon> Search
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                         </button>
+                        <br>
                         <button md-raised-button (click)="cryptarsifiles()">
-                        <md-icon class="md-24">list</md-icon> Show files
+                        <md-icon class="md-24">list</md-icon> Files list
                         </button>
                     <span *ngIf="results.length > 0" class="md-body-2">
                     <br>

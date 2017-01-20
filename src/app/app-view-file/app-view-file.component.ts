@@ -52,7 +52,7 @@ export class AppViewFileComponent implements OnInit {
             })
             .catch((e) => {
                 // Error, for some reason we cannot retrieve the data
-                //console.log('Error retrieve data', e);
+                console.log('Error retrieve data', e);
             });
     }
 

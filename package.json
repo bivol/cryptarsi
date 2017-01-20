@@ -1,6 +1,6 @@
 {
   "name": "cryptarsi",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "GPL",
   "angular-cli": {},
   "main": "electron.js",

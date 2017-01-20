@@ -1,0 +1,10 @@
+.app-search-view-files {
+    /* display: inline-flex;*/
+}
+
+.app-view-file-line {}
+
+.app-view-file-line:hover {
+    background: #F0F0F0;
+    cursor: pointer;
+}

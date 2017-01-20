@@ -12,6 +12,7 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
 import { Ng2PaginationModule } from 'ng2-pagination';
 import { AppSanitizerPipe } from '../app-sanitizer-pipe/app-sanitizer-pipe';
 import { AppDbService } from '../app-db-service/app-db-service';
+import { AppViewFileListComponent } from '../app-view-file-list/app-view-file-list.component';
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MaterialModule } from '@angular/material';
         AppSearchLineComponent,
         AppViewFileComponent,
         AppDialogComponent,
+        AppViewFileListComponent,
         AppSanitizerPipe,
         PdfViewerComponent
     ],

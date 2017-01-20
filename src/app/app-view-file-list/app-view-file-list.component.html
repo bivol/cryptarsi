@@ -1,0 +1,13 @@
+<div class="app-search-view-files">
+    <md-list class="md-dense" flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span><md-icon>folder_open</md-icon> Files</span>
+            </div>
+        </md-toolbar>
+        <md-list-item *ngFor="let item of filelist" class="md-1-line app-view-file-line" (click)="viewFile(item)">
+            <md-icon>{{item.icon}}</md-icon>
+            <p>{{item.name}}</p>
+        </md-list-item>
+    </md-list>
+</div>

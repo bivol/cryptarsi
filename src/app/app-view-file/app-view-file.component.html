@@ -3,7 +3,7 @@
     <md-card-subtitle></md-card-subtitle>
     <md-card-content>
 
-<span [ngSwitch]="type">
+        <span [ngSwitch]="type">
     <span *ngSwitchCase="'application/pdf'">
         <div align="center">
             <md-icon class="md-36" md-tooltip="Previous page" tooltip-position="above" (click)="prevPage()">fast_rewind</md-icon>
@@ -42,7 +42,7 @@
         </div>
       </span>
 
-    <span *ngSwitchCase="'image/gif'">
+        <span *ngSwitchCase="'image/gif'">
         <div *ngIf="clearUrl" align="center">
         <a [href]="clearUrl | safe" target="_blank" class="app-link">
             <img [src]='clearUrl | safe' [width]='400'>
@@ -58,7 +58,7 @@
         </a>
         </div>
     </span>
-    <span *ngSwitchCase="'image/jpeg'">
+        <span *ngSwitchCase="'image/jpeg'">
         <div *ngIf="clearUrl" align="center">
             <a [href]="clearUrl | safe" target="_blank" class="app-link">
             <img [src]='clearUrl | safe' [width]='400' md-tooltip="Click for full size" tooltip-position="after"></a>
@@ -71,7 +71,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'image/pjpeg'">
+        <span *ngSwitchCase="'image/pjpeg'">
         <div *ngIf="clearUrl">
           <a [href]="clearUrl | safe" target="_blank" class="app-link">
             <img [src]='clearUrl | safe' [width]='400'>
@@ -85,7 +85,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'image/png'">
+        <span *ngSwitchCase="'image/png'">
         <div *ngIf="clearUrl">
         <a [href]="clearUrl | safe" target="_blank" class="app-link">
             <img [src]='clearUrl | safe' [width]='400'>
@@ -99,7 +99,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'video/mpeg'">
+        <span *ngSwitchCase="'video/mpeg'">
         <div *ngIf="clearUrl" align="center">
             <video controls>
                 <source [src]='clearUrl | safe' [type]='type'>
@@ -113,7 +113,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-     <span *ngSwitchCase="'video/ogg'">
+        <span *ngSwitchCase="'video/ogg'">
         <div *ngIf="clearUrl">
             <video controls>
                 <source [src]='clearUrl | safe' [type]='type'>
@@ -127,7 +127,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-     <span *ngSwitchCase="'video/mp4'">
+        <span *ngSwitchCase="'video/mp4'">
         <div *ngIf="clearUrl" align="center">
             <video controls>
                 <source [src]='clearUrl | safe' [type]='type'>
@@ -141,7 +141,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'video/webm'">
+        <span *ngSwitchCase="'video/webm'">
         <div *ngIf="clearUrl" align="center">
             <video controls>
                 <source [src]='clearUrl | safe' [type]='type'>
@@ -153,7 +153,7 @@
         <a [download]="name" [href]="clearUrl | safe" class="app-link">
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
     </span>
-    <span *ngSwitchCase="'audio/mp3'">
+        <span *ngSwitchCase="'audio/mp3'">
         <div *ngIf="clearUrl" align="center">
             <audio controls>
                 <source [src]="clearUrl | safe" [type]="type">
@@ -167,7 +167,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'audio/wav'">
+        <span *ngSwitchCase="'audio/wav'">
         <div *ngIf="clearUrl" align="center">
             <audio controls>
                 <source [src]="clearUrl | safe" [type]="type">
@@ -181,7 +181,7 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'audio/ogg'">
+        <span *ngSwitchCase="'audio/ogg'">
         <div *ngIf="clearUrl" align="center">
             <audio controls>
                 <source [src]='clearUrl | safe' [type]="type">
@@ -195,27 +195,19 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
     </span>
-    <span *ngSwitchCase="'text/plain'">
+        <span *ngSwitchCase="'text/plain'">
         <div class="app-view-content">
             <pre class="app-pre-break">
             {{data}}
             </pre>
         </div>
-        <div class="app-search-view-files">
-            <md-list class="md-dense" flex>
-            <md-toolbar layout="row" class="md-hue-3">
-             <div class="md-toolbar-tools">
-                <span><md-icon>folder_open</md-icon> Files</span>
-              </div>
-            </md-toolbar>
-            <md-list-item *ngFor="let item of files" class="md-1-line" (click)="viewFile(item)">
-              <md-icon>{{item.icon}}</md-icon>
-              <p>{{item.name}}</p>
-            </md-list-item>
-            </md-list>
-        </div>
-    </span>
-    <span *ngSwitchCase="'text/html'">
+        <app-view-file-list
+            sorted="true"
+            [files]="files"
+            (onOpen)="viewFile($event)">
+        </app-view-file-list>
+        </span>
+        <span *ngSwitchCase="'text/html'">
         <div *ngIf="clearUrl" align="center">
             <iframe [src]="clearUrl | safe" width="800" height="1000">
             </iframe>
@@ -227,34 +219,26 @@
         <a [download]="name" [href]="clearUrl | safe" class="app-link">
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
         </div>
-        <div class="app-search-view-files">
-            <div *ngFor="let item of files">
-            <md-icon class="md-10" (click)="viewFile(item)">{{item.icon}}</md-icon>
-                <b><span (click)="viewFile(item)">{{item.name}}</span></b>;&nbsp;
-            </div>
+        <app-view-file-list
+            sorted="true"
+            [files]="files"
+            (onOpen)="viewFile($event)">
+        </app-view-file-list>
         </div>
-    </span>
-    <span *ngSwitchCase="'text/xml'">
+        </span>
+        <span *ngSwitchCase="'text/xml'">
         <div class="app-view-content">
             <pre class="app-pre-break">
             {{data}}
             </pre>
         </div>
-        <div class="app-search-view-files">
-            <md-list class="md-dense" flex>
-            <md-toolbar layout="row" class="md-hue-3">
-             <div class="md-toolbar-tools">
-                <span><md-icon>folder_open</md-icon> Files</span>
-              </div>
-            </md-toolbar>
-            <md-list-item *ngFor="let item of files" class="md-1-line" (click)="viewFile(item)">
-              <md-icon>{{item.icon}}</md-icon>
-              <p>{{item.name}}</p>
-            </md-list-item>
-            </md-list>
-        </div>
-    </span>
-    <span *ngSwitchDefault>
+        <app-view-file-list
+            sorted="true"
+            [files]="files"
+            (onOpen)="viewFile($event)">
+        </app-view-file-list>
+        </span>
+        <span *ngSwitchDefault>
     <div align="center">
         <a [href]="clearUrl | safe" target="_blank" class="app-link">
         <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
@@ -262,9 +246,11 @@
         <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
       </div>
     </span>
-</span>
-</md-card-content>
-<md-card-footer>
-   <a href="#top"><md-icon class="md-24">arrow_upward</md-icon></a>
- </md-card-footer>
+        </span>
+    </md-card-content>
+    <md-card-footer>
+        <a href="#top">
+            <md-icon class="md-24">arrow_upward</md-icon>
+        </a>
+    </md-card-footer>
 </md-card>

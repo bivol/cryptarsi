@@ -13,6 +13,7 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { AppSanitizerPipe } from '../app-sanitizer-pipe/app-sanitizer-pipe';
 import { AppDbService } from '../app-db-service/app-db-service';
 import { AppViewFileListComponent } from '../app-view-file-list/app-view-file-list.component';
+import { AppViewFileAudioComponent } from '../app-view-file-audio/app-view-file-audio.component';
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { MaterialModule } from '@angular/material';
         AppViewFileComponent,
         AppDialogComponent,
         AppViewFileListComponent,
+        AppViewFileAudioComponent,
         AppSanitizerPipe,
         PdfViewerComponent
     ],

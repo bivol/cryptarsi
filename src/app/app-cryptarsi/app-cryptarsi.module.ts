@@ -16,6 +16,7 @@ import { AppViewFileListComponent } from '../app-view-file-list/app-view-file-li
 import { AppViewFileAudioComponent } from '../app-view-file-audio/app-view-file-audio.component';
 import { AppViewFileVideoComponent } from '../app-view-file-video/app-view-file-video.component';
 import { AppViewFileImageComponent } from '../app-view-file-image/app-view-file-image.component';
+import { AppViewFilePdfComponent } from '../app-view-file-pdf/app-view-file-pdf.component';
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MaterialModule } from '@angular/material';
         AppViewFileAudioComponent,
         AppViewFileVideoComponent,
         AppViewFileImageComponent,
+        AppViewFilePdfComponent,
         AppSanitizerPipe,
         PdfViewerComponent
     ],

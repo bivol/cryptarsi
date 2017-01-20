@@ -4,130 +4,95 @@
     <md-card-content>
 
         <span [ngSwitch]="type">
-    <span *ngSwitchCase="'application/pdf'">
-        <div align="center">
-            <md-icon class="md-36" md-tooltip="Previous page" tooltip-position="above" (click)="prevPage()">fast_rewind</md-icon>
-            <input
-                type="number" placeholder="Page"
-                [(ngModel)]="page"
-                min="1" max="1000" maxlength="4"
-            >
-            <md-icon class="md-36" md-tooltip="Next page" tooltip-position="after" (click)="nextPage()">fast_forward</md-icon>
-        </div>
-
-        <div *ngIf="clearUrl" align="center">
-            <pdf-viewer [src]="clearUrl"
-                        [page]="page"
-                        [original-size]="true"
-                        [zoom]="1.5"
-                        [render-text]="false"
-                        style="display: block; z-index: 1"
-            ></pdf-viewer>
-        </div>
-        <div align="center">
-            <md-icon class="md-36" md-tooltip="Previous page" tooltip-position="above" (click)="prevPage()">fast_rewind</md-icon>
-            <input
-                type="number" placeholder="Page"
-                [(ngModel)]="page"
-                min="1" max="1000" maxlength="4"
-            >
-            <md-icon class="md-36" md-tooltip="Next page" tooltip-position="after" (click)="nextPage()">fast_forward</md-icon>
-        </div>
-        <BR>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Open in new window" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-      </span>
-
+            <span *ngSwitchCase="'application/pdf'">
+                <app-view-file-pdf [name]="name" [data]="clearUrl" [type]="type"></app-view-file-pdf>
+            </span>
         <span *ngSwitchCase="'image/gif'">
-            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
-        </span>
+                <app-view-file-image [name]="name" [data]="clearUrl" [type]="type"></app-view-file-image>
+            </span>
         <span *ngSwitchCase="'image/jpeg'">
-            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
-        </span>
+                <app-view-file-image [name]="name" [data]="clearUrl" [type]="type"></app-view-file-image>
+            </span>
         <span *ngSwitchCase="'image/pjpeg'">
-            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
-        </span>
+                <app-view-file-image [name]="name" [data]="clearUrl" [type]="type"></app-view-file-image>
+            </span>
         <span *ngSwitchCase="'image/png'">
-            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
-        </span>
+                <app-view-file-image [name]="name" [data]="clearUrl" [type]="type"></app-view-file-image>
+            </span>
         <span *ngSwitchCase="'video/mpeg'">
-            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
-        </span>
+                <app-view-file-video [name]="name" [data]="clearUrl" [type]="type"></app-view-file-video>
+            </span>
         <span *ngSwitchCase="'video/ogg'">
-            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
-        </span>
+                <app-view-file-video [name]="name" [data]="clearUrl" [type]="type"></app-view-file-video>
+            </span>
         <span *ngSwitchCase="'video/mp4'">
-            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
-        </span>
+                <app-view-file-video [name]="name" [data]="clearUrl" [type]="type"></app-view-file-video>
+            </span>
         <span *ngSwitchCase="'video/webm'">
-            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
-        </span>
+                <app-view-file-video [name]="name" [data]="clearUrl" [type]="type"></app-view-file-video>
+            </span>
         <span *ngSwitchCase="'audio/mp3'">
-            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
-        </span>
+                <app-view-file-audio [name]="name" [data]="clearUrl" [type]="type"></app-view-file-audio>
+            </span>
         <span *ngSwitchCase="'audio/wav'">
-            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
-        </span>
+                <app-view-file-audio [name]="name" [data]="clearUrl" [type]="type"></app-view-file-audio>
+            </span>
         <span *ngSwitchCase="'audio/ogg'">
-            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
-        </span>
+                <app-view-file-audio [name]="name" [data]="clearUrl" [type]="type"></app-view-file-audio>
+            </span>
         <span *ngSwitchCase="'text/plain'">
-        <div class="app-view-content">
-            <pre class="app-pre-break">
-            {{data}}
-            </pre>
-        </div>
-        <app-view-file-list
-            sorted="true"
-            header="true"
-            [files]="files"
-            (onOpen)="viewFile($event)">
-        </app-view-file-list>
-        </span>
+                <div class="app-view-content">
+                    <pre class="app-pre-break">
+                    {{data}}
+                    </pre>
+                </div>
+                <app-view-file-list
+                    sorted="true"
+                    header="true"
+                    [files]="files"
+                    (onOpen)="viewFile($event)">
+                </app-view-file-list>
+            </span>
         <span *ngSwitchCase="'text/html'">
-        <div *ngIf="clearUrl" align="center">
-            <iframe [src]="clearUrl | safe" width="800" height="1000">
-            </iframe>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-        <app-view-file-list
-            sorted="true"
-            header="true"
-            [files]="files"
-            (onOpen)="viewFile($event)">
-        </app-view-file-list>
-        </span>
+                <div *ngIf="clearUrl" align="center">
+                    <iframe [src]="clearUrl | safe" width="800" height="1000">
+                    </iframe>
+                </div>
+                <br>
+                <div align="center">
+                <a [href]="clearUrl | safe" target="_blank" class="app-link">
+                <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+                <a [download]="name" [href]="clearUrl | safe" class="app-link">
+                <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+                </div>
+                <app-view-file-list
+                    sorted="true"
+                    header="true"
+                    [files]="files"
+                    (onOpen)="viewFile($event)">
+                </app-view-file-list>
+            </span>
         <span *ngSwitchCase="'text/xml'">
-        <div class="app-view-content">
-            <pre class="app-pre-break">
-            {{data}}
-            </pre>
-        </div>
-        <app-view-file-list
-            sorted="true"
-            header="true"
-            [files]="files"
-            (onOpen)="viewFile($event)">
-        </app-view-file-list>
-        </span>
+                <div class="app-view-content">
+                    <pre class="app-pre-break">
+                    {{data}}
+                    </pre>
+                </div>
+                <app-view-file-list
+                    sorted="true"
+                    header="true"
+                    [files]="files"
+                    (onOpen)="viewFile($event)">
+                </app-view-file-list>
+            </span>
         <span *ngSwitchDefault>
-    <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-      </div>
-    </span>
+                <div align="center">
+                    <a [href]="clearUrl | safe" target="_blank" class="app-link">
+                    <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
+                    <a [download]="name" [href]="clearUrl | safe" class="app-link">
+                    <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+                </div>
+            </span>
         </span>
     </md-card-content>
     <md-card-footer>

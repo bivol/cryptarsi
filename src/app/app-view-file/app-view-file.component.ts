@@ -47,7 +47,7 @@ export class AppViewFileComponent implements OnInit {
                     this.data = s;
                 }
                 let Uint8 = TarTools.stringToUint8(s);
-                //console.log('My Uint8 is', Uint8);
+                console.log('My Uint8 is', Uint8);
                 this.clearUrl = window.URL.createObjectURL(new Blob([Uint8], { type: this.type }));
             })
             .catch((e) => {
@@ -69,22 +69,5 @@ export class AppViewFileComponent implements OnInit {
     downloadFile() {
         window.open(this.clearUrl, '_new');
     }
-
-    prevPage() {
-        this.page = Math.max(--this.page, 1);
-    }
-
-    nextPage() {
-        this.page = Math.min(++this.page, 999);
-    }
-
-    zoomIn() {
-        this.zoom = Math.max((this.zoom + 0.1), 1);
-    }
-
-    zoomOut() {
-        this.zoom = Math.max((this.zoom - 0.1), 0.1);
-    }
-
 }
 

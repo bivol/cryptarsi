@@ -73,11 +73,11 @@ export class AppSearchPageComponent implements OnInit {
                     this._snackbar.open('Your encryption key is probably wrong', 'OK');
                 }
             }).catch((e) => {
-                log('Cannot open the db', e);
+                log('(1) Cannot open the db', e);
                 this._snackbar.open('Cannot read the database', 'OK');
             });
         }).catch((e) => {
-            log('Cannot open the db', e);
+            log('(2) Cannot open the db', e);
             this._snackbar.open('Cannot open the database', 'OK');
         });
     }

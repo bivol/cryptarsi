@@ -11,6 +11,7 @@ export class AppViewFileListComponent implements OnInit {
     @Input() files;
     @Input() limit;
     @Input() sorted;
+    @Input() header;
     @Output() onOpen = new EventEmitter();
 
     filelist = [];

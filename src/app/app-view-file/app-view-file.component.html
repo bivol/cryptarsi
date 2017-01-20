@@ -203,6 +203,7 @@
         </div>
         <app-view-file-list
             sorted="true"
+            header="true"
             [files]="files"
             (onOpen)="viewFile($event)">
         </app-view-file-list>
@@ -221,10 +222,10 @@
         </div>
         <app-view-file-list
             sorted="true"
+            header="true"
             [files]="files"
             (onOpen)="viewFile($event)">
         </app-view-file-list>
-        </div>
         </span>
         <span *ngSwitchCase="'text/xml'">
         <div class="app-view-content">
@@ -234,6 +235,7 @@
         </div>
         <app-view-file-list
             sorted="true"
+            header="true"
             [files]="files"
             (onOpen)="viewFile($event)">
         </app-view-file-list>

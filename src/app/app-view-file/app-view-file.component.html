@@ -43,124 +43,37 @@
       </span>
 
         <span *ngSwitchCase="'image/gif'">
-        <div *ngIf="clearUrl" align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-            <img [src]='clearUrl | safe' [width]='400'>
-            </a>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon>
-        </a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon>
-        </a>
-        </div>
-    </span>
+            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
+        </span>
         <span *ngSwitchCase="'image/jpeg'">
-        <div *ngIf="clearUrl" align="center">
-            <a [href]="clearUrl | safe" target="_blank" class="app-link">
-            <img [src]='clearUrl | safe' [width]='400' md-tooltip="Click for full size" tooltip-position="after"></a>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
+        </span>
         <span *ngSwitchCase="'image/pjpeg'">
-        <div *ngIf="clearUrl">
-          <a [href]="clearUrl | safe" target="_blank" class="app-link">
-            <img [src]='clearUrl | safe' [width]='400'>
-          </a>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
+        </span>
         <span *ngSwitchCase="'image/png'">
-        <div *ngIf="clearUrl">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-            <img [src]='clearUrl | safe' [width]='400'>
-        </a>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-image [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-image>
+        </span>
         <span *ngSwitchCase="'video/mpeg'">
-        <div *ngIf="clearUrl" align="center">
-            <video controls>
-                <source [src]='clearUrl | safe' [type]='type'>
-            </video>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
+        </span>
         <span *ngSwitchCase="'video/ogg'">
-        <div *ngIf="clearUrl">
-            <video controls>
-                <source [src]='clearUrl | safe' [type]='type'>
-            </video>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
+        </span>
         <span *ngSwitchCase="'video/mp4'">
-        <div *ngIf="clearUrl" align="center">
-            <video controls>
-                <source [src]='clearUrl | safe' [type]='type'>
-            </video>
-        </div>
-        <br>
-        <div align="center">
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
-        </div>
-    </span>
+            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
+        </span>
         <span *ngSwitchCase="'video/webm'">
-        <div *ngIf="clearUrl" align="center">
-            <video controls>
-                <source [src]='clearUrl | safe' [type]='type'>
-            </video>
-        </div>
-        <br>
-        <a [href]="clearUrl | safe" target="_blank" class="app-link">
-        <md-icon class="md-36" md-tooltip="View" tooltip-position="below">visibility</md-icon></a>
-        <a [download]="name" [href]="clearUrl | safe" class="app-link">
-        <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+            <app-view-file-video [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-video>
         </span>
         <span *ngSwitchCase="'audio/mp3'">
-        <app-view-file-audio data="cleanUrl"></app-view-file-audio>
+            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
         </span>
         <span *ngSwitchCase="'audio/wav'">
-        <app-view-file-audio data="cleanUrl"></app-view-file-audio>
+            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
         </span>
         <span *ngSwitchCase="'audio/ogg'">
-        <app-view-file-audio data="cleanUrl"></app-view-file-audio>
+            <app-view-file-audio [name]="name" [data]="cleanUrl" [type]="type"></app-view-file-audio>
         </span>
         <span *ngSwitchCase="'text/plain'">
         <div class="app-view-content">

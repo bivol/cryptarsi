@@ -8,4 +8,6 @@ import { Component, Input } from '@angular/core';
 })
 export class AppViewFileAudioComponent {
     @Input() data;
+    @Input() type;
+    @Input() name;
 }

@@ -7,8 +7,8 @@
         <pre class="app-pre-break">{{content}}</pre>
     </md-card-content>
     <md-toolbar layout="row" class="md-hue-3">
-        <div class="md-toolbar-tools">
-            <span (click)="viewFile()">More...</span>
+        <div class="md-toolbar-tools app-search-line" (click)="viewFile()">
+            <span>More...</span>
         </div>
     </md-toolbar>
     <app-view-file-list limit=5 [files]="files" (onOpen)="viewFile($event)">

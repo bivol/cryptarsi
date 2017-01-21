@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { Dialog } from '../app-dialog/app-dialog.component';
 import { MdDialog, MdSnackBar } from '@angular/material';
+//import { DB } from '../cryptarsi/Database';
 import { Search } from '../cryptarsi/Search';
 import { ExportDB } from '../cryptarsi/ExportDB';
 import { log } from '../cryptarsi/log';
@@ -53,7 +54,7 @@ export class AppSearchPageComponent implements OnInit {
                     this.open = true;
                     this.srch = new Search(this.db);
                     // Dirty hack to display the files list first
-                    this.results = [];
+                  /*  this.results = [];
                     this.searchWorking = false;
                     this.srch.searchRule('cryptarsi all files', (index, data) => {
                     this.results.push({
@@ -67,7 +68,7 @@ export class AppSearchPageComponent implements OnInit {
                     this.searchWorking = false;
                     }).catch(() => {
                     this.searchWorking = false;
-                    });
+                    }); */
                     // Dirty hack ends
                 } else {
                     this._snackbar.open('Your encryption key is probably wrong', 'OK');
@@ -122,8 +123,17 @@ export class AppSearchPageComponent implements OnInit {
                 db: this.db,
                 query: this.searchInput.value
             });
+<<<<<<< Updated upstream
         }).then(() => this.searchWorking = false )
         .catch(() => this.searchWorking = false );
+=======
+        }).then(() => {
+            this.searchWorking = false;
+        }).catch(() => {
+            this.searchWorking = false;
+        });
+        this.selectedTab = 0;
+>>>>>>> Stashed changes
     }
 
      cryptarsifiles() {
@@ -143,6 +153,7 @@ export class AppSearchPageComponent implements OnInit {
         }).catch(() => {
             this.searchWorking = false;
         });
+        this.selectedTab = 0;
     }
 
     selectTab(e) {

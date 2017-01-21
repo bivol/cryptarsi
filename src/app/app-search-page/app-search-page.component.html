@@ -45,7 +45,7 @@
                         >
                         </md-input>
                         &nbsp;
-                        <button md-raised-button (click)="search()">
+                        <button md-raised-button (click)="search();selectTab(selectedTab)">
                         <md-icon class="md-24">search</md-icon> Search
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                         </button>

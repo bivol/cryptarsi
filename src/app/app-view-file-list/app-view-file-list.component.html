@@ -5,6 +5,7 @@
                 <span><md-icon>folder_open</md-icon> Files</span>
             </div>
         </md-toolbar>
+<<<<<<< Updated upstream
         <span *ngIf="!sorted">
             <md-list-item *ngFor="let item of filelist " class="md-1-line app-view-file-line " (click)="viewFile(item)">
                 <md-icon>{{item.icona}}</md-icon>
@@ -20,5 +21,11 @@
                 </md-list-item>
             </div>
         </span>
+=======
+        <md-list-item *ngFor="let item of filelist " class="md-1-line app-view-file-line " (click)="viewFile(item) ">
+            <md-icon>{{item.icona}}</md-icon>
+            <p>{{item.name}}</p>
+        </md-list-item>
+>>>>>>> Stashed changes
     </md-list>
 </div>

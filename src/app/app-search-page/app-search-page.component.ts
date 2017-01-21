@@ -123,17 +123,10 @@ export class AppSearchPageComponent implements OnInit {
                 db: this.db,
                 query: this.searchInput.value
             });
-<<<<<<< Updated upstream
         }).then(() => this.searchWorking = false )
         .catch(() => this.searchWorking = false );
-=======
-        }).then(() => {
-            this.searchWorking = false;
-        }).catch(() => {
-            this.searchWorking = false;
-        });
         this.selectedTab = 0;
->>>>>>> Stashed changes
+
     }
 
      cryptarsifiles() {

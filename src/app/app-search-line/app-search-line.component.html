@@ -11,7 +11,11 @@
             <span>More...</span>
         </div>
     </md-toolbar>
-    <app-view-file-list limit=100 sorted=0 [files]="files" (onOpen)="viewFile($event)">
+     <app-view-file-list
+                    sorted="true"
+                    header="true"
+                    [files]="files"
+                    (onOpen)="viewFile($event)">
     </app-view-file-list>
     <md-card-footer>
         <a href="#top">

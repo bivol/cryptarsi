@@ -122,11 +122,8 @@ export class AppSearchPageComponent implements OnInit {
                 db: this.db,
                 query: this.searchInput.value
             });
-        }).then(() => {
-            this.searchWorking = false;
-        }).catch(() => {
-            this.searchWorking = false;
-        });
+        }).then(() => this.searchWorking = false )
+        .catch(() => this.searchWorking = false );
     }
 
      cryptarsifiles() {

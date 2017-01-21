@@ -5,9 +5,20 @@
                 <span><md-icon>folder_open</md-icon> Files</span>
             </div>
         </md-toolbar>
-        <md-list-item *ngFor="let item of filelist " class="md-1-line app-view-file-line " (click)="viewFile(item) ">
-            <md-icon>{{item.icon}}</md-icon>
-            <p>{{item.name}}</p>
-        </md-list-item>
+        <span *ngIf="!sorted">
+            <md-list-item *ngFor="let item of filelist " class="md-1-line app-view-file-line " (click)="viewFile(item)">
+                <md-icon>{{item.icona}}</md-icon>
+                <p>{{item.name}}</p>
+            </md-list-item>
+        </span>
+        <span *ngIf="sorted">
+            <div *ngFor="let type of types" class="">
+                {{type}}<br>
+                <md-list-item *ngFor="let item of sortedlist[type] " class="md-1-line app-view-file-line " (click)="viewFile(item)">
+                    <md-icon>{{item.icona}}</md-icon>
+                    <p>{{item.name}}</p>
+                </md-list-item>
+            </div>
+        </span>
     </md-list>
 </div>

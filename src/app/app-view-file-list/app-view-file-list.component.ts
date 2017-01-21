@@ -1,8 +1,21 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+let IconMap = {
+    'audio/mp3': 'volume_down',
+    'audio/ogg': 'volume_down',
+    'audio/wav': 'volume_down',
+    'image/jpeg': 'image',
+    'image/png': 'image',
+    'image/gif': 'image',
+    'video/mp4': 'videocam',
+    'video/avi': 'videocam',
+    'video/mpeg': 'videocam',
+    'video/webm': 'videocam',
+    'application/pdf': 'format_align_left'
+};
+
 @Component({
-    //moduleId: module.id,
     selector: 'app-view-file-list',
     templateUrl: './app-view-file-list.component.html',
     styleUrls: ['./app-view-file-list.component.css']
@@ -15,6 +28,8 @@ export class AppViewFileListComponent implements OnInit, OnChanges {
     @Output() onOpen = new EventEmitter();
 
     filelist = [];
+    sortedlist = {};
+    types = [];
 
     constructor(public sanitizer: DomSanitizer) {
     }
@@ -25,15 +40,14 @@ export class AppViewFileListComponent implements OnInit, OnChanges {
         this.filelist = this.files.slice(); // Make a copy
         if (this.sorted) {
             console.log('sorting');
-            this.filelist = this.files
-                .slice()
-                .sort((a, b) => {
-                    let n = a.type + a.name;
-                    let m = b.type + b.name;
-                    if (n === m) { return 0; }
-                    if (n > m) { return 1; }
-                    return -1;
-                }); // Sort by type
+            this.filelist = this.files.slice().sort((a, b) => {
+                let [n, m] = [a.type + a.name, b.type + b.name];
+                return (n < m) ? -1 : (n > m);
+            }); // Sort by type
+            let x = {};
+            this.filelist.forEach((n) => (x[n.type] && x[n.type].push(n)) || (x[n.type] = [n]));
+            this.sortedlist = x;
+            this.types = Object.keys(x);
         } else {
             this.filelist = this.files;
         }
@@ -42,29 +56,8 @@ export class AppViewFileListComponent implements OnInit, OnChanges {
             this.filelist = this.filelist.slice(0, this.limit);
         }
         this.filelist.forEach((n) => {
-            let icona = 'format_align_left';
-            switch (n.type) {
-                case 'audio/mp3':
-                case 'audio/ogg':
-                case 'audio/wav':
-                    icona = 'volume_down';
-                    break;
-                case 'image/jpeg':
-                case 'image/png':
-                case 'image/gif':
-                    icona = 'image';
-                    break;
-                case 'video/mp4':
-                case 'video/avi':
-                case 'video/mpeg':
-                case 'video/webm':
-                    icona = 'videocam';
-                    break;
-                case 'application/pdf':
-                    icona = 'format_align_left';
-                    break;
-            }
-            n.icona = icona;
+            console.log('imap', n.type, IconMap[n.type], IconMap);
+            n.icona = IconMap[n.type] || 'format_align_left';
         });
         console.log('filelist', this.filelist);
     }

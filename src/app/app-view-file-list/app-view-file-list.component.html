@@ -10,7 +10,18 @@
             <div *ngFor="let type of types" class="">
             <md-toolbar *ngIf="header" layout=" row " class="md-hue-3 ">
             <div class="md-toolbar-tools ">
-                <span><md-icon>folder_open</md-icon> Files {{type}}</span>
+                <span *ngIf="type == 'application/pdf'"><md-icon>format_align_left</md-icon> PDF Files</span>
+                <span *ngIf="type == 'audio/ogg'"><md-icon>volume_down</md-icon> Audio OGG Files</span>
+                <span *ngIf="type == 'audio/mp3'"><md-icon>volume_down</md-icon> Audio MP3 Files</span>
+                <span *ngIf="type == 'audio/wav'"><md-icon>volume_down</md-icon> Audio WAV Files</span>
+                <span *ngIf="type == 'image/jpeg'"><md-icon>image</md-icon> Image JPG Files</span>
+                <span *ngIf="type == 'image/png'"><md-icon>image</md-icon> Image PNG Files</span>
+                <span *ngIf="type == 'image/png'"><md-icon>image</md-icon> Image GIF Files</span>
+                <span *ngIf="type == 'video/mp4'"><md-icon>videocam</md-icon> Video MP4 Files</span>
+                <span *ngIf="type == 'video/avi'"><md-icon>videocam</md-icon> Video AVI Files</span>
+                <span *ngIf="type == 'video/mpeg'"><md-icon>videocam</md-icon> Video MPEG Files</span>
+                <span *ngIf="type == 'video/webm'"><md-icon>videocam</md-icon> Video WEBM Files</span>
+                <span *ngIf="type == 'text/plain'"><md-icon>format_align_left</md-icon> Text Files</span>
             </div>
         </md-toolbar>
                 <md-list-item *ngFor="let item of sortedlist[type] " class="md-1-line app-view-file-line " (click)="viewFile(item)">

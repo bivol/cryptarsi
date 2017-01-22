@@ -3,14 +3,9 @@
     <md-card-title class="md-hue-3">
         <div class="md-toolbar-tools">{{filename}}</div>
     </md-card-title>
-    <md-card-content class="md-body-1">
-        <pre class="app-pre-break">{{content}}</pre>
+    <md-card-content class="md-body-1" (click)="viewFile()">
+        <pre class="app-pre-break">{{content}} (click for more)</pre>
     </md-card-content>
-    <md-toolbar layout="row" class="md-hue-3">
-        <div class="md-toolbar-tools app-search-line" (click)="viewFile()">
-            <span>More...</span>
-        </div>
-    </md-toolbar>
      <app-view-file-list
                     sorted="true"
                     header="true"

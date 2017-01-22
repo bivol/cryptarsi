@@ -2,17 +2,20 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChange
 import { DomSanitizer } from '@angular/platform-browser';
 
 let IconMap = {
-    'audio/mp3': 'volume_down',
-    'audio/ogg': 'volume_down',
-    'audio/wav': 'volume_down',
-    'image/jpeg': 'image',
-    'image/png': 'image',
-    'image/gif': 'image',
-    'video/mp4': 'videocam',
-    'video/avi': 'videocam',
-    'video/mpeg': 'videocam',
-    'video/webm': 'videocam',
-    'application/pdf': 'format_align_left'
+    'audio/mp3': 'fa fa-file-audio-o',
+    'audio/ogg': 'fa fa-file-audio-o',
+    'audio/wav': 'fa fa-file-audio-o',
+    'image/jpeg': 'fa fa-file-picture-o',
+    'image/png': 'fa fa-file-picture-o',
+    'image/gif': 'fa fa-file-picture-o',
+    'video/mp4': 'fa fa-file-video-o',
+    'video/avi': 'fa fa-file-video-o',
+    'video/mpeg': 'fa fa-file-video-o',
+    'video/webm': 'fa fa-file-video-o',
+    'application/pdf': 'fa fa-file-pdf-o',
+    'text/plain': 'fa fa-file-text-o',
+    'text/html': 'fa fa-file-code-o',
+    'text/xml': 'fa fa-file-code-o'
 };
 
 @Component({

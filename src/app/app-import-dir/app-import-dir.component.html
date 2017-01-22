@@ -25,8 +25,8 @@
                 <br>
               <br>
             <br>
-            <button type="button" md-button color="warn" (click)="onStrongPassword()" md-tooltip="Generate new password" tooltip-position="after">
-                Generate Password
+            <button type="button" md-raised-button color="accent" (click)="onStrongPassword()" md-tooltip="Generate new password" tooltip-position="after">
+             <md-icon class="md-24">lock</md-icon> Generate Strong Password
             </button>
             &nbsp;
             <div #clearTextPassword></div>
@@ -66,7 +66,7 @@
                     webkitdirectory mozdirectory msdirectory odirectory directory
                     multiple
                     (change)="onDirChange($event)"
-                    class="app-input"
+                    class="app-file-input"
                     placeholder="Select directory"
                 >
                 </label>
@@ -79,14 +79,14 @@
                     type="file"
                     multiple
                     (change)="onDirChange($event)"
-                    class="app-input"
+                    class="app-file-input"
                     placeholder="Select file or files"
                 >
                 </label>
             </div>
             <br><br>
-            <button type="submit" md-mini-fab color="warn" (click)="menuSelected='importDir'" md-tooltip="Create new data set" tooltip-position="after">
-                <md-icon class="md-24">add</md-icon>
+            <button type="submit" md-raised-button color="warn" (click)="menuSelected='importDir'" >
+                <md-icon class="md-24">add</md-icon> Create new data set
             </button>
         </form>
         </md-card-content>

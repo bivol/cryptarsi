@@ -10,22 +10,22 @@
             <div *ngFor="let type of types" class="">
             <md-toolbar *ngIf="header" layout=" row " class="md-hue-3 ">
             <div class="md-toolbar-tools ">
-                <span *ngIf="type == 'application/pdf'"><md-icon>format_align_left</md-icon> PDF Files</span>
-                <span *ngIf="type == 'audio/ogg'"><md-icon>volume_down</md-icon> Audio OGG Files</span>
-                <span *ngIf="type == 'audio/mp3'"><md-icon>volume_down</md-icon> Audio MP3 Files</span>
-                <span *ngIf="type == 'audio/wav'"><md-icon>volume_down</md-icon> Audio WAV Files</span>
-                <span *ngIf="type == 'image/jpeg'"><md-icon>image</md-icon> Image JPG Files</span>
-                <span *ngIf="type == 'image/png'"><md-icon>image</md-icon> Image PNG Files</span>
-                <span *ngIf="type == 'image/png'"><md-icon>image</md-icon> Image GIF Files</span>
-                <span *ngIf="type == 'video/mp4'"><md-icon>videocam</md-icon> Video MP4 Files</span>
-                <span *ngIf="type == 'video/avi'"><md-icon>videocam</md-icon> Video AVI Files</span>
-                <span *ngIf="type == 'video/mpeg'"><md-icon>videocam</md-icon> Video MPEG Files</span>
-                <span *ngIf="type == 'video/webm'"><md-icon>videocam</md-icon> Video WEBM Files</span>
-                <span *ngIf="type == 'text/plain'"><md-icon>format_align_left</md-icon> Text Files</span>
+                <span *ngIf="type == 'application/pdf'"><i class="fa fa-file-pdf-o" style="font-size:36px;color:#6734BA"></i> PDF Files</span>
+                <span *ngIf="type == 'audio/ogg'"><i class="fa fa-file-audio-o" style="font-size:36px;color:#6734BA"></i> Audio OGG Files</span>
+                <span *ngIf="type == 'audio/mp3'"><i class="fa fa-file-audio-o" style="font-size:36px;color:#6734BA"></i> Audio MP3 Files</span>
+                <span *ngIf="type == 'audio/wav'"><i class="fa fa-file-audio-o" style="font-size:36px;color:#6734BA"></i> Audio WAV Files</span>
+                <span *ngIf="type == 'image/jpeg'"><i class="fa fa-file-picture-o" style="font-size:36px;color:#6734BA"></i> Image JPG Files</span>
+                <span *ngIf="type == 'image/png'"><i class="fa fa-file-picture-o" style="font-size:36px;color:#6734BA"></i> Image PNG Files</span>
+                <span *ngIf="type == 'image/png'"><i class="fa fa-file-picture-o" style="font-size:36px;color:#6734BA"></i> Image GIF Files</span>
+                <span *ngIf="type == 'video/mp4'"><i class="fa fa-file-picture-o" style="font-size:36px;color:#6734BA"></i> Video MP4 Files</span>
+                <span *ngIf="type == 'video/avi'"><i class="fa fa-file-video-o" style="font-size:36px;color:#6734BA"></i> Video AVI Files</span>
+                <span *ngIf="type == 'video/mpeg'"><i class="fa fa-file-video-o" style="font-size:36px;color:#6734BA"></i> Video MPEG Files</span>
+                <span *ngIf="type == 'video/webm'"><i class="fa fa-file-video-o" style="font-size:36px;color:#6734BA"></i> Video WEBM Files</span>
+                <span *ngIf="type == 'text/plain'"><i class="fa fa-file-text-o" style="font-size:36px;color:#6734BA"></i> Text Files</span>
             </div>
         </md-toolbar>
                 <md-list-item *ngFor="let item of sortedlist[type] " class="md-1-line app-view-file-line " (click)="viewFile(item)">
-                    <md-icon>{{item.icona}}</md-icon>
+                    <i class="{{item.icona}}" style="font-size:24px"></i>&nbsp;
                     <p>{{item.name}}</p>
                 </md-list-item>
             </div>

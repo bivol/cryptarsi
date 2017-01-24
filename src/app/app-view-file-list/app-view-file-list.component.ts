@@ -18,6 +18,23 @@ let IconMap = {
     'text/xml': 'fa fa-file-code-o'
 };
 
+let DescMap = {
+    'audio/mp3': 'MP3 Audio Files',
+    'audio/ogg': 'OGG Audio Files',
+    'audio/wav': 'WAV Audio Files',
+    'image/jpeg': 'JPG Picture Files',
+    'image/png': 'PNG Picture Files',
+    'image/gif': 'GIF Picture Files',
+    'video/mp4': 'MP4 Video Files',
+    'video/avi': 'AVI Video Files',
+    'video/mpeg': 'MPEG Video Files',
+    'video/webm': 'WEBM Video Files',
+    'application/pdf': 'PDF Files',
+    'text/plain': 'Text Files',
+    'text/html': 'HTML Files',
+    'text/xml': 'XML Files'
+};
+
 @Component({
     selector: 'app-view-file-list',
     templateUrl: './app-view-file-list.component.html',
@@ -60,7 +77,8 @@ export class AppViewFileListComponent implements OnInit, OnChanges {
         }
         this.filelist.forEach((n) => {
             console.log('imap', n.type, IconMap[n.type], IconMap);
-            n.icona = IconMap[n.type] || 'format_align_left';
+            n.icona = IconMap[n.type] || 'fa fa-file-o';
+            n.desc = DescMap[n.type] || 'Other Files';
         });
         console.log('filelist', this.filelist);
     }

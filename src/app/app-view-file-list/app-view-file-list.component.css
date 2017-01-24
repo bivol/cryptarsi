@@ -5,9 +5,11 @@
     /* display: inline-flex;*/
 }
 
-.app-view-file-line {}
+.app-view-file-line {
+  margin-left:15px;
+  }
 
 .app-view-file-line:hover {
-    background: #F0F0F0;
+    margin-left:15px;
     cursor: pointer;
 }

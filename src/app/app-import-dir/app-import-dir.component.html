@@ -18,7 +18,7 @@
             </md-input><br>
             <md-textarea
                 #description
-                rows="10"
+                rows="5"
                 cols="50"
                 placeholder="Data set description"
                 class="app-input">Enter new data set description</md-textarea>
@@ -58,7 +58,7 @@
             <br>
             <br>
             <div *ngIf="dirSelection.checked">
-                <label for=dirName>
+
                 <input
                     #dirName
                     id="dirName"
@@ -66,23 +66,24 @@
                     webkitdirectory mozdirectory msdirectory odirectory directory
                     multiple
                     (change)="onDirChange($event)"
-                    class="app-file-input"
+                    class="inputfile inputfile-1"
                     placeholder="Select directory"
                 >
-                </label>
+                <label for=dirName><i class="fa fa-upload fa-lg" aria-hidden="true"></i> <span>Choose a directory&hellip;</span></label>
             </div>
             <div *ngIf="!dirSelection.checked">
-                <label for=dirName>
+
                 <input
                     #dirName
                     id="dirName"
                     type="file"
                     multiple
                     (change)="onDirChange($event)"
-                    class="app-file-input"
+                    class="inputfile inputfile-1"
                     placeholder="Select file or files"
                 >
-                </label>
+                <label for=dirName><i class="fa fa-upload fa-lg" aria-hidden="true"></i> <span>Choose a file&hellip;</span></label>
+
             </div>
             <br><br>
             <button type="submit" md-raised-button color="warn" (click)="menuSelected='importDir'" >

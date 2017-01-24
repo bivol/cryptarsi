@@ -154,8 +154,11 @@ export class FileReaderAPI {
 
             if (file.type === 'text/plain') {
                 reader.readAsText(file, 'utf-8');
+            } else if(file.type === 'application/pdf') {
+               reader.readAsBinaryString(file); // To put there the text extraction code
+               log('This is a PDF ',file);
             } else {
-                reader.readAsBinaryString(file); // To verify
+              reader.readAsBinaryString(file); // To verify
             }
         });
     }

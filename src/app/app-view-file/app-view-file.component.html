@@ -61,9 +61,9 @@
                 <br>
                 <div align="center">
                 <a [href]="clearUrl | safe" target="_blank" class="app-link">
-                <md-icon class="md-36" md-tooltip="Listen" tooltip-position="below">volume_down</md-icon></a>
+                <md-icon class="app-link" md-tooltip="Listen" tooltip-position="before">volume_down</md-icon></a>
                 <a [download]="name" [href]="clearUrl | safe" class="app-link">
-                <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+                <md-icon color="accent" class="app-link" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
                 </div>
                 <app-view-file-list
                     sorted="true"
@@ -88,9 +88,9 @@
         <span *ngSwitchDefault>
                 <div align="center">
                     <a [href]="clearUrl | safe" target="_blank" class="app-link">
-                    <md-icon class="md-36" md-tooltip="Open" tooltip-position="below">visibility</md-icon></a>
+                    <md-icon class="app-link" md-tooltip="Open" tooltip-position="before">visibility</md-icon></a>
                     <a [download]="name" [href]="clearUrl | safe" class="app-link">
-                    <md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+                    <md-icon color="accent" class="app-link" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
                 </div>
             </span>
         </span>

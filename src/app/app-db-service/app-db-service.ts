@@ -32,10 +32,7 @@ export class AppDbService {
                     return resolve(this._dbList[name].db);
                 }
                 return this.close(name)
-                    .then(() => {
-                        log('We successfuly closed the Database');
-                        return this.open(name, key);
-                    })
+                    .then(() => this.open(name, key))
                     .then(resolve)
                     .catch(reject);
             }
@@ -45,9 +42,7 @@ export class AppDbService {
                 db: db
             };
             db.open()
-                .then(() => {
-                    resolve(db);
-                })
+                .then(() => resolve(db))
                 .catch(reject);
         });
     }
@@ -71,10 +66,9 @@ export class AppDbService {
         return new Promise((resolve, reject) => {
             if (this._dbList[name]) { // Close it first
                 return this.close(name)
-                    .then(() => this.drop(name)
-                        .then(resolve)
-                        .catch(reject)
-                    );
+                    .then(() => this.drop(name))
+                    .then(resolve)
+                    .catch(reject);
             }
             let db = new DB(name, 'xxxxxxx');
             db.drop().then(resolve).catch(reject);

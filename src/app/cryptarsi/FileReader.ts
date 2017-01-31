@@ -141,7 +141,7 @@ export class FileReaderAPI {
 
             reader.onprogress = (d) => {
                 if (d.lengthComputable) {
-                     log('file', file.name, d.loaded, d.total);
+                    log('file', file.name, d.loaded, d.total);
                     if (cb) {
                         cb(file, d.loaded, d.total);
                     }

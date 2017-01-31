@@ -226,16 +226,18 @@ export class DB {
                             }
                             if (hashQ.length === 0) {
                                 progress(1);
+                                log('Hash import is completed for', file, obj);
                                 return resolve();
                             }
                             let hash = hashQ.shift();
                             me.addIndexToHash(hash, obj.index)
                                 .then(() => {
-                                    log('Updated hash', hash, obj.index, file.name);
+                                    log('Updated hash', hash, obj.index, file.name, hashQ.length);
                                     procHash();
                                 })
                                 .catch((e) => {
-                                    log('Error inserting hash to index');
+                                    log('Error inserting hash to index', hashQ.length);
+                                    reject(); // Cancel the whole insert
                                 });
                         }
 
@@ -372,10 +374,15 @@ export class DB {
                 id: hash,
                 data: content
             };
-            this.store.add(this.indexStoreName, data).then(resolve).catch((e) => {
-                if (e.target.error.code === 0) { // Key duplication
+            this.store.add(this.indexStoreName, data)
+                .then(resolve)
+                .catch((e) => {
+                if (e.target.error.code === 0
+                    || e.target.error.name === 'ConstraintError') { // Key duplication
                     this.store.update(this.indexStoreName, data)
                         .then(resolve).catch(reject);
+                } else {
+                    log('Unknown error while hash modify', e);
                 }
             });
         });
@@ -427,13 +434,10 @@ export class DB {
                     if (ar.indexOf(index.toString()) < 0) {
                         ar.push(index.toString());
                         log('Index is added to hash', index, hash, ar);
-                        this.modifyHash(hash, ar.join(','))
-                            .then(resolve)
-                            .catch(reject);
-                    } else {
-                        resolve();
-                    }
+                        return this.modifyHash(hash, ar.join(','));
+                    } // undefined should still trigger then
                 })
+                .then(resolve)
                 .catch(reject);
         });
     }

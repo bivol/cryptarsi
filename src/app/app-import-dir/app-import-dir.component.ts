@@ -82,6 +82,7 @@ export class AppImportDirComponent {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';
+                return reject();
             }).catch(resolve);
         });
     }
@@ -90,7 +91,7 @@ export class AppImportDirComponent {
         return new Promise((resolve, reject) => {
             if (!this.validateDbName()) {
                 this.dbName.focus();
-                reject();
+                return reject();
             }
 
             if (!this.validateKeys()) {

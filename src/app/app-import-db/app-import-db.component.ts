@@ -49,6 +49,7 @@ export class AppImportDbComponent {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';
+                return resolve();
             }).catch(resolve);
         });
     }
@@ -57,7 +58,7 @@ export class AppImportDbComponent {
         return new Promise((resolve, reject) => {
             if (!this.validateDbName()) {
                 this.dbName.focus();
-                reject();
+                return reject();
             }
 
             if (!this.validateFiles()) {

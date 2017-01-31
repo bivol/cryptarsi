@@ -99,17 +99,17 @@ export class FileReaderAPI {
             function processNextFile() {
                 if (q.length === 0) {
                     //console.log('Lets add the last file');
-                    return cbfile(Object.assign({}, lonelyFileName), lonelyFileName.name + '\n' + description, hash[lonelyFileName.index]).then(() => {
-                        //console.log('The lonely index file is added');
-                        cbfile(Object.assign({}, allFileName), allFileName.name + '\n' + description, hash[allFileName.index]).then(() => {
-                            //console.log('The index file is added');
-                            resolve();
-                        }).catch(reject);
-                    }).catch(reject);
+                    return cbfile(Object.assign({}, lonelyFileName), lonelyFileName.name + '\n' + description, hash[lonelyFileName.index])
+                        .then(() => {
+                            //console.log('The lonely index file is added');
+                            return cbfile(Object.assign({}, allFileName), allFileName.name + '\n' + description, hash[allFileName.index]);
+                        })
+                        .then(resolve)
+                        .catch(reject);
                 }
                 let file = q.shift();
                 me.readFile(file, (file, l, t) => {
-                     log('file - 2', file.name, loaded, total);
+                    log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
                         cbprogress(file, loaded + l, total, cnt, files.length + 1, l);
                     }
@@ -120,8 +120,7 @@ export class FileReaderAPI {
                     if (cbfile) {
                         return cbfile(file, text, hash[nindex[file.name]]);
                     } else {
-                        //processNextFile();
-                        return;
+                        return; // Empty return still trigger the next then, so it acts like processNextFile
                     }
                 }).then(() => processNextFile()).catch(reject);
             }

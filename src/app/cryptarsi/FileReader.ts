@@ -114,19 +114,16 @@ export class FileReaderAPI {
                         cbprogress(file, loaded + l, total, cnt, files.length + 1, l);
                     }
                 }).then((text) => {
-                     log('File', file.name, 'loaded');
+                    log('File', file.name, 'loaded');
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
-                        cbfile(file, text, hash[nindex[file.name]])
-                            .then(() => {
-                                processNextFile();
-                            })
-                            .catch(reject);
+                        return cbfile(file, text, hash[nindex[file.name]]);
                     } else {
-                        processNextFile();
+                        //processNextFile();
+                        return;
                     }
-                }).catch(reject);
+                }).then(() => processNextFile()).catch(reject);
             }
 
             processNextFile();

@@ -21,7 +21,7 @@ export class ImportDB {
             this.store.open().then(() => {
                 console.log('Starting the import');
 
-                r.readAll(files, (f, text, obj) => {
+                return r.readAll(files, (f, text, obj) => {
                     console.log('Downloaded', f.name, f.type, obj);
                     return new Promise((res, rej) => {
                         let tar = new Tar();
@@ -62,8 +62,8 @@ export class ImportDB {
                    // console.log('insert ok', f, pos, total);
                         progress(f, loaded, total, 'Downloading file');
                     }
-                }).then(resolve).catch(reject);
-            }).catch(reject);
+                });
+            }).then(resolve).catch(reject);
         });
     }
 }

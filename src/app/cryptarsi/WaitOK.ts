@@ -1,4 +1,4 @@
-import { log } from '../log';
+import { log } from './log';
 import { Config } from './Config';
 
 export function WaitOK(f: any, wait = Config.waitTime, retry = Config.waitRetry) {

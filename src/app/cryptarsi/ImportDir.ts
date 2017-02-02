@@ -1,7 +1,7 @@
 import { FileReaderAPI } from './FileReader';
 import { DB } from './Database';
 import { WordHash } from './Hash';
-import { log } from '../log';
+import { log } from './log';
 
 export class ImportDir {
     store: DB = null;
@@ -23,7 +23,7 @@ export class ImportDir {
                 let gTotalcnt = 0;
                 let gL = 0;
 
-                r.readAll(files, (f, text, obj) => {
+                return r.readAll(files, (f, text, obj) => {
                     log('Downloaded', f.name, f.type, obj);
                     lastIndex = Math.max(obj.index, lastIndex);
 
@@ -40,12 +40,8 @@ export class ImportDir {
                         gL = l;
                         progress(f, (loaded - l) * 3 + l, total * 3, count, totalcnt);
                     }
-                }, this.description).then(() => {
-                    this.store.setNextIndex(lastIndex)
-                        .then(resolve)
-                        .catch(reject);
-                }).catch(reject);
-            }).catch(reject);
+                }, this.description).then(() => this.store.setNextIndex(lastIndex));
+            }).then(resolve).catch(reject);
         });
     }
 }

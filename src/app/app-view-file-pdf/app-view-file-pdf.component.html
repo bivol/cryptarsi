@@ -1,0 +1,22 @@
+<div align="center">
+    <span>
+    <i class="fa fa-backward app-link" aria-hidden="true" (click)="prevPage()"></i>
+     <input class="app-input" type="number" placeholder="Page" [(ngModel)]="page" min="1" max="1000" maxlength="4">
+    <i class="fa fa-forward app-link" aria-hidden="true" (click)="nextPage()"></i>
+    </span>
+</div>
+
+<div *ngIf="data" align="center">
+    <pdf-viewer [src]="data" [page]="page" [original-size]="true" [zoom]="1.5" [render-text]="false" style="display: block; z-index: 1"></pdf-viewer>
+</div>
+<div align="center">
+    <i class="fa fa-backward app-link" aria-hidden="true" (click)="prevPage()"></i>
+     <input class="app-input" type="number" placeholder="Page" [(ngModel)]="page" min="1" max="1000" maxlength="4">
+    <i class="fa fa-forward app-link" aria-hidden="true" (click)="nextPage()"></i>
+</div>
+<BR>
+<div align="center">
+    <a [href]="data | safe" target="_blank" class="app-link"><md-icon class="md-36" md-tooltip="Open in new window" tooltip-position="before">visibility</md-icon></a>
+
+    <a [download]="name" [href]="data | safe" class="app-link"><md-icon class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+</div>

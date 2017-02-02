@@ -1,6 +1,6 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MdInput, MdSnackBar } from '@angular/material';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { ImportDB } from '../cryptarsi/ImportDB';
 import { AppDbService } from '../app-db-service/app-db-service';
 
@@ -49,6 +49,7 @@ export class AppImportDbComponent {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';
+                return resolve();
             }).catch(resolve);
         });
     }
@@ -57,7 +58,7 @@ export class AppImportDbComponent {
         return new Promise((resolve, reject) => {
             if (!this.validateDbName()) {
                 this.dbName.focus();
-                reject();
+                return reject();
             }
 
             if (!this.validateFiles()) {

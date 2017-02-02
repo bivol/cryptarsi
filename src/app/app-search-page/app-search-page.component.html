@@ -44,13 +44,14 @@
                             (keyup.enter)="search()"
                         >
                         </md-input>
-                        &nbsp;<br>
-                        <button md-raised-button (click)="search()">
+                        &nbsp;
+                        <button md-raised-button (click)="search();selectTab(selectedTab)">
                         <md-icon class="md-24">search</md-icon> Search
                         <md-spinner *ngIf="searchWorking" class="app-spinner"></md-spinner>
                         </button>
+                        <br>
                         <button md-raised-button (click)="cryptarsifiles()">
-                        <md-icon class="md-24">list</md-icon> Show files
+                        <md-icon class="md-24">list</md-icon> Files list
                         </button>
                     <span *ngIf="results.length > 0" class="md-body-2">
                     <br>
@@ -71,7 +72,7 @@
         <md-tab>
         <template md-tab-label>
             <button md-button disabled>
-                    <md-icon class="md-24">list</md-icon>
+                    <i class="fa fa-th-list" style="font-size:24px;color:#6734BA"></i>&nbsp;
                     Results
             </button>
          </template>
@@ -96,9 +97,9 @@
         </md-tab>
         <md-tab *ngFor="let tab of openTabs">
         <template md-tab-label>
-            <div class="app-search-cursor">
+            <div class="app-search-cursor" md-tooltip="{{tab.name}}" tooltip-position="above">
                 <md-icon class="md-24" (click)="closeTab(tab)">cancel</md-icon>
-                {{tab.name}}
+             {{tab.name.substr(0, 20)}}...&nbsp;<i class="{{tab.icona}}" style="font-size:24px;color:#6734BA"></i>
             </div>
          </template>
          <div class="app-search-tab-content">

@@ -4,7 +4,7 @@ import { MdDialog, MdSnackBar } from '@angular/material';
 //import { DB } from '../cryptarsi/Database';
 import { Search } from '../cryptarsi/Search';
 import { ExportDB } from '../cryptarsi/ExportDB';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({
@@ -54,7 +54,7 @@ export class AppSearchPageComponent implements OnInit {
                     this.open = true;
                     this.srch = new Search(this.db);
                     // Dirty hack to display the files list first
-                    this.results = [];
+                  /*  this.results = [];
                     this.searchWorking = false;
                     this.srch.searchRule('cryptarsi all files', (index, data) => {
                     this.results.push({
@@ -68,17 +68,17 @@ export class AppSearchPageComponent implements OnInit {
                     this.searchWorking = false;
                     }).catch(() => {
                     this.searchWorking = false;
-                    });
+                    }); */
                     // Dirty hack ends
                 } else {
                     this._snackbar.open('Your encryption key is probably wrong', 'OK');
                 }
             }).catch((e) => {
-                log('Cannot open the db', e);
+                log('(1) Cannot open the db', e);
                 this._snackbar.open('Cannot read the database', 'OK');
             });
         }).catch((e) => {
-            log('Cannot open the db', e);
+            log('(2) Cannot open the db', e);
             this._snackbar.open('Cannot open the database', 'OK');
         });
     }
@@ -123,11 +123,10 @@ export class AppSearchPageComponent implements OnInit {
                 db: this.db,
                 query: this.searchInput.value
             });
-        }).then(() => {
-            this.searchWorking = false;
-        }).catch(() => {
-            this.searchWorking = false;
-        });
+        }).then(() => this.searchWorking = false )
+        .catch(() => this.searchWorking = false );
+        this.selectedTab = 0;
+
     }
 
      cryptarsifiles() {
@@ -147,6 +146,7 @@ export class AppSearchPageComponent implements OnInit {
         }).catch(() => {
             this.searchWorking = false;
         });
+        this.selectedTab = 0;
     }
 
     selectTab(e) {

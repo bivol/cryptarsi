@@ -1,9 +1,11 @@
 // <reference path="Jen.d.ts"/>
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MdInput, MdSnackBar } from '@angular/material';
+import { Dialog } from '../app-dialog/app-dialog.component';
+import { MdDialog, MdSnackBar } from '@angular/material';
+import { MdInput} from '@angular/material';
 import { ImportDir } from '../cryptarsi/ImportDir';
 import { Jen } from '../cryptarsi/Jen';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 import { AppDbService } from '../app-db-service/app-db-service';
 
 @Component({
@@ -32,7 +34,10 @@ export class AppImportDirComponent {
     filename: string = '';
     processing = false;
 
-    constructor(private _snackbar: MdSnackBar, private db: AppDbService) {
+    constructor(private _dialog: MdDialog,
+                private _snackbar: MdSnackBar,
+                private db: AppDbService
+               ) {
     }
 
     validateDbName(): boolean {
@@ -77,6 +82,7 @@ export class AppImportDirComponent {
                 log('DB exist');
                 this.dbName.dividerColor = 'warn';
                 this.dbName.hintLabel = 'Already exist!';
+                return reject();
             }).catch(resolve);
         });
     }
@@ -85,7 +91,7 @@ export class AppImportDirComponent {
         return new Promise((resolve, reject) => {
             if (!this.validateDbName()) {
                 this.dbName.focus();
-                reject();
+                return reject();
             }
 
             if (!this.validateKeys()) {
@@ -111,8 +117,16 @@ export class AppImportDirComponent {
         let password = j.password(15, 20, /[a-z0-9]/);
         this.encKey1.value = password;
         this.encKey2.value = password;
-        this._snackbar.open('The password is ' + password, 'Close');
-
+        let dialog = new Dialog(this._dialog);
+        log('New dialog', this._dialog);
+        dialog.open('Your password is ' + password + ' Do you wanna keep it?', (v) => {
+            log('Dialog Call back', v);
+            if (v === 'yes') {
+                this._snackbar.open('Remember! Your password is ' + password, 'Close');
+            } else {
+                this._snackbar.open('Select another password', 'OK');
+            }
+        });
     }
 
     submit() {

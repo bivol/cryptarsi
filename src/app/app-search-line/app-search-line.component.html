@@ -1,21 +1,20 @@
 <br>
-  <md-card>
-    <md-card-title class="md-hue-3"><div class="md-toolbar-tools">{{filename}}</div></md-card-title>
-    <md-card-content class="md-body-1">
-     <pre class="app-pre-break">{{content}}</pre>
+<md-card>
+    <md-card-title class="md-hue-3">
+        <div class="md-toolbar-tools">{{filename}}</div>
+    </md-card-title>
+    <md-card-content class="md-body-1" (click)="viewFile()">
+        <pre class="app-pre-break">{{content}} (click for more)</pre>
     </md-card-content>
-    <md-list class="md-dense" flex >
-    <md-toolbar layout="row" class="md-hue-3">
-      <div class="md-toolbar-tools">
-        <span (click)="viewFile()">More...</span>
-      </div>
-    </md-toolbar>
-      <md-list-item *ngFor="let item of fileslist" class="md-1-line" (click)="viewFile(item)">
-        <md-icon>{{item.icon}}</md-icon>
-        <p>{{item.name}}</p>
-      </md-list-item>
-    </md-list>
-  <md-card-footer>
-   <a href="#top"><md-icon class="md-24">arrow_upward</md-icon></a>
- </md-card-footer>
-  </md-card>
+     <app-view-file-list
+                    sorted="true"
+                    header="true"
+                    [files]="files"
+                    (onOpen)="viewFile($event)">
+    </app-view-file-list>
+    <md-card-footer>
+        <a href="#top">
+            <md-icon class="md-24">arrow_upward</md-icon>
+        </a>
+    </md-card-footer>
+</md-card>

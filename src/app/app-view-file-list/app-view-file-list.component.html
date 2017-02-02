@@ -1,0 +1,23 @@
+<div class="app-search-view-files">
+    <md-list class="md-dense" flex>
+        <span *ngIf="!sorted">
+            <md-list-item *ngFor="let item of filelist " class="md-1-line app-view-file-line " (click)="viewFile(item)">
+                <md-icon>{{item.icona}}</md-icon>
+                <p>{{item.name}}</p>
+            </md-list-item>
+        </span>
+        <span *ngIf="sorted">
+            <div *ngFor="let type of types" class="">
+            <md-toolbar *ngIf="header" layout=" row " class="md-hue-3 ">
+            <div class="md-toolbar-tools ">
+                <span><i class="{{sortedlist[type][0].icona}}" style="font-size:36px;color:#6734BA"></i> {{sortedlist[type][0].desc}}</span>
+            </div>
+        </md-toolbar>
+                <md-list-item *ngFor="let item of sortedlist[type] " class="md-1-line app-view-file-line " (click)="viewFile(item)">
+                    <i class="{{item.icona}}" style="font-size:24px"></i>&nbsp;
+                    <p>{{item.name}}</p>
+                </md-list-item>
+            </div>
+        </span>
+    </md-list>
+</div>

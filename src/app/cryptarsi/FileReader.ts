@@ -1,4 +1,4 @@
-import { log } from '../log';
+import { log } from './log';
 import { isIndexable } from './IsIndexable';
 import { Config } from './Config';
 
@@ -42,7 +42,6 @@ export class FileReaderAPI {
             let allfiles = [];
             let nindex = {};
             let index = 3;
-            let icona = 'format_align_left';
             for (let file of files) {
                 //console.log('File name is', file);
                 if (file.name.match(/^\./)) {
@@ -64,24 +63,11 @@ export class FileReaderAPI {
                 if (isIndexable(file.type)) {
                     delete lonelyGroups[gname]; // Remove it from the list if it is indexable
                 }
-                icona = 'format_align_left';
-                if(file.type === 'audio/mp3') icona = 'volume_down';
-                if(file.type === 'audio/ogg') icona = 'volume_down';
-                if(file.type === 'audio/wav') icona = 'volume_down';
-                if(file.type === 'image/jpeg') icona = 'image';
-                if(file.type === 'image/png') icona = 'image';
-                if(file.type === 'image/gif') icona = 'image';
-                if(file.type === 'video/mp4') icona = 'videocam';
-                if(file.type === 'video/avi') icona = 'videocam';
-                if(file.type === 'video/mpeg') icona = 'videocam';
-                if(file.type === 'video/webm') icona = 'videocam';
-                if(file.type === 'application/pdf') icona = 'format_align_left';
                 let w = {
                     index: index,
                     type: file.type,
                     size: file.size,
                     name: file.name,
-                    icon: icona,
                     file: null,
                     group: gname
                 };
@@ -113,34 +99,30 @@ export class FileReaderAPI {
             function processNextFile() {
                 if (q.length === 0) {
                     //console.log('Lets add the last file');
-                    return cbfile(Object.assign({}, lonelyFileName), lonelyFileName.name + '\n' + description, hash[lonelyFileName.index]).then(() => {
-                        //console.log('The lonely index file is added');
-                        cbfile(Object.assign({}, allFileName), allFileName.name + '\n' + description, hash[allFileName.index]).then(() => {
-                            //console.log('The index file is added');
-                            resolve();
-                        }).catch(reject);
-                    }).catch(reject);
+                    return cbfile(Object.assign({}, lonelyFileName), lonelyFileName.name + '\n' + description, hash[lonelyFileName.index])
+                        .then(() => {
+                            //console.log('The lonely index file is added');
+                            return cbfile(Object.assign({}, allFileName), allFileName.name + '\n' + description, hash[allFileName.index]);
+                        })
+                        .then(resolve)
+                        .catch(reject);
                 }
                 let file = q.shift();
                 me.readFile(file, (file, l, t) => {
-                     log('file - 2', file.name, loaded, total);
+                    log('file - 2', file.name, loaded, total);
                     if (cbprogress) {
                         cbprogress(file, loaded + l, total, cnt, files.length + 1, l);
                     }
                 }).then((text) => {
-                     log('File', file.name, 'loaded');
+                    log('File', file.name, 'loaded');
                     loaded += file.size;
                     cnt++;
                     if (cbfile) {
-                        cbfile(file, text, hash[nindex[file.name]])
-                            .then(() => {
-                                processNextFile();
-                            })
-                            .catch(reject);
+                        return cbfile(file, text, hash[nindex[file.name]]);
                     } else {
-                        processNextFile();
+                        return; // Empty return still trigger the next then, so it acts like processNextFile
                     }
-                }).catch(reject);
+                }).then(() => processNextFile()).catch(reject);
             }
 
             processNextFile();
@@ -159,7 +141,7 @@ export class FileReaderAPI {
 
             reader.onprogress = (d) => {
                 if (d.lengthComputable) {
-                     log('file', file.name, d.loaded, d.total);
+                    log('file', file.name, d.loaded, d.total);
                     if (cb) {
                         cb(file, d.loaded, d.total);
                     }
@@ -168,8 +150,11 @@ export class FileReaderAPI {
 
             if (file.type === 'text/plain') {
                 reader.readAsText(file, 'utf-8');
+            } else if(file.type === 'application/pdf') {
+               reader.readAsBinaryString(file); // To put there the text extraction code
+               log('This is a PDF ',file);
             } else {
-                reader.readAsBinaryString(file); // To verify
+              reader.readAsBinaryString(file); // To verify
             }
         });
     }

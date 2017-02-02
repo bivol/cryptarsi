@@ -10,7 +10,7 @@
                 (change)="checkDbName"
                 maxlength="50"
                 md-tooltip="Enter new data set name"
-                tooltip-position="above"
+                tooltip-position="after"
                 class="app-input"
                 (change)="validateDbName()"
             >
@@ -19,18 +19,18 @@
                 </md-hint>
             </md-input>
             <br><br>
-            <label for=fileName>
+
             <input
                 #fileName
                 id="fileName"
-                class="app-input"
+                class="inputfile inputfile-1"
                 type="file"
                 (change)="onFileChange($event)"
             >
-            </label>
+            <label for=fileName><i class="fa fa-upload fa-lg" aria-hidden="true"></i> <span>Choose a file&hellip;</span></label>
             <br><br>
-            <button type="submit" md-mini-fab color="primary" (click)="menuSelected='importDb'" md-tooltip="Import data" tooltip-position="after">
-    <md-icon class="md-24">file_upload</md-icon>
+            <button type="submit" md-raised-button color="primary" (click)="menuSelected='importDb'">
+    <md-icon class="md-24">file_upload</md-icon> Import data
 </button>
         </form>
         </md-card-content>

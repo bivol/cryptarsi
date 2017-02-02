@@ -3,5 +3,5 @@
 //}
 
 export function log(...argv) {
-   // console.log.apply(this, argv);
+    console.log.apply(this, argv);
 }

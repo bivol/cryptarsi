@@ -1,10 +1,13 @@
-//window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+export function isFileWriterSupported() {
+    let requestFS = window['requestFileSystem'] || window['webkitRequestFileSystem'];
+    return typeof requestFS !== 'undefined';
+}
 
 export class FileWriterAPI {
     fs = null;
     file = null;
     constructor(private name = 'pesho', private size = 100000000) {
-        // Follows a little hack to escape tslint strick checking
+        // Follows a little hack to escape from tslint strick checking
         let requestFS = window['requestFileSystem'] || window['webkitRequestFileSystem'];
         let TEMPORARY = window['TEMPORARY'] || 0;
         // window.webkitRequestFileSystem(window.TEMPORARY, 10000000000, (file) => console.log(file), (e) => console.log('Error',e))

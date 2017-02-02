@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DB, DbList } from '../cryptarsi/Database';
-import { log } from '../log';
+import { log } from '../cryptarsi/log';
 
 log('AppDbService instanciated');
 
@@ -32,10 +32,8 @@ export class AppDbService {
                     return resolve(this._dbList[name].db);
                 }
                 return this.close(name)
-                    .then(() => this.open(name, key)
-                        .then(resolve)
-                        .catch(reject)
-                    )
+                    .then(() => this.open(name, key))
+                    .then(resolve)
                     .catch(reject);
             }
             let db = new DB(name, key);
@@ -44,9 +42,7 @@ export class AppDbService {
                 db: db
             };
             db.open()
-                .then(() => {
-                    resolve(db);
-                })
+                .then(() => resolve(db))
                 .catch(reject);
         });
     }
@@ -55,7 +51,10 @@ export class AppDbService {
         return new Promise((resolve, reject) => {
             if (this._dbList[name]) {
                 this._dbList[name].db.close()
-                    .then(resolve)
+                    .then(() => {
+                        delete this._dbList[name];
+                        resolve();
+                    })
                     .catch(reject);
             } else {
                 resolve();
@@ -67,10 +66,9 @@ export class AppDbService {
         return new Promise((resolve, reject) => {
             if (this._dbList[name]) { // Close it first
                 return this.close(name)
-                    .then(() => this.drop(name)
-                        .then(resolve)
-                        .catch(reject)
-                    );
+                    .then(() => this.drop(name))
+                    .then(resolve)
+                    .catch(reject);
             }
             let db = new DB(name, 'xxxxxxx');
             db.drop().then(resolve).catch(reject);

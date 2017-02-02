@@ -1,0 +1,10 @@
+<div *ngIf="data" align="center">
+    <a [href]="data | safe" target="_blank" class="app-link">
+        <img [src]='data | safe' [width]='400' md-tooltip="Click for full size" tooltip-position="after">
+    </a>
+</div>
+<br>
+<div align="center">
+    <a [href]="data | safe" target="_blank" class="app-link"><md-icon class="md-36" md-tooltip="Full size" tooltip-position="below">visibility</md-icon></a>
+    <a [download]="name" [href]="data | safe" class="app-link"><md-icon color="accent" class="md-36" md-tooltip="Download" tooltip-position="after">file_download</md-icon></a>
+</div>

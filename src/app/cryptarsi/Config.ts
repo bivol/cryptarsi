@@ -1,5 +1,6 @@
 export class Config {
     static fileChunkSize = 10000000;
+    static fileBlobChunks = 10; // We use FileWriterAPI if supported if we have a file with more than this amount of chunks
     static listStoreName = 'list';
     static listDbName = 'dbList';
     static listVersion = 8;

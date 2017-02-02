@@ -5,7 +5,7 @@
  */
 
 import {Injectable} from '@angular/core';
-import { log } from '../log';
+import { log } from './log';
 
 @Injectable()
 export class AngularIndexedDB {

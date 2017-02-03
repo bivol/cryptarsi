@@ -11,7 +11,7 @@ export class AppViewFilePdfComponent {
     @Input() type;
     @Input() name;
     page = 1;
-    zoom = 0.5;
+    zoom = 1;
 
     constructor() {
     }
@@ -25,11 +25,11 @@ export class AppViewFilePdfComponent {
     }
 
     zoomIn() {
-        this.zoom = Math.max((this.zoom + 0.1), 1);
+        this.zoom = Math.min((this.zoom + 0.1), 2); // Max is 2 (200%)
     }
 
     zoomOut() {
-        this.zoom = Math.max((this.zoom - 0.1), 0.1);
+        this.zoom = Math.max((this.zoom - 0.1), 0.1); // Min is 0.1 (10%)
     }
 
 }

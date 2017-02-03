@@ -1,13 +1,19 @@
 <div align="center">
     <span>
-    <i class="fa fa-backward app-link" aria-hidden="true" (click)="prevPage()"></i>
-     <input class="app-input" type="number" placeholder="Page" [(ngModel)]="page" min="1" max="1000" maxlength="4">
-    <i class="fa fa-forward app-link" aria-hidden="true" (click)="nextPage()"></i>
+    Page: <i class="fa fa-backward app-link app-arrow-button" aria-hidden="true" (click)="prevPage()"></i>
+     <input class="app-input app-text-right" type="number" placeholder="Page" [(ngModel)]="page" min="1" max="1000" maxlength="4">
+    <i class="fa fa-forward app-link app-arrow-button" aria-hidden="true" (click)="nextPage()"></i>
+    </span>
+    &nbsp;
+    <span>
+    <i class="fa fa-backward app-link app-arrow-button" aria-hidden="true" (click)="zoomOut()"></i>
+    Zoom {{zoom*100 | number: '2.0'}}%
+    <i class="fa fa-forward app-link app-arrow-button" aria-hidden="true" (click)="zoomIn()"></i>
     </span>
 </div>
 
 <div *ngIf="data" align="center">
-    <pdf-viewer [src]="data" [page]="page" [original-size]="true" [zoom]="1.5" [render-text]="false" style="display: block; z-index: 1"></pdf-viewer>
+    <pdf-viewer [src]="data" [page]="page" [original-size]="true" [zoom]="zoom" [render-text]="false" style="display: block; z-index: 1"></pdf-viewer>
 </div>
 <div align="center">
     <i class="fa fa-backward app-link" aria-hidden="true" (click)="prevPage()"></i>

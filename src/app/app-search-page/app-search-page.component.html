@@ -98,11 +98,12 @@
         <md-tab *ngFor="let tab of openTabs">
         <template md-tab-label>
             <div class="app-search-cursor" md-tooltip="{{tab.name}}" tooltip-position="above">
-                <md-icon class="md-24" (click)="closeTab(tab)">cancel</md-icon>
-             {{tab.name.substr(0, 20)}}...&nbsp;<i class="{{tab.icona}}" style="font-size:24px;color:#6734BA"></i>
+               <!-- <md-icon class="md-24" (click)="closeTab(tab)">cancel</md-icon> -->
+             <i class="{{tab.icona}}" style="font-size:24px;color:#6734BA"></i>&nbsp;{{tab.name.substr(0, 20)}}...
             </div>
          </template>
          <div class="app-search-tab-content">
+         <i class="fa fa-window-close app-search-cursor" style="font-size:24px;color:red" (click)="closeTab(tab)" aria-hidden="true"></i>
             <app-view-file
                 [index]="tab.index"
                 [name]="tab.name"

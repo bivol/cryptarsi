@@ -44,11 +44,11 @@ Beta 3 roadmap:
 
 1. Load a tar archive from URL;
 
-2. Circumvent the 25MB limit;
+2. Circumvent the 25MB limit (done);
 
-3. Optional key generation button;
+3. Optional key generation button (done);
 
-4. Fix the Electron version to read from directories
+4. Fix the Electron version to read from directories.
 
 Beta 5 roadmap:
 
@@ -56,10 +56,12 @@ Beta 5 roadmap:
 
 2. Improved obfuscation of the index;
 
-3. Imrpoved and faster encryption (electron native CryptoJS);
+3. Improved and faster encryption (electron native CryptoJS);
 
 4. Incremental import and deletion;
 
 5. Recover the tags system from V1;
 
-6. Option to query the databases from a http server instead from indexedDB.
+6. Option to query the databases from a http server instead from indexedDB;
+
+7. Index PDF files.

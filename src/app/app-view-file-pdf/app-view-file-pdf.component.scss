@@ -1,1 +1,19 @@
 // component css goes here
+.app-link {
+  color: black;
+}
+
+.app-arrow-button {
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+
+.app-text-right {
+  text-align: right;
+}

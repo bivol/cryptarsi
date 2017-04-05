@@ -33,7 +33,7 @@
     <md-toolbar color="accent">
         <button class="app-icon-button" (click)="sidenav.toggle()">
       <i class="material-icons app-toolbar-menu">menu</i>
-    </button> CRYPTARSI 2.0&beta;3
+    </button> <img src="assets/images/logo-cryptarsi.svg" height="60">
         <span class="app-toolbar-filler"></span>
     </md-toolbar>
 
@@ -52,20 +52,28 @@
           Create, query and share encrypted data
           </md-card-subtitle>
           <md-card-title>
-          CRYPTARSI  - a browser based files encryption and search engine
+          CRYPTARSI  - a browser based file encryption and search engine
           </md-card-title>
           <md-card-content class="md-body-1">
-              <p>Investigative journalists; human right activists and many other professionals need to protect data and to share protected data easily. Cryptarsi is a system designed to meet those needs without installing a specific software.
+              <p>Investigative journalists, human right activists and many other professionals need to protect data and to share protected data easily. Cryptarsi is a system designed to meet those needs without installing specific software.
               </p>
-              <p>Cryptarsi is designed to work straight from the browser. If you read this on Chrome browser, then you can start using Cryptarsi right now. Otherwise install <a href="https://chrome.com" target="_blank">Chrome</a> or <a href="https://www.chromium.org/" target="_blank">Chromium</a> and open this url again. Cryptarsi is loading from internet, but <strong>your data and passwords stay on your computer and never travel through internet</strong>. You can even disconnect your computer from internet now and continue using Cryptarsi.
+              <p>Cryptarsi is designed to work straight from the browser. If you read this on a Chrome or a Firefox browser, then you can start using Cryptarsi right now. Otherwise install <a href="https://chrome.com" target="_blank">Chrome</a> or <a href="https://www.chromium.org/" target="_blank">Chromium</a> or <a href="https://www.firefox.com/" target="_blank">Firefox</a> and open this url again. Cryptarsi is loading from the internet, but <strong>your data and passwords stay on your computer and never travel on the internet</strong>. You can even disconnect your computer from the internet now and continue using Cryptarsi.
               </p>
-              <p>With Cryptarsi you can easily encrypt a single file or a large collection of data: text, PDF, audio and video files and view them without leaving your browser. Text files are indexed and searchable. If you take some time to describe your data or if you have a big cache of text data, Cryptarsi is able to search and locate the relevant documents and files.</p>
+              <p>With Cryptarsi you can easily encrypt a single file or a large collection of data: text, PDF, audio and video files and view them without leaving your browser. Text files are indexed and searchable inside the app. If you have a big cache of text data, Cryptarsi is able to search and locate the relevant documents.</p>
+              <p><b>Case studies:</b>
+              <ul>
+              <li>You have to secure some data you got from a source on a flash drive. Open https://cryptarsi.org on any computer with Chrome or Firefox, import the files from the flash drive in a new data set. Export the data set and keep it on the flash drive. Delete the imported data and the originals.
+              <li>You take pictures of confidential documents or events with your smartphone. Open https://cryptarsi.org in the phone browser, import the pictures and delete them from the gallery. On Android phones you can export the whole set of encrypted pictures and share them.
+              <li>You got a data cache with thousands of confidential text documents. You want to do some collaborative work on them and share the data cache securely. Import the documents directory in Cryptarsi, then export the data set and share it. Send the password through a secure channel. Your colleagues can import the data and search for the relevant documents.
+              </ul>
+              <p>
               <p>Cryptarsi is an open source project available on Github. The development of the last version of Cryptarsi was supported by <a href="https://www.digitalnewsinitiative.com/" target="_blank">Google Digital News Initiative Fund</a>.
               <p>The name Cryptarsi comes from the Latin word "Crypto" and the Bulgarian word "Tarsi", meaning "search".
               <p>If you want to contribute to the development of Cryptarsi join us on <a href="https://github.com/bivol/cryptarsi" target="_blank">Github</a>.
-              <p>An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases of <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
+              <p>An early version of the system was used by the journalists from <a href="http://www.bivol.bg" target="_blank">Bivol.bg</a> while working on the <a href="https://en.wikipedia.org/wiki/United_States_diplomatic_cables_leak" target="_blank">Cablegate</a> releases by <a href="https://www.wikileaks.org" target="_blank">Wikileaks</a> from different locations.
               <p><b>File types support in Chrome:</b> Text UTF-8 (.txt .html .xml); Images: jpg, png, gif; Audio: wav, ogg, mp3; Video: mp4, webm. Other files are downloadable and can be opened in external viewers. Text files are indexed and searchable.
-              <p><b>Requirements:</b> Chrome or Chromium browsers. The Firefox version is not fully operational.
+              <p><b>Requirements:</b> Chrome or Chromium, or Firefox browsers. Other browsers like Safary have a partial support.
+              <img src="assets/images/cryptarsib03browsercomp.png">
               <p><b>Limitations:</b> Because of a bug in CryptoJS a single file should not be bigger then 100 megabytes.</p>
               <p>
               &copy; Delian Delchev @delian, Atanas Tchobanov @bivolbg 2011-2017
@@ -75,45 +83,45 @@
       <!-- Doc card Fast start -->
       <md-card *ngIf="!databaseSelected">
             <md-card-subtitle>
-            For the impatients...
+            For the impatient...
             </md-card-subtitle>
             <md-card-title>
             Fast start
             </md-card-title>
             <md-card-content class="md-body-1">
-            <p>The most simple usage of Cryptarsi is to encrypt files and to consult them or share them with other users. From the top of the sidebar click on the
+            <p>The simplest usage of Cryptarsi is to encrypt files and to consult them or share them with other users. From the top of the sidebar click on the
             <button md-mini-fab color="warn">
                 <md-icon class="md-24">add</md-icon>
               </button>
             button. Select a name for your data set, give it a description, type a strong password, click on "Add files", select individual files or a directory full of files from your disk and click again on the red button to import them.
             </p>
-            <p>Voilà, you have a new encrypted data set and his name will appear in the left menu.
+            <p>Voilà, you have a new encrypted data set and its name will appear in the menu on the left.
             </p>
-            <p>To see the content of the newly created data set click on the name, type the password and type on the list button next to the search button.
+            <p>To see the content of the newly created data set click on the name, type the password and click on the list button next to the search button.
             <button md-raised-button>
                 <md-icon class="md-24">list</md-icon>
               </button>
-            to display the list of all the files. Click on a file name to open it in a new tab where you can view or download the file.</p>
+            to display the list of all files. Click on a file name to open it in a new tab where you can view or download the file.</p>
             <p>The encrypted data you just created is easy to export and share with other Cryptarsi users. Then open the data set, unlock it with the password and click on the Export Data button
                     <button md-mini-fab color="primary">
                       <md-icon class="md-24">file_download</md-icon>
-                    </button>. If nothing happens allow popup windows for the current URL.
+                    </button>. If nothing happens, allow popup windows for the current URL.
             </p>
 <p>The Cryptarsi export will produce a .tar archive with the encrypted data. You can send the tar file through email or, if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email.
 </p>
 <p>
-An even better practice is to transmit the tar archive through the anonymous Tor network using <a href="https://www.torproject.org/" target="_blank">Tor Browser</a> and <a href="https://onionshare.org/" target="_blank">Onionshare</a>. Then send the password through the <a href="https://ricochet.im/" target="_blank">Ricochet</a> anonymous instant messaging. Install those state of the art tools and start using them now to protect your privacy and your sources.
+An even better procedure is to transmit the tar archive through the anonymous Tor network using <a href="https://www.torproject.org/" target="_blank">Tor Browser</a> and <a href="https://onionshare.org/" target="_blank">Onionshare</a>. Then send the password through the <a href="https://ricochet.im/" target="_blank">Ricochet</a> anonymous instant messaging. Install those state of the art tools and start using them now to protect your privacy and your sources.
 </p>
 <p>
 To import a Cryptarsi data set from file click on Import Data.
                   <button md-mini-fab color="primary">
                     <md-icon class="md-24">file_upload</md-icon>
                   </button>
-                  Type a name for the data set, select the tar file and click the Import button.
+                  Type a name for the data set, select the tar file and click on the Import button.
           <p>
-          To give it a try without creating a new data set just download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> with a demo data set and import it. Select the newly imported data set from the list. The password for the demo data set is simply: <i>test</i>.
+          To give it a try without creating a new data set just download this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a> with a demo data set and import it. Select the newly imported data set from the list. The password for the demo data set is simply <i>test</i>.
           </p>
-          <p>Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then simply encrypt files.
+          <p>Go to the Search field and type "cryptarsi". As you can see you can do much more with Cryptarsi then just encrypting files.
 </p>
     </md-card-content>
 </md-card>
@@ -126,7 +134,7 @@ To import a Cryptarsi data set from file click on Import Data.
       Searching encrypted data with Cryptarsy
      </md-card-title>
       <md-card-content class="md-body-1">
-<p>Cryptarsi has a powerful search engine and you can work with hundreds and even tousends of text files. Cryptarsi will automatically index any text in UTF-8 format found in files with .txt extension. Each text file can have multiple attachments - pdf, images, audio and even video files. Follow this guide to prepare your data for meaningful searches.
+<p>Cryptarsi has a powerful search engine and you can work with hundreds and even thousands of text files. Cryptarsi will automatically index any text in UTF-8 format found in files with .txt extension. Each text file can have multiple attachments - pdf, images, audio and even video files. Follow this guide to prepare your data for meaningful searches.
 
 <h3>Data structure</h3>
       <p>The Cryptarsi data is structured a bit like an email: a plain text and (a lot of) attached documents. The text will be indexed, so the content you put in is important. You will later search and find your documents by the keywords in the texts. We use plain text files (UTF-8 encoded) and a mandatory .txt extension. You can produce such files with any writing app.</p>
@@ -138,7 +146,7 @@ My story
 |--Lead2.txt
 |--Lead3.txt
 </pre>
-              Then suppose you have three documents you want to attach to your Lead1.txt. Create a floder named Lead1 (exactly as the text file but without the .txt extension. Put your files inside. It should look like this:
+              Then suppose you have three documents you want to attach to your Lead1.txt. Create a folder named Lead1 (exactly as the text file but without the .txt extension. Put your files inside. It should look like this:
 <pre>
 |--Lead1
 |	|--Lead_1_supporting_doucuments.pdf
@@ -173,7 +181,7 @@ My story
 |--Lead2.png
 |--Lead3.txt
 </pre>
-<p>Attachments are not mandatory. you can have a story with multiple text files or just one text file.</p>
+<p>Attachments are not mandatory. You can have a story with multiple text files or just one text file.</p>
 <p>Here you can download a <a href="http://cryptarsi.org/cryptarsi_sources.zip">file</a> with different data sources you can use for testing purposes.</p>
 <h3>Importing data from directory</h3>
 <p>The story folder will be imported and indexed in Cryptarsi with the button Create new data set. Give a name to the data set, write a strong password, select the folder with the story and click on "Encrypt and Import". The data set will then appear in the Menu on the left side of the app. </p>
@@ -189,7 +197,7 @@ My story
                 <md-icon class="md-24">search</md-icon>
               </button>
 </p>
-<p> If you just type a sequence of words, the results will match all the text documents having the words in the same order. If you type the sequence in quotes, the exact expression will be returned. If you type + before the words all the documents having those words regardless the order will be returned. If you type - (minus sign) before a word documents having this word will be excluded from the search.
+<p> If you just type a sequence of words, the results will match all the text documents with those words in the same order. If you type the sequence in quotes, the exact expression will be returned. If you type + before the words all documents with those words regardless of the order will be returned. If you type - (minus sign) before a word, then the documents with this word will be excluded from the search.
 </p>
 
 <p>To understand the syntax of the search let's say we have 3 documents. Each document has one of the following expressions:
@@ -205,9 +213,9 @@ So, if you type Investigative Reporting the system will return the string <i>We 
 "Investigative reporting" with quotes will match only A. <i>Investigative journalists started reporting</i> and <i>Reporting was done by investigative journalists</i> will not be found.
 </p>
 <p>
-+Investigative +Reporting will return both A,B and C, but +Investigative +Reporting -done will return only A and B.
++Investigative +Reporting will return both A, B and C, but +Investigative +Reporting -done will return only A and B.
 </p>
-<p>If you want to search for a particular date enter the date in european format without ponctuation: 09 10 2007 (October 9-th 2007).
+<p>If you want to search for a particular date enter the date in European format without punctuation: 09 10 2007 (October 9-th 2007).
 </p>
       </md-card-content>
       </md-card>
@@ -220,7 +228,7 @@ So, if you type Investigative Reporting the system will return the string <i>We 
       Exporting and importing data
      </md-card-title>
      <md-card-content class="md-body-1">
-<p>Once you have build a data set from your data you can easily export it and share it with other Cryptarsi users.
+<p>Once you have built a data set from your data you can easily export it and share it with other Cryptarsi users.
 
 <p>To do this open the data set, unlock it with the password and click on Export Data.
 <p>
@@ -228,9 +236,9 @@ So, if you type Investigative Reporting the system will return the string <i>We 
                       <md-icon class="md-24">file_download</md-icon>
                     </button>
 </p>
-The export will produce a .tar archive containing encrypted data and indexes. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even best practice is to split the password and to send the parts through different secured channels.
+The export will produce a .tar archive. You can send the tar file through email or if it is too big, share it in the cloud. Send the password to the persons allowed to use the archive by a separate and secured channel: encrypted chat or email. An even better procedure is to split the password and to send the parts through different secured channels.
 <p>
-To import a Cryptarsi data set from file click on Import Data. Type a name for the data set, select the tar file and click Import. If the import is successful the data set will appear in the list.
+To import a Cryptarsi data set from file, click on Import Data. Type a name for the data set, select the tar file and click Import. If the import is successful the data set will appear in the list.
 </p>
 <p>
                   <button md-mini-fab color="primary" (click)="menuSelected='importDb'">
@@ -238,13 +246,13 @@ To import a Cryptarsi data set from file click on Import Data. Type a name for t
                   </button>
 </p>
 <p>
-It is a good idea to export all your data sets as tar files for archiving purposes. You can copy a CrypTARsi archive on a memory stick and use it on any computer having a Chrome browser installed.
+It is a good idea to export all your data sets as tar files for archiving purposes. You can copy a Cryptarsi archive on a memory stick and use it on any computer that has a Chrome browser installed.
 </p>
 <p>
-If the imported data set has hundreds of documents the import may be slow. Take a cake and wait a minute or two! The documents need time to be indexed properly. The import is successful when the data set name appears in the list and you can log in.
+If the imported data set has hundreds of documents the import may be slow. Take a brake and wait a minute or two! The documents need time to be indexed properly. The import is successful when the data set name appears in the list and you can log in.
 </p>
 <p>
-You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test data set is simply: <i>test</i>.
+You can also import some test data from this <a href="http://cryptarsi.org/cryptarsi_test_data.tar">file</a>. The password for the test data set is simply <i>test</i>.
 </p>
 </md-card-content>
 </md-card>
@@ -257,14 +265,14 @@ You can also import some test data from this <a href="http://cryptarsi.org/crypt
      Security matters
      </md-card-title>
      <md-card-content class="md-body-1">
-            <p>Cryptarsi is vulnerable if somebody can sniff or guess the passwords you use to encrypt the data. Your password and data will never travel through the net while you are working with Cryptarsi. Keep in mind, that after the Cryptarsi page is loaded in the browser you don't need the internet connection any more. You can even disconnect from internet, but don't reload the page and don't hit the back button while you are disconnected, because the app will break.
+            <p>Cryptarsi is vulnerable if somebody can snoop or guess the passwords you use to encrypt the data. Your password and data will never travel through the net while you are working with Cryptarsi. Keep in mind that after the Cryptarsi page is loaded in the browser you don't need the internet connection any more. You can even disconnect from internet, but don't reload the page and don't hit the back button while you are disconnected, because the app will break.
             </p>
             <p>
             Do not leave open the data set you are working on while you are away from your computer. Click on the
             <button md-mini-fab color="accent">
                 <md-icon class="md-24">lock_open</md-icon>
             </button>
-              button to lock the data set anytime you want to avoid eyesdropping.
+              button to lock the data set anytime you want to avoid eavesdropping.
             </p>
             <p>
 To delete all traces of your work click on Close data set, then wait a bit and click on Drop data set. This will erase the data and index files from the app memory.
@@ -272,9 +280,9 @@ To delete all traces of your work click on Close data set, then wait a bit and c
                   <md-icon class="md-24">delete</md-icon>
                 </button>
 </p>
-            <p>It is safe, while not recommended, to send the Cryptarsi tar files through unsecured connections, because they are already encrypted. But never send a password for a cryptarsi tar file by unprotected email or any not secured chat.
+            <p>It is safe, though not recommended, to send the Cryptarsi tar files through unsecured connections, because they are already encrypted. But never send a password for a cryptarsi tar file by unprotected email or any not secured chat.
           <p>
-The best practice is to transmit the tar archive through the anonymous Tor network using <a href="https://www.torproject.org/" target="_blank">Tor Browser</a> and <a href="https://onionshare.org/" target="_blank">Onionshare</a>. Then send the password securely. PGP encrypted email will be fine. You can also use the <a href="https://ricochet.im/" target="_blank">Ricochet</a> anonymous instant messaging. On mobile devices use the app <a href="https://whispersystems.org/" target="_blank">Signal</a> by Open Whisper system. Install those state of the art tools and start using them now to protect your privacy and your sources.
+The best practice is to transmit the tar archive through the anonymous Tor network using the <a href="https://www.torproject.org/" target="_blank">Tor Browser</a> and <a href="https://onionshare.org/" target="_blank">Onionshare</a>. Then send the password securely. PGP encrypted email will be fine. You can also use the <a href="https://ricochet.im/" target="_blank">Ricochet</a> anonymous instant messaging. On mobile devices use the app <a href="https://whispersystems.org/" target="_blank">Signal</a> by Open Whisper system. Install those state of the art tools and start using them now to protect your privacy and your sources.
 </p>
 </md-card-content>
 </md-card>
@@ -287,9 +295,9 @@ The best practice is to transmit the tar archive through the anonymous Tor netwo
      </md-card-title>
      <md-card-content class="md-body-1">
 
-            <p>The web app is fully functional on Android Chrome. Unfortunately the app is not working yet on the iOS version of Chrome.
-            <h3>Stand alone apps</h3>
-             <p>Cryptarsi is also available as a stand alone Electon app. For now those apps can't create new data sets. You can however import data sets prepared in the browser version and browse the data.
+            <p>The web app is fully functional on Android with Chrome and Firefox. Cryptarsi works on iOS with the native Safari, Chrome and Firefox browsers. Due to security limitations on iOS data export is not possible.
+            <h3>Stand-alone apps</h3>
+             <p>Cryptarsi is also available as a stand-alone Electon app.
               <ul>
               <li><a href="http://cryptarsi.org/download/cryptarsi-win32.zip">Windows x32</a>
               <li><a href="http://cryptarsi.org/download/cryptarsi-osx64.app.zip">MacOS x64</a>`

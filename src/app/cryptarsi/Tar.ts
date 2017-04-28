@@ -154,20 +154,44 @@ export class Tar {
         return buffer;
     };
 
-    addFile(name, content,
-        mode = 511,
-        mtime = Math.floor(+new Date() / 1000),
-        uid = 0,
-        gid = 0,
-        owner = '',
-        group = ''
-    ) {
+    addToBuffer(data) {
+        if (this.writen + data.length > this.buffer.length) {
+            // Extend the buffer
+            this.buffer = TarTools.extendBuffer(this.buffer,
+                this.writen,
+                data.length,
+                this.blockSize
+            );
+        }
+        //console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
+        this.buffer.set(data, this.writen);
+        this.writen += data.length;
+        /*
+        let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
+        this.writen += (data.length + roundToRecord);
+        console.log('rounding', name, 'data length', data.length,
+           'recordSize', this.recordSize,
+           'lefover', (data.length % this.recordSize),
+           'how much we add', roundToRecord,
+           'where we are after adding', this.writen);
+        */
+    }
+
+    roundToRecord() {
+        let roundToRecord = this.recordSize - (this.writen % this.recordSize || this.recordSize);
+        this.writen += roundToRecord;
+    }
+
+    closeTarInBuffer() {
+        // Always add 2 extra records, for compatibility with GNU Tar
+        if (this.buffer.length - this.writen < this.recordSize * 2) {
+            this.buffer = TarTools.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
+        }
+    }
+
+    addHeader(name, length, mode = 511, mtime = Math.floor(+new Date() / 1000), uid = 0, gid = 0, owner = '', group = '') {
         if (name.length > 99) {
             console.error('Error: name length larger than 99 charactgers!', name);
-        }
-        let data = content;
-        if (typeof data === 'string') {
-            data = TarTools.stringToUint8(content);
         }
 
         let header: IHeaderField = {
@@ -175,7 +199,7 @@ export class Tar {
             fileMode: this.pad(mode, 7),
             uid: this.pad(uid, 7),
             gid: this.pad(gid, 7),
-            fileSize: this.pad(data.length, 11),
+            fileSize: this.pad(length, 11),
             mtime: this.pad(mtime, 11),
             checksum: '        ',
             type: '0', // just a file
@@ -198,33 +222,27 @@ export class Tar {
         //console.log('Header', header, header.fileSize, data.length);
         let headerArr = this.format(header);
         //console.log('HeaderArr', headerArr, headerArr.length);
-        this.buffer.set(headerArr, this.writen);
-        this.writen += headerArr.length;
+        this.addToBuffer(headerArr);
+        //this.buffer.set(headerArr, this.writen);
+        //this.writen += headerArr.length;
+    }
 
-        if (this.writen + data.length > this.buffer.length) {
-            // Extend the buffer
-            this.buffer = TarTools.extendBuffer(this.buffer,
-                this.writen,
-                data.length,
-                this.blockSize
-            );
+    addFile(name, content,
+        mode = 511,
+        mtime = Math.floor(+new Date() / 1000),
+        uid = 0,
+        gid = 0,
+        owner = '',
+        group = ''
+    ) {
+        let data = content;
+        if (typeof data === 'string') {
+            data = TarTools.stringToUint8(content);
         }
-
-        //console.log('Tar buf.len', this.buffer.length, 'cont.len', data.length, 'pos', this.writen);
-        this.buffer.set(data, this.writen);
-        let roundToRecord = this.recordSize - (data.length % this.recordSize || this.recordSize);
-        this.writen += (data.length + roundToRecord);
-        /* console.log('rounding', name, 'data length', data.length,
-           'recordSize', this.recordSize,
-           'lefover', (data.length % this.recordSize),
-           'how much we add', roundToRecord,
-           'where we are after adding', this.writen);
-        */
-        // Always add 2 extra records, for compatibility with GNU Tar
-        if (this.buffer.length - this.writen < this.recordSize * 2) {
-            this.buffer = TarTools.extendBuffer(this.buffer, this.writen, this.recordSize * 2, this.blockSize);
-        }
-
+        this.addHeader(name, data.length, mode, mtime, uid, gid, owner, group);
+        this.addToBuffer(data);
+        this.roundToRecord(); // Every file must round to a block
+        this.closeTarInBuffer();
         return this.buffer;
     }
 

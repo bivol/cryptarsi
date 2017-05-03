@@ -246,6 +246,16 @@ export class Tar {
         return this.buffer;
     }
 
+    resetBuffer() { // Retrieve a buffer with the current content and reset it to zero
+        let buffer = this.buffer.slice(this.writen);
+        this.clear();
+        return buffer;
+    }
+
+    closingBuffer() {
+        return TarTools.cleanBuffer(this.recordSize * 2);
+    }
+
     clear() {
         this.writen = 0;
         this.buffer = TarTools.cleanBuffer(this.blockSize);

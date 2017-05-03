@@ -1,5 +1,6 @@
 import { DB } from './Database';
 import { Tar } from './Tar';
+import { FileWriterAPI } from './FileWriter';
 
 export class ExportDB {
     constructor(private db: DB) {
@@ -24,26 +25,21 @@ export class ExportDB {
     exportTar() {
         return new Promise((resolve, reject) => {
             let tar = new Tar();
-            let buffer;
-
-           /* this.db.getAllCbIndexes((data) => {
-              //  console.log('one index cursor is', data);
+            let file = new FileWriterAPI('database.tar');
+            this.db.getAllCbData((data) => {
+                //console.log('one data cursor is', data);
                 return new Promise((resolve2, reject2) => {
-                    buffer = tar.addFile('i/' + this.stringToHex(atob(data.id)), data.data);
-                    resolve2();
+                    tar.addFile(this.stringToHex(atob(data.id)), data.data);
+                    file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}))
+                        .then(resolve2).catch(reject2);
                 });
-            }).then(() => { */
-                this.db.getAllCbData((data) => {
-                    //console.log('one data cursor is', data);
-                    return new Promise((resolve2, reject2) => {
-                        buffer = tar.addFile(/* 'd/' + */ this.stringToHex(atob(data.id)), data.data);
-                        resolve2();
+            }).then(() => {
+                //console.log('Indexes are in buffer with length', buffer.length);
+                return file.writeToFile(new Blob([tar.closingBuffer()], {type: 'application/octet-stream'}))
+                    .then(() => {
+                        resolve(window.URL.createObjectURL(new Blob(['aaa'], { type: 'application/tar' }))); // This has to point to the temporary file
                     });
-                }).then(() => {
-                    //console.log('Indexes are in buffer with length', buffer.length);
-                    resolve(new Blob([buffer], { type: 'application/tar' }));
-                }).catch(reject);
-           // }).catch(reject);
+            }).catch(reject);
         });
     }
 }

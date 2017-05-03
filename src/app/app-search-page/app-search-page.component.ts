@@ -184,9 +184,9 @@ export class AppSearchPageComponent implements OnInit {
         //console.log('Export database');
         let exp = new ExportDB(this.db);
         this.exportWorking = true;
-        exp.exportTar().then((buffer) => {
+        exp.exportTar().then(url => {
             //console.log('The database is exported, make it downloadable');
-            window.open(window.URL.createObjectURL(buffer));
+            window.open(<string>url);
             this.exportWorking = false;
         }).catch((e) => {
             //console.log('Error exporting Tar', e);

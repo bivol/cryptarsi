@@ -25,7 +25,7 @@ export class ExportDB {
     exportTar() {
         return new Promise((resolve, reject) => {
             let tar = new Tar();
-            let file = new FileWriterAPI('database.tar');
+            let file = new FileWriterAPI('cryptarsi.database.tar');
             this.db.getAllCbData((data) => {
                 //console.log('one data cursor is', data);
                 return new Promise((resolve2, reject2) => {
@@ -37,7 +37,7 @@ export class ExportDB {
                 //console.log('Indexes are in buffer with length', buffer.length);
                 return file.writeToFile(new Blob([tar.closingBuffer()], {type: 'application/octet-stream'}))
                     .then(() => {
-                        resolve(window.URL.createObjectURL(new Blob(['aaa'], { type: 'application/tar' }))); // This has to point to the temporary file
+                        resolve(file.url('application/tar')); // This has to point to the temporary file
                     });
             }).catch(reject);
         });

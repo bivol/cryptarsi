@@ -25,7 +25,12 @@ export class ExportDB {
     exportTar() {
         return new Promise((resolve, reject) => {
             let tar = new Tar();
-            let file = new FileWriterAPI('cryptarsi.database.tar');
+            let file;
+            try {
+                file = new FileWriterAPI('cryptarsi.2.database.tar');
+            } catch(e) {
+                console.log('ERRRRRORR', e);
+            }
             this.db.getAllCbData((data) => {
                 console.log('one data cursor is', data);
                 return new Promise((resolve2, reject2) => {

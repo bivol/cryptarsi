@@ -6,22 +6,26 @@ export function isFileWriterSupported() {
 export class FileWriterAPI {
     fs = null;
     file = null;
-    constructor(private name = 'pesho', private size = 100000000) {
+    constructor(private name = 'pesho', private size = 1024 * 1024) {
         // Follows a little hack to escape from tslint strick checking
+        let requestQuota = navigator['temporaryStorage'] || navigator['webkitTemporaryStorage'];
+        requestQuota = requestQuota.requestQuota;
         let requestFS = window['requestFileSystem'] || window['webkitRequestFileSystem'];
         let TEMPORARY = window['TEMPORARY'] || 0;
         // window.webkitRequestFileSystem(window.TEMPORARY, 10000000000, (file) => console.log(file), (e) => console.log('Error',e))
-        requestFS(
-            TEMPORARY,
-            this.size,
-            (fs) => {
-                console.log('Granted temp file access', fs);
-                this.fs = fs;
-            },
-            (e) => {
-                console.log('ERROR file', e);
-            }
-        );
+        requestQuota.call(window, this.size, bytes => {
+            requestFS.call(window,
+                TEMPORARY,
+                bytes,
+                (fs) => {
+                    console.log('Granted temp file access', fs);
+                    this.fs = fs;
+                },
+                (e) => {
+                    console.log('ERROR file', e);
+                }
+            );
+        }, e => console.log('Request Quota Error', e));
     }
 
     createFile(name?: string) {

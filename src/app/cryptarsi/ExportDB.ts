@@ -27,14 +27,14 @@ export class ExportDB {
             let tar = new Tar();
             let file = new FileWriterAPI('cryptarsi.database.tar');
             this.db.getAllCbData((data) => {
-                //console.log('one data cursor is', data);
+                console.log('one data cursor is', data);
                 return new Promise((resolve2, reject2) => {
                     tar.addFile(this.stringToHex(atob(data.id)), data.data);
                     file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}))
                         .then(resolve2).catch(reject2);
                 });
             }).then(() => {
-                //console.log('Indexes are in buffer with length', buffer.length);
+                console.log('Indexes are in file with length', file);
                 return file.writeToFile(new Blob([tar.closingBuffer()], {type: 'application/octet-stream'}))
                     .then(() => {
                         resolve(file.url('application/tar')); // This has to point to the temporary file

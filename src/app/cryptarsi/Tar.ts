@@ -247,7 +247,7 @@ export class Tar {
     }
 
     resetBuffer() { // Retrieve a buffer with the current content and reset it to zero
-        let buffer = this.buffer.slice(this.writen);
+        let buffer = this.buffer.slice(0, this.writen);
         this.clear();
         return buffer;
     }

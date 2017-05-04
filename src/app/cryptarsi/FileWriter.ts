@@ -9,12 +9,12 @@ export class FileWriterAPI {
     constructor(private name = 'pesho', private size = 1024 * 1024) {
         // Follows a little hack to escape from tslint strick checking
         let requestQuota = navigator['temporaryStorage'] || navigator['webkitTemporaryStorage'];
-        requestQuota = requestQuota.requestQuota;
-        let requestFS = window['requestFileSystem'] || window['webkitRequestFileSystem'];
+        requestQuota = requestQuota.requestQuota.bind(navigator);
+        let requestFS = (window['requestFileSystem'] || window['webkitRequestFileSystem']).bind(window);
         let TEMPORARY = window['TEMPORARY'] || 0;
         // window.webkitRequestFileSystem(window.TEMPORARY, 10000000000, (file) => console.log(file), (e) => console.log('Error',e))
-        requestQuota.call(window, this.size, bytes => {
-            requestFS.call(window,
+        requestQuota(this.size, bytes => {
+            requestFS(
                 TEMPORARY,
                 bytes,
                 (fs) => {

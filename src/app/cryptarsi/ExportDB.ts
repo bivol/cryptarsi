@@ -28,7 +28,7 @@ export class ExportDB {
             let file;
             try {
                 file = new FileWriterAPI('cryptarsi.2.database.tar');
-            } catch(e) {
+            } catch (e) {
                 console.log('ERRRRRORR', e);
             }
             this.db.getAllCbData((data) => {

@@ -7,6 +7,7 @@ export class FileWriterAPI {
     fs = null;
     file = null;
     constructor(private name = 'pesho', private size = 1024 * 1024) {
+        /*
         // Follows a little hack to escape from tslint strick checking
         //let requestQuota = navigator['temporaryStorage'] || navigator['webkitTemporaryStorage'];
         //requestQuota = requestQuota.requestQuota.bind(navigator);
@@ -28,6 +29,28 @@ export class FileWriterAPI {
                 }
             );
         }, e => console.log('Request Quota Error', e));
+        */
+        console.log('Requesting quota', navigator, window);
+        navigator['webkitTemporaryStorage'].queryUsageAndQuota(
+            (used, total) => console.log('Quota used', used, 'total', total),
+            error => console.log('Usage error', error)
+        );
+        navigator['webkitTemporaryStorage'].requestQuota(
+            this.size,
+            bytes => {
+                console.log('Quota granted', bytes);
+                window['webkitRequestFileSystem'](
+                    window['TEMPORARY'],
+                    bytes,
+                    fs => {
+                        console.log('Got file system', fs);
+                        this.fs = fs;
+                    },
+                    error => console.log('Filesystem error', error)
+                );
+            },
+            error => console.log('Request Quota Error', error)
+        );
     }
 
     createFile(name?: string) {

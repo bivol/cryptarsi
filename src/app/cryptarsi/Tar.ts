@@ -59,6 +59,7 @@ export class Tar {
     blockSize = this.recordSize * 20;
 
     buffer;
+    beginRead = true;
 
     headerFormat = [
         {
@@ -279,29 +280,45 @@ export class Tar {
         return data;
     };
 
+    cnv2buffer(iBuffer) {
+        let buffer;
+        if (iBuffer instanceof Uint8Array) {
+            buffer = iBuffer;
+        } else {
+            buffer = new Uint8Array(iBuffer.length);
+            for (let i = iBuffer.length - 1; i >= 0; i--) {
+                buffer[i] = iBuffer.charCodeAt(i);
+            }
+        }
+        return buffer;
+    }
+
     readTar(iBuffer, cb = (header, content, pos, total) => {
         return new Promise((resolve, reject) => {
             return resolve();
         });
     }): Promise<any> {
         return new Promise((resolve, reject) => {
-            let buffer;
-            if (iBuffer instanceof Uint8Array) {
-                buffer = Uint8Array;
+            let buffer = this.cnv2buffer(iBuffer);
+            if (this.beginRead) {
+                this.buffer = buffer;
+                this.beginRead = false;
             } else {
-                buffer = new Uint8Array(iBuffer.length);
-                for (let i = iBuffer.length - 1; i >= 0; i--) {
-                    buffer[i] = iBuffer.charCodeAt(i);
-                }
+                let tmp = new Uint8Array(this.buffer.length + buffer.length);
+                tmp.set(this.buffer, 0);
+                tmp.set(buffer, this.buffer.length);
+                this.buffer = tmp;
             }
+            buffer = this.buffer;
 
             // One file has 512 bytes of header + variable length data
             //console.log('I have data in buffer', buffer, buffer.length);
             let pos = 0;
+            let read = 0;
 
             let procTarChunk = () => {
                 if (pos >= buffer.length - 512) {
-                    return resolve();
+                    return resolve(1);
                 }
                 let data = this.readHeader(buffer, pos);
                 if (buffer[pos] === 0
@@ -309,31 +326,37 @@ export class Tar {
                     && data.fileSize === ''
                 ) {
                     //console.log('Trimming block is reached. Reading is complete!');
-                    return resolve();
+                    this.buffer = this.buffer.slice(0, 1024); // Cut the rest of the buffer to keep the memory usage low
+                    return resolve(null);
                 }
                 //console.log('Return data', data);
                 pos += 512;
                 let content = '';
                 let len = parseInt(data.fileSize, 8);
                 if (isNaN(len)) {
-                    console.error('Wrong length');
-                    return reject(new Error('Wrong length'));
+                    console.error('Wrong length', data);
+                    return reject(new Error('Wrong file length'));
                 }
                 let roundToRecord = this.recordSize - (len % this.recordSize || this.recordSize);
-                //console.log('data.fileSize', len, roundToRecord, len + roundToRecord);
+
+                if (pos + len + roundToRecord > buffer.length) {
+                    return resolve(1); // Not all of the file is in the buffer
+                }
+
                 for (let i = 0; i < len; i++) {
                     content += String.fromCharCode(buffer[pos + i]);
-                //  console.log('pos', i, pos, pos + i, String.fromCharCode(buffer[pos + i]));
                 }
-                //console.log('Return content', content.length/*, content*/);
                 pos += len + roundToRecord;
-                //console.log('new pos is', pos, buffer.length);
-                cb(data, content, pos, buffer.length).then(() => {
+
+                read += pos;
+
+                cb(data, content, read, buffer.length).then(() => {
+                    // Cut the buffer
+                    this.buffer = this.buffer.slice(pos);
+                    buffer = this.buffer;
+                    pos = 0;
                     procTarChunk();
-                }).catch((e) => {
-                    //console.log('Something is wrong', e);
-                    reject(e);
-                });
+                }).catch(e => reject(e));
             };
 
             procTarChunk();

@@ -129,17 +129,57 @@ export class FileReaderAPI {
         });
     }
 
+    readFileChunks(file, cb = (f, loaded, total, data) => {
+        return new Promise((resolve, reject) => resolve());
+    }) {
+        return new Promise((resolve, reject) => {
+            let fileSize = file.size - 1;
+            let chunkSize = 10000000;
+            let i = 0;
+            let procChunk = () => {
+                if (i >= fileSize) {
+                    return resolve();
+                }
+                let reader = new FileReader();
+                reader.onload = e => {
+                    if (cb) {
+                        cb(file, i, fileSize, reader.result)
+                            .then(() => {
+                                i += chunkSize;
+                                procChunk();
+                            })
+                            .catch(err => reject(err));
+                    }
+                };
+                reader.onerror = reject;
+                reader.onabort = reject;
+
+                let blob = file.slice(i, i + chunkSize);
+
+                if (file.type === 'text/plain') {
+                    reader.readAsText(blob, 'utf-8');
+                } else if (file.type === 'application/pdf') {
+                    reader.readAsBinaryString(blob); // To put there the text extraction code
+                    log('This is a PDF ', file);
+                } else {
+                    reader.readAsBinaryString(blob); // To verify
+                }
+            };
+            procChunk();
+        });
+    }
+
     readFile(file, cb = (f, loaded, total) => {} ) {
         return new Promise((resolve, reject) => {
-            let reader = new FileReader;
-            reader.onload = (e) => {
+            let reader = new FileReader();
+            reader.onload = e => {
                 let text = reader.result;
                 resolve(text);
             };
             reader.onerror = reject;
             reader.onabort = reject;
 
-            reader.onprogress = (d) => {
+            reader.onprogress = d => {
                 if (d.lengthComputable) {
                     log('file', file.name, d.loaded, d.total);
                     if (cb) {
@@ -152,7 +192,7 @@ export class FileReaderAPI {
                 reader.readAsText(file, 'utf-8');
             } else if(file.type === 'application/pdf') {
                reader.readAsBinaryString(file); // To put there the text extraction code
-               log('This is a PDF ',file);
+               log('This is a PDF ', file);
             } else {
               reader.readAsBinaryString(file); // To verify
             }

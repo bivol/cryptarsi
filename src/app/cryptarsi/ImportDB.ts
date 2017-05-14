@@ -20,50 +20,34 @@ export class ImportDB {
             let r = new FileReaderAPI();
             this.store.open().then(() => {
                 console.log('Starting the import');
+                let tar = new Tar();
 
-                return r.readAll(files, (f, text, obj) => {
-                    console.log('Downloaded', f.name, f.type, obj);
+                return r.readFileChunks(files[0], (f, loaded, total, text) => {
+                    console.log('Downloaded', f.name, f.type, loaded, total, 100 * loaded / total);
                     return new Promise((res, rej) => {
-                        let tar = new Tar();
-                        tar.readTar(text, (header, content, pos, total) => {
+                        tar.readTar(text, (header, content, pos, bufLen) => {
                             return new Promise((resolve, reject) => {
-                                /*
-                                console.log('tar callback', header, content.length, pos, total);
-                                if (header.fileName.match(/^i\//)) {
-                                  console.log('fileName');
-                                    let name = header.fileName.match(/^i\/(.+)/)[1];
-                                    this.store.modifyRawHash(this.nameToIndex(name), content)
-                                        .then(() => {
-                                            progress(f, pos, total, 'Populate the database');
-                                            resolve();
-                                        })
-                                        .catch(reject);
-                                }
-                                if (header.fileName.match(/^d\//)) {
-                                    console.log(header.fileName);
-                                    let name = header.fileName.match(/^d\/(.+)/)[1];
-                                    */
+                                console.log('From tar got file', header);
                                     let name = header.fileName;
                                     this.store.modifyRawData(this.nameToIndex(name), content)
                                         .then(() => {
-                                            progress(f, pos, total, 'Populate the database');
+                                            progress(f, loaded + pos, total, 'Populate the database');
                                             resolve();
                                         })
                                         .catch(reject);
-                                // }
                             });
                         }).then(() => {
-                            progress(f, 100, 100, 'Import completed');
+                            // Nothing to do
                             res();
                         }).catch(rej);
                     });
-                }, (f, loaded, total, count, totalcnt, l) => {
-                    if (progress) {
-                   // console.log('insert ok', f, pos, total);
-                        progress(f, loaded, total, 'Downloading file');
-                    }
                 });
-            }).then(resolve).catch(reject);
+            })
+            .then(() => {
+                progress({}, 100, 100, 'Import completed');
+                resolve();
+            })
+            .catch(reject);
         });
     }
 }

@@ -80,6 +80,7 @@ export class AppImportDbComponent {
             let imp = new ImportDB(this.dbName.value);
             this.status = 'Downloading file';
             imp.importFile(this.files, (f, loaded, total, status) => {
+                console.log('Progress', loaded, total, status);
                 this.progress = parseFloat((100 * (loaded / total)).toFixed(1));
                 this.status = status;
             }).then(() => {

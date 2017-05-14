@@ -152,6 +152,64 @@ export class AngularIndexedDB {
         return promise;
     }
 
+    getAllKeys(storeName: string) {
+        let self = this;
+        let promise = new Promise<any>((resolve, reject ) => {
+            self.dbWrapper.validateBeforeTransaction(storeName, reject);
+
+            let result = [],
+                transaction = self.dbWrapper.createTransaction({ storeName: storeName,
+                    dbMode: self.utils.dbMode.readOnly,
+                    error: (e: Event) => {
+                        e.preventDefault(); // Firefox patch
+                        reject(e);
+                    },
+                    complete: (e: Event) => {
+                        resolve(result);
+                    }
+                }),
+                objectStore = transaction.objectStore(storeName),
+                request = objectStore['getAllKeys']();
+
+            request.onerror = function (e) {
+                e.preventDefault(); // Firefox patch
+                reject(e);
+            };
+
+            request.onsuccess = function (evt) {
+                result = (<IDBOpenDBRequest>evt.target).result;
+            };
+        });
+
+        return promise;
+    }
+
+    getAllByKeysCb(storeName: string, cb) {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            self.getAllKeys(storeName)
+                .then(keys => {
+                    console.log('All keys are taken', keys);
+                    let procOne = () => {
+                        if ((!(keys instanceof Array)) || (keys.length < 1)) {
+                            return resolve(); // Keys are empty
+                        }
+                        let k = keys.shift(); // Take one key
+                        self.getByKey(storeName, k)
+                          .then(data => {
+                            return cb(data);
+                          })
+                          .then(() => {
+                            procOne(); // Take the next one from the list
+                          })
+                          .catch(reject);
+                    };
+                    procOne();
+                })
+                .catch(reject);
+        });
+    }
+
     getAllCb(storeName: string, cb) {
         let self = this;
         let promise = new Promise<any>((resolve, reject ) => {
@@ -179,8 +237,9 @@ export class AngularIndexedDB {
                 let cursor = (<IDBOpenDBRequest>evt.target).result;
                 if (cursor) {
                     cb(cursor.value).then(() => {
-                        //console.log('Got back from the cb')
-                        cursor['continue']();
+                        console.log('Got back from the cb');
+                        //cursor['continue']();
+                        cursor.continue();
                     }).catch((e) => {
                         reject(e);
                     });

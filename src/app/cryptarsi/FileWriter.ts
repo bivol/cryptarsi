@@ -1,3 +1,5 @@
+import { Config } from './Config';
+
 export function isFileWriterSupported() {
     let requestFS = window['requestFileSystem'] || window['webkitRequestFileSystem'];
     return typeof requestFS !== 'undefined';
@@ -6,7 +8,7 @@ export function isFileWriterSupported() {
 export class FileWriterAPI {
     fs = null;
     file = null;
-    constructor(private name = 'pesho', private size = 1024 * 1024) {
+    constructor(private name = 'pesho', private size = Config.maxFileSize) {
         /*
         // Follows a little hack to escape from tslint strick checking
         //let requestQuota = navigator['temporaryStorage'] || navigator['webkitTemporaryStorage'];
@@ -65,14 +67,20 @@ export class FileWriterAPI {
                     return reject();
                 }
                 if (my.fs) {
-                    console.log('We have fs, lets try to get a file', my.fs);
-                    my.fs.root.getFile(my.name, { create: true }, (file) => {
-                        my.file = file;
+                    if (my.file) {
+                        console.log('File descriptor already exist. Leave');
                         return resolve();
-                    }, (e) => {
-                        console.log('Error creating file', e);
-                        reject(e);
-                    });
+                    } else {
+                        console.log('We have fs, lets try to get a file', my.fs);
+                        my.fs.root.getFile(my.name, { create: true }, (file) => {
+                            console.log('We received file descriptor', file);
+                            my.file = file;
+                            return resolve();
+                        }, (e) => {
+                            console.log('Error creating file', e);
+                            reject(e);
+                        });
+                    }
                 } else {
                     console.log('No fs descriptor, retry');
                     count--;
@@ -93,15 +101,16 @@ export class FileWriterAPI {
             let count = 50;
             function exec() {
                 if (count < 0) {
-                    return reject();
+                    return reject('Count is less than zero');
                 }
                 if (my.file) {
-                    my.file.createWriter((writer) => {
-                        writer.onerror = (e) => reject(e);
+                    my.file.createWriter(writer => {
+                        writer.onerror = e => reject(e);
                         writer.onwriteend = () => resolve();
+                        writer.onwrite = () => resolve();
                         writer.seek(writer.length);
                         writer.write(data);
-                    }, (e) => reject(e));
+                    }, e => reject(e));
                 } else {
                     count--;
                     setTimeout(exec, 250); // Retry again in a while

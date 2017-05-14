@@ -484,6 +484,14 @@ export class DB {
         return this.store.getAll(this.dataStoreName);
     }
 
+    getAllKeys() {
+        return this.store.getAllKeys(this.dataStoreName);
+    }
+
+    getAllByKeysCb(cb) {
+        return this.store.getAllByKeysCb(this.dataStoreName, cb);
+    }
+
     getAllCbIndexes(cb) {
         return this.store.getAllCb(this.indexStoreName, cb);
     }

@@ -62,14 +62,18 @@ export class ExportDB {
                         console.log('one data cursor is', data);
                         return new Promise((resolve2, reject2) => {
                             tar.addFile(this.stringToHex(atob(data.id)), data.data);
-                            if (++c % 10) { return resolve2(); }
+                            if (++c % 10) { return resolve2(); } // Do not write to the disk on every step
                             file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}))
                                 .then(resolve2).catch(reject2);
                         });
                     });
                 })
                 .then(() => {
-                    console.log('The database export is completed and it is in in file', file);
+                    console.log('flush the current buffer');
+                    return file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}));
+                })
+                .then(() => {
+                    console.log('The database export is completed and it is in the file', file);
                     return file.writeToFile(new Blob([tar.closingBuffer()], {type: 'application/octet-stream'}));
                 })
                 .then(() => {

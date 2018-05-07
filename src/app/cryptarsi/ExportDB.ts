@@ -54,6 +54,7 @@ export class ExportDB {
             return resolve();
             // */
             ///*
+            let dirty = false;
             file.createFile()
                 .then(() => {
                     console.log('Now we shall have one empty file created. Retrieve chunks');
@@ -62,7 +63,9 @@ export class ExportDB {
                         console.log('one data cursor is', data);
                         return new Promise((resolve2, reject2) => {
                             tar.addFile(this.stringToHex(atob(data.id)), data.data);
+                            dirty = true;
                             if (++c % 10) { return resolve2(); } // Do not write to the disk on every step
+                            dirty = false;
                             file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}))
                                 .then(resolve2).catch(reject2);
                         });
@@ -70,7 +73,8 @@ export class ExportDB {
                 })
                 .then(() => {
                     console.log('flush the current buffer');
-                    return file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}));
+                    if (dirty) return file.writeToFile(new Blob([tar.resetBuffer()], {type: 'application/octet-stream'}));
+                    return true;
                 })
                 .then(() => {
                     console.log('The database export is completed and it is in the file', file);

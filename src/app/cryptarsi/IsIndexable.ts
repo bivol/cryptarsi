@@ -13,15 +13,18 @@ export function isIndexable(type) {
     return indexableList[type] ? true : false;
 };
 
-export function getHashList(file, content) {
+export function getHashList(file, content): Promise<any[]> {
+  return new Promise((resolve, reject) => {
     if (!isIndexable(file.type)) {
-        return [];
+      return resolve([]);
     }
 
     // The follwing code is made for text/plain only
     let hashMap = {};
     indexableList[file.type](content, (hash) => {
       hashMap[hash] = 1;
-    });
-    return Object.keys(hashMap);
+    })
+    .then(() => resolve(Object.keys(hashMap)))
+    .catch(reject);
+  });
 };

@@ -206,10 +206,7 @@ export class DB {
             let me = this;
             if (isIndexable(file.type)) {
               //  console.log('Going to index', file.name, file.type, file);
-                let hashQ = getHashList(file, content);
-             //   console.log('HashQ is', hashQ);
-              //  console.log('Obj is', obj);
-
+              getHashList(file, content).then(hashQ => {
                 let data = 'XXXX' + JSON.stringify(obj) + 'XXXX\n' + content; // Metadata in every text file shall include the groups
 
                 me.modifyData(obj.index, data)
@@ -248,6 +245,10 @@ export class DB {
                         log('Error inserting', file, e, obj);
                         reject(e);
                     });
+              }).catch(reject);
+              //  console.log('HashQ is', hashQ);
+              //  console.log('Obj is', obj);
+
             } else {
                 me.modifyData(obj.index, content)
                     .then(() => {

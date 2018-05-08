@@ -1,4 +1,5 @@
 import { log } from './log';
+import { PDFJS } from 'pdfjs-dist';
 
 export class WordHash {
     static regex = /[^\x00-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]{2,15}/g; // TODO: the regex must be more correct
@@ -24,14 +25,23 @@ export class WordHash {
     }
 
     static cbPerHash(text: string, cb: any) {
+      return new Promise((resolve, reject) => {
         text.replace(WordHash.regex, (m) => {
-            //log('we have matched', m);
-            cb(WordHash.hash(m));
-            return m;
+          //log('we have matched', m);
+          cb(WordHash.hash(m));
+          return m;
         });
+        resolve();
+      });
     }
 }
 
 export class PdfHash {
+  static cbPerHash(text: string, cb: any) {
+    return new Promise((resolve, reject) => {
+      PDFJS.getDocument(text).then( pdf => {
 
+      });
+    });
+  }
 }

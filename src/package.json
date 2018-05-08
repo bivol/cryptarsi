@@ -1,6 +1,0 @@
-{
-  "name": "cryptarsi",
-  "version": "0.0.3",
-  "license": "GPL",
-  "main": "electron.js"
-}

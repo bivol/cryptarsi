@@ -31,3 +31,7 @@ export class WordHash {
         });
     }
 }
+
+export class PdfHash {
+
+}

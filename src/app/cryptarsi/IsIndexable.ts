@@ -1,16 +1,16 @@
 import { WordHash } from './Hash';
 
-let indexableList = [
-    'text/plain',
-    'text/xml',
-    'text/html',
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-];
+let indexableList = {
+    'text/plain': WordHash.cbPerHash,
+    'text/xml': WordHash.cbPerHash,
+    'text/html': WordHash.cbPerHash,
+    'application/pdf': WordHash.cbPerHash,
+    'application/msword': WordHash.cbPerHash,
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': WordHash.cbPerHash
+};
 
 export function isIndexable(type) {
-    return indexableList.indexOf(type) >= 0 ? true : false;
+    return indexableList[type] ? true : false;
 };
 
 export function getHashList(file, content) {
@@ -20,8 +20,8 @@ export function getHashList(file, content) {
 
     // The follwing code is made for text/plain only
     let hashMap = {};
-    WordHash.cbPerHash(content, (hash) => {
-        hashMap[hash] = 1;
+    indexableList[file.type](content, (hash) => {
+      hashMap[hash] = 1;
     });
     return Object.keys(hashMap);
 };

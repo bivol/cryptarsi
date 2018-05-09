@@ -1,5 +1,5 @@
 import { log } from './log';
-import { isIndexable } from './IsIndexable';
+import { isIndexable, isBinary } from './IsIndexable';
 import { Config } from './Config';
 
 export const allFileName = {
@@ -155,14 +155,11 @@ export class FileReaderAPI {
                 reader.onabort = reject;
 
                 let blob = file.slice(i, i + chunkSize);
-
-                if (file.type === 'text/plain') {
-                    reader.readAsText(blob, 'utf-8');
-                } else if (file.type === 'application/pdf') {
+                
+                if (isBinary(file.type)) {
                     reader.readAsBinaryString(blob); // To put there the text extraction code
-                    log('This is a PDF ', file);
                 } else {
-                    reader.readAsBinaryString(blob); // To verify
+                    reader.readAsText(blob, 'utf-8');
                 }
             };
             procChunk();
@@ -187,15 +184,15 @@ export class FileReaderAPI {
                     }
                 }
             };
-
-            if (file.type === 'text/plain') {
-                reader.readAsText(file, 'utf-8');
-            } else if(file.type === 'application/pdf') {
+            
+            if (isBinary(file.type)) {
                reader.readAsBinaryString(file); // To put there the text extraction code
-               log('This is a PDF ', file);
+               log('This is a binary file ', file);
             } else {
-              reader.readAsBinaryString(file); // To verify
+               reader.readAsText(file, 'utf-8');
+               log('This is a text file', file);
             }
+
         });
     }
 }

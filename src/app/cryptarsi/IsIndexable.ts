@@ -28,8 +28,8 @@ let indexableList = {
 };
 
 export function isBinary(type) {
-  if (isIndexable[type]) {
-    return isIndexable[type].binary;
+  if (indexableList[type]) {
+    return indexableList[type].binary;
   }
   return true;
 }

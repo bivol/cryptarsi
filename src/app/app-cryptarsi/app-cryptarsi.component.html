@@ -306,6 +306,17 @@ The best practice is to transmit the tar archive through the anonymous Tor netwo
 <p>
           </md-card-content>
           </md-card>
+      <!-- Russian version -->
+    <md-card *ngIf="!databaseSelected">
+     <md-card-subtitle>
+     </md-card-subtitle>
+     <md-card-title>
+      Русский
+     </md-card-title>
+     <md-card-content class="md-body-1">
+     <p>Русская версия инструкции в PDF скачайте <a href="https://cryptarsi.org/cryptarsi-manual-russian.pdf">здесь</a>
+     </md-card-content>
+     </md-card>
           <div *ngIf="databaseSelected">
             <!--<div>Database selected: {{databaseSelected.name}}</div>-->
             <div *ngFor="let item of collection">
@@ -318,7 +329,7 @@ The best practice is to transmit the tar archive through the anonymous Tor netwo
             </div>
           </div>
       </span>
-        </span>
+      </span>
     </div>
 </md-sidenav-layout>
 

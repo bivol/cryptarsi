@@ -13,7 +13,11 @@ let indexableList = {
       binary: false,
       cb: WordHash.cbPerHash
     },
-    'application/pdf': {
+    'text/csv': {
+      binary: false,
+      cb: WordHash.cbPerHash
+    }//,
+  /*  'application/pdf': {
       binary: true,
       cb: WordHash.cbPerHash
     },
@@ -24,7 +28,7 @@ let indexableList = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
       binary: false,
       cb: WordHash.cbPerHash
-    }
+    } */
 };
 
 export function isBinary(type) {
